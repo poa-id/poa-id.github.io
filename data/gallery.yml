@@ -1,0 +1,48 @@
+title: "Shots"
+style: "style2 small lightbox onscroll-fade-in"
+content: |
+  Here I showcase a couple of shots and mockups from different projects. <strong>Click on them to expand</strong>.
+pictures:
+  - title: "Dashboard"
+    content: "Dashboard - Company travel budget managing app"
+    image: "images/gallery/Portfolio mockup.jpg"
+    thumb: "images/gallery/Portfolio mockup.jpg"
+    button: "Details"
+
+  - title: "Onboarding"
+    content: "Onboarding for a company travel budget manager"
+    image: "images/gallery/Portfolio mockup2.jpg"
+    thumb: "images/gallery/Portfolio mockup2.jpg"
+    button: "Details"
+
+  - title: "Institutional"
+    content: "Institutional website I've built with Webflow"
+    image: "images/gallery/Portfolio mockup3.jpg"
+    thumb: "images/gallery/Portfolio mockup3.jpg"
+    button: "Details"
+
+  - title: "Forms"
+    content: "Forms - Event staffing app"
+    image: "images/gallery/Portfolio mockup4.jpg"
+    thumb: "images/gallery/Portfolio mockup4.jpg"
+    button: "Details"
+
+  - title: "Platform"
+    content: "Talent page with filters, Event staffing app"
+    image: "images/gallery/Portfolio mockup1.jpg"
+    thumb: "images/gallery/Portfolio mockup1.jpg"
+    button: "Details"
+
+  - title: "Mobile Insurance"
+    content: "Fixed price product B2B insurance app"
+    image: "images/gallery/Portfolio mockup5.jpg"
+    thumb: "images/gallery/Portfolio mockup5.jpg"
+    button: "Details"
+
+  - title: "Multistep"
+    content: "Step in an insurance broker web app."
+    image: "images/gallery/Portfolio mockup6.jpg"
+    thumb: "images/gallery/Portfolio mockup6.jpg"
+    button: "Details"
+
+ 

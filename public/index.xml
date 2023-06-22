@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Poa Portfolio</title>
+    <link>/</link>
+    <description>Recent content on Poa Portfolio</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>{year}</copyright><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Case Study</title>
+      <link>/case1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/case1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Case Study</title>
+      <link>/case2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/case2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Case Study</title>
+      <link>/case3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/case3/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
