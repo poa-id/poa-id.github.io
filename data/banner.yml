@@ -8,5 +8,5 @@ content : |
 button:
   label : "Get in touch"
   link : "#contact-form"
-image : "images/banner.jpg"
+image : "images/banner.webp"
 
