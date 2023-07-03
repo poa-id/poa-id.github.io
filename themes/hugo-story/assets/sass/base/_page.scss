@@ -58,8 +58,16 @@
 	  div .svg-arrow {
 		position: absolute;
 		bottom: 40px;
-		max-height: 64px;
-		width: 64px;
+		right: 80px;
+		max-height: 48px;
+		width: 48px;
 		display: flex;
 		align-items: flex-end;
+	  }
+
+	  .footer-aligned-center {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 16px;
 	  }
