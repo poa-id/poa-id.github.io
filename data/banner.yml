@@ -1,12 +1,12 @@
 ####################### Banner #########################
 style: "style1 orient-left content-align-left image-position-right fullscreen onload-image-fade-in onload-content-fade-right"
-title : "poa."
+title : "Pedro Ossorio Arana"
 subtitle: |
-  Hi! I'm Pedro Ossorio Arana, or <strong>Poa</strong> for short, and I'm a <span>Product Designer</span> from Argentina.
+  PRODUCT DESIGNER - UX/UI
 content : |
-  I've worked with various clients, locally and internationally. Nowadays I'm working as a Lead Product Designer <a href="https://www.balloon-group.com/es/index.html">here</a>, where I lead a team of four designers. <span>I'm currently available for freelance work</span>. If you are interested in working with me don't hesitate to contact me &#8594; 
+  Hi! I'm Pedro, but people call me <strong>Poa</strong>. I'm a <span>Product Designer</span> from Argentina. I've collaborated with various clients, locally and internationally. Nowadays I'm working as a Product Designer <a href="https://www.balloon-group.com/es/index.html">here</a>. <span>I'm currently available for freelance work</span>. I also love to take Brand Identity projects, as well as Webflow websites whenever I can. If you are interested in working with me leave me a message below. 
 button:
   label : "Get in touch"
   link : "#contact-form"
-image : "images/banner.webp"
+# image : "images/banner.webp"
 

@@ -1,5 +1,6 @@
 /* Type */
 @import url("https://use.typekit.net/uvv5uih.css");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 	html {
 		font-size: 18pt;
@@ -75,14 +76,14 @@
 	}
 
 	h1 {
-		font-size: 5rem;
-		letter-spacing: 2px;
+		font-size: 4rem;
+		letter-spacing: -3px;
 		line-height: 1.2;
-		text-transform: lowercase;
-		font-family: "nasalization", sans-serif;
-		font-weight: 400;
+		text-transform: uppercase;
+		font-family: "Inter", sans-serif;
+		font-weight: 600;
 		font-style: normal;
-		margin-bottom: 40px;
+		margin-bottom: 0px;
 	}
 
 	h2 {

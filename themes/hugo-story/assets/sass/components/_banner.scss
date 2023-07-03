@@ -237,10 +237,16 @@
 			@include vendor('align-self', 'center');
 			@include vendor('flex-grow', '1');
 			@include vendor('flex-shrink', '1');
-			width: 50%;
-			max-width: (_size(inner) * 0.75);
+			width: 100%;
+			max-width: (_size(inner) * 1.05);
 			margin: 0 auto;
 		}
+
+		.major {
+			font-size: 1.55rem;
+			letter-spacing: 5px;
+		}
+
 
 		.image {
 			@include vendor('flex-grow', '0');
