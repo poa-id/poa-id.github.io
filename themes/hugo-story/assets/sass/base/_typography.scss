@@ -263,4 +263,36 @@
 		}
 	}
 
+	.title-cs {
+		margin-top: 40px;
+		font-weight: 200;
+		font-size: 2rem;
+
+		strong {
+			font-weight: 600;
+		}
+	}
+
+	.author-cs {
+		text-transform: uppercase;
+		letter-spacing: 4px;
+	}
+
+	.subtitle-cs {
+		margin-top: 40px;
+	}
+
+	.list-case {
+		margin:0;
+   		padding: 0;
+   		text-indent: 0;
+   		list-style-type: 0;
+
+		li {
+			font-weight: 200;
+			margin: 10 0;
+			padding-left: 0;
+		}
+	}
+
 	@include color-typography;

@@ -1,9 +1,9 @@
 ####################### Spotlight #########################
 style: "style3 orient-right content-align-left image-position-center onscroll-image-fade-right"
 id: "first"
-title : "Lead Product Designer // Balloon Group"
+title : "Product Designer // Balloon Group"
 content: |
-  This is where I'm currently working. In this position, appart from <span>strategic design decisions</span>, and management tasks, I built <a href="https://www.fastforward.ai/">this</a> Webflow site for the company. I'm currently developing Balloon Group's Design System from scratch. (<i>WIP: Missing toggles, checkboxes, avatars, tooltips progress indicators and sliders</i>). You can check it out <a href="https://www.figma.com/file/SYn7JAYGe1NiopRa4mOa4x/Design-System---BGv1.0?type=design&node-id=5%3A642&mode=design&t=FuRVLvVZyhm2sSxi-1">here</a>.
+  This is where I'm currently working. In this position, appart from <strong>SaaS Websites/e-commerce/B2B UI Designs</strong>, and strategic design decisions, I built the company's Webflow site. <span>I'm currently developing Balloon Group's <strong>Design System</strong> from scratch.</span> (<i>WIP: Missing toggles, checkboxes, avatars, tooltips progress indicators, sliders and a couple more...</i>).
 button: 
   label: "Learn More"
   link: "/case3"
