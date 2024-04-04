@@ -2,14 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/aboutme/</loc>
+    <loc>//localhost:1313/aboutme/</loc>
   </url><url>
-    <loc>/case1/</loc>
+    <loc>//localhost:1313/case1/</loc>
   </url><url>
-    <loc>/case2/</loc>
+    <loc>//localhost:1313/case2/</loc>
   </url><url>
-    <loc>/case3/</loc>
+    <loc>//localhost:1313/case3/</loc>
   </url><url>
-    <loc>/</loc>
+    <loc>//localhost:1313/</loc>
   </url>
 </urlset>
