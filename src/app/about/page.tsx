@@ -10,6 +10,15 @@ export default function About() {
   const { theme } = useTheme()
   const [currentSection, setCurrentSection] = useState<Section>("tldr")
 
+  const handleSectionChange = (section: Section) => {
+    setCurrentSection(section)
+    // Reset scroll position of the content div
+    const contentDiv = document.querySelector('.content-scroll')
+    if (contentDiv) {
+      contentDiv.scrollTop = 0
+    }
+  }
+
   const renderContent = () => {
     switch (currentSection) {
       case "tldr":
@@ -23,7 +32,7 @@ export default function About() {
             In past roles, I have driven strategic initiatives that improved key product metrics and user retention. I specialize in overseeing the entire design process—from strategy and research to UX/UI execution—while collaborating closely with cross-functional teams.
             </p>
             <p className="text-base text-muted-foreground">
-            My expertise lies in creating intuitive interfaces and fostering collaboration between design, engineering, and product teams. I am committed to craftsmanship,innovation, pushing boundaries, and delivering solutions that meet user needs while aligning with business objectives.
+            My expertise lies in creating intuitive interfaces and fostering collaboration between design, engineering, and product teams. I am committed to craftsmanship, innovation, pushing boundaries, and delivering solutions that meet user needs while aligning with business objectives.
             </p>
             <div className="space-y-6">
               {/* Currently Reading */}
@@ -47,6 +56,60 @@ export default function About() {
                 <ul className="space-y-2 text-base text-muted-foreground list-disc pl-6">
                   <li>Data Driven Design: Quantitative Research for UX, by the <span className="font-medium">Interaction Design Foundation (IxDF)</span></li>
                 </ul>
+              </div>
+
+              {/* Skills Assessment */}
+              <div className="space-y-4 border border-border dark:border-gray-800 p-6 bg-card">
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
+                  <h4 className="text-xl [font-family:var(--font-disket-bold)]">Skills Assessment</h4>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-base text-muted-foreground">1. Product Thinking</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-primary">★★★★☆</span>
+                      <span className="text-sm text-muted-foreground">Strong</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-base text-muted-foreground">2. Interaction Design</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-primary">★★★★☆</span>
+                      <span className="text-sm text-muted-foreground">Strong</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-base text-muted-foreground">3. Visual Design</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-primary">★★★★☆</span>
+                      <span className="text-sm text-muted-foreground">Strong</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-base text-muted-foreground">4. Drive</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-primary">★★★★☆</span>
+                      <span className="text-sm text-muted-foreground">Strong</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-base text-muted-foreground">5. Intentionality</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-primary">★★★☆☆</span>
+                      <span className="text-sm text-muted-foreground">Solid</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-base text-muted-foreground">6. Self-Awareness</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-primary">★★★☆☆</span>
+                      <span className="text-sm text-muted-foreground">Solid</span>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground mt-4">
+                  Based on <a href="https://docs.google.com/spreadsheets/d/1jWdQNolms6lpC478OP7RdIQNqFt4jK-9ROIUiP-JOGM/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">Aaron Jones' Self Assessment Rubric</a> and this <a href="https://uxdesign.cc/a-guide-to-becoming-a-senior-product-designer-7b7296f08910" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">related article</a>.
+                </p>
               </div>
             </div>
           </div>
@@ -264,7 +327,7 @@ export default function About() {
         <div className="w-full lg:w-1/2 bg-background border-b lg:border-b-0 lg:border-r border-border dark:border-gray-800 flex flex-col items-center justify-center relative py-6 lg:py-0">
           <nav className="flex lg:flex-col space-x-4 lg:space-x-0 lg:space-y-6 items-center overflow-x-auto w-full lg:w-auto px-6 lg:px-0">
             <button
-              onClick={() => setCurrentSection("tldr")}
+              onClick={() => handleSectionChange("tldr")}
               className={`text-base lg:text-xl uppercase tracking-wide transition-colors whitespace-nowrap ${
                 currentSection === "tldr" 
                   ? "[font-family:var(--font-disket-bold)] text-foreground" 
@@ -274,7 +337,7 @@ export default function About() {
               TL;DR
             </button>
             <button
-              onClick={() => setCurrentSection("background")}
+              onClick={() => handleSectionChange("background")}
               className={`text-base lg:text-xl uppercase tracking-wide transition-colors whitespace-nowrap ${
                 currentSection === "background" 
                   ? "[font-family:var(--font-disket-bold)] text-foreground" 
@@ -284,7 +347,7 @@ export default function About() {
               Background
             </button>
             <button
-              onClick={() => setCurrentSection("values")}
+              onClick={() => handleSectionChange("values")}
               className={`text-base lg:text-xl uppercase tracking-wide transition-colors whitespace-nowrap ${
                 currentSection === "values" 
                   ? "[font-family:var(--font-disket-bold)] text-foreground" 
@@ -294,7 +357,7 @@ export default function About() {
               Values
             </button>
             <button
-              onClick={() => setCurrentSection("cv")}
+              onClick={() => handleSectionChange("cv")}
               className={`text-base lg:text-xl uppercase tracking-wide transition-colors whitespace-nowrap ${
                 currentSection === "cv" 
                   ? "[font-family:var(--font-disket-bold)] text-foreground" 
@@ -304,7 +367,7 @@ export default function About() {
               CV
             </button>
             <button
-              onClick={() => setCurrentSection("interests")}
+              onClick={() => handleSectionChange("interests")}
               className={`text-base lg:text-xl uppercase tracking-wide transition-colors whitespace-nowrap ${
                 currentSection === "interests" 
                   ? "[font-family:var(--font-disket-bold)] text-foreground" 
@@ -317,7 +380,7 @@ export default function About() {
         </div>
 
         {/* Right side - Content */}
-        <div className={`w-full lg:w-1/2 ${theme === 'dark' ? 'bg-[#0C0E15]' : 'bg-background'} overflow-y-auto h-full`}>
+        <div className={`w-full lg:w-1/2 ${theme === 'dark' ? 'bg-[#0C0E15]' : 'bg-background'} overflow-y-auto h-full content-scroll`}>
           <div className="w-[90%] lg:w-4/5 mx-auto py-8 lg:py-12">
             {renderContent()}
           </div>

@@ -56,7 +56,7 @@ export default function Home() {
         {/* Content section - Full width on mobile */}
         <div className="w-full lg:w-1/2 bg-background lg:border-r border-gray-200 dark:border-gray-800">
           <div className="h-full flex items-center justify-center p-6 lg:p-0">
-            <section className="w-full lg:w-4/5 space-y-6 lg:space-y-0">
+            <section className="w-full lg:w-4/5 space-y-6">
               <h2 className="text-xl lg:text-3xl mb-4 lg:mb-6 uppercase tracking-wide [font-family:var(--font-disket)]">PEDRO OSSORIO ARANA</h2>
               <h1 className="text-3xl lg:text-4xl mb-4 lg:mb-6 uppercase tracking-wide [font-family:var(--font-disket-bold)]">
                 Product Design/UX D.Systems/Strategy
@@ -81,7 +81,7 @@ export default function Home() {
               </div>
               <Link 
                 href="/work" 
-                className="inline-flex mt-6 lg:mt-8 px-6 py-3 bg-transparent text-foreground border border-foreground dark:border-foreground hover:bg-foreground hover:text-background dark:hover:bg-gray-300 dark:hover:text-gray-900 transition-all duration-200 [font-family:var(--font-disket)]"
+                className="inline-flex mt-8 px-6 py-3 bg-transparent text-foreground border border-foreground dark:border-foreground hover:bg-foreground hover:text-background dark:hover:bg-gray-300 dark:hover:text-gray-900 transition-all duration-200 [font-family:var(--font-disket)]"
               >
                 View My Work
               </Link>
