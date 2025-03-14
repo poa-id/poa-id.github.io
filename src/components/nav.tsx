@@ -7,7 +7,7 @@ import { ThemeToggle } from "./theme-toggle"
 
 export function Nav() {
   return (
-    <nav className="fixed top-0 w-full border-b bg-white dark:bg-[#0C0E15] dark:border-gray-800 z-50">
+    <nav className="fixed top-0 w-full border-b bg-white dark:bg-[#0F1015] dark:border-gray-800 z-50">
       <div className="w-full mx-auto flex items-center justify-between h-24">
         <div className="w-full lg:w-1/2 flex items-center">
           <div className="w-full lg:w-4/5 mx-auto px-6 lg:px-0">

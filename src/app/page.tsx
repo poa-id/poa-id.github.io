@@ -90,7 +90,7 @@ export default function Home() {
         </div>
 
         {/* Video section - Hidden on mobile */}
-        <div className="hidden lg:block lg:w-1/2 bg-[#0C0E15] h-full flex items-center justify-center">
+        <div className="hidden lg:block lg:w-1/2 bg-[#0F1015] h-full flex items-center justify-center">
           <div className={currentTheme === 'light' ? 'w-full h-full relative flex items-center justify-center' : 'w-full h-full flex items-center justify-center'}>
             <div className="relative w-full h-full flex items-center justify-center">
               <div className={`${
@@ -99,9 +99,9 @@ export default function Home() {
                     ? 'h-full w-full flex items-end'
                     : 'h-full w-full flex items-center'
                   : currentDarkVideo === 'campfire'
-                    ? 'w-3/4 mx-auto flex items-center'
+                    ? 'h-full w-full flex items-center'
                     : 'h-full w-full flex items-center'
-              } bg-[#0C0E15] overflow-hidden justify-center`}>
+              } bg-[#0F1015] overflow-hidden justify-center`}>
                 <video
                   key={currentTheme === 'light' ? currentLightVideo : currentDarkVideo}
                   autoPlay
@@ -114,7 +114,7 @@ export default function Home() {
                         ? 'w-[150%] max-w-none h-auto object-cover -mb-32'
                         : 'w-full h-full object-cover'
                       : currentDarkVideo === 'campfire'
-                        ? 'aspect-video w-full'
+                        ? 'w-full h-full object-cover'
                         : 'w-[150%] max-w-none h-auto object-cover'
                   }`}
                 >

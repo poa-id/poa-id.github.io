@@ -545,7 +545,7 @@ export default function Work() {
         </div>
 
         {/* Right side - Content */}
-        <div className={`w-full lg:w-1/2 ${theme === 'dark' ? 'bg-[#0C0E15]' : 'bg-background'} overflow-y-auto h-full content-scroll`}>
+        <div className={`w-full lg:w-1/2 ${theme === 'dark' ? 'bg-[#0F1015]' : 'bg-background'} overflow-y-auto h-full content-scroll`}>
           <div className="w-[90%] lg:w-4/5 mx-auto py-8 lg:py-12">
             {renderContent()}
           </div>
