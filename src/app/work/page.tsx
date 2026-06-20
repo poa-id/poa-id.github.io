@@ -74,23 +74,20 @@ export default function Work() {
               <h2 className="text-4xl mb-2 uppercase tracking-wide [font-family:var(--font-disket-bold)]">Nera</h2>
               <p className="text-lg mb-8 text-muted-foreground [font-family:var(--font-disket)]">Product Designer - Aug 23 / Present</p>
               <p className="text-base text-muted-foreground">
-              As a Product Designer at Nera, I am responsible for designing and implementing AgTech solutions that help farmers optimize their operations and simplify their financial decisions. At the same time, I work to make it easier for suppliers to offer financing options to farmers and to streamline the process of charging and receiving payments. This requires a deep understanding of the industry, strong business acumen, and close collaboration with banking partners.
+              Nera builds financing and payments infrastructure for agricultural businesses, working with banking partners — which means the real design problem is making complex eligibility and transaction logic legible to people who aren't financial specialists. That's the problem I spend most of my time on.
               </p>
             </div>
 
             {/* Key Responsibilities */}
             <div className="space-y-8 border border-border dark:border-gray-800 p-8 bg-card">
               <div className="space-y-4">
-                <h3 className="text-2xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">Key Responsibilities</h3>
+                <h3 className="text-2xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">Impact</h3>
                 <ul className="space-y-4 text-base text-muted-foreground list-disc pl-6">
-                  <li>Design and refine UI components, ensuring a seamless user experience.</li>
-                  <li>Develop and maintain the design system, collaborating with developers to implement it as reusable libraries.</li>
-                  <li>Optimize key user flows that drive the company's highest TPV, reducing complexity to improve conversion rates, increase revenue, and minimize friction.</li>
-                  <li>Partner with product and technical owners to shape the roadmap, plan new features, and drive product discoveries.</li>
-                  <li>Conduct user interviews to gain insights and improve user-centric decision-making.</li>
-                  <li>Analyze metrics and funnels in Amplitude to make data-driven design decisions.</li>
-                  <li>Improve cross-team communication, reducing silos and minimizing gatekeeping to enhance collaboration and efficiency.</li>
-                  <li>Continuously research the business model and industry trends in AgTech, focusing on agricultural payments and financing platforms involving banking partners.</li>
+                  <li>Found a critical drop-off point in the flow driving our highest transaction volume, using funnel analysis in Amplitude — redesigned it and cut abandonment by 16%.</li>
+                  <li>Own the design system end-to-end: 275+ components in production, shared across a 4-designer team and shipped to engineering as a versioned npm package, not just a Figma file.</li>
+                  <li>Run user interviews directly with farmers and suppliers to catch where financial logic breaks down before it ships as confusing UI.</li>
+                  <li>Push back in roadmap discussions when a requested feature solves a symptom, not the underlying problem — and bring data to make that case.</li>
+                  <li>Work close enough to engineering to know what's actually expensive to build, which shapes which tradeoffs I propose.</li>
                 </ul>
               </div>
             </div>
@@ -103,7 +100,7 @@ export default function Work() {
               <h2 className="text-4xl mb-2 uppercase tracking-wide [font-family:var(--font-disket-bold)]">Balloon Group</h2>
               <p className="text-lg mb-8 text-muted-foreground [font-family:var(--font-disket)]">Design Lead - May 21 / Aug 23</p>
               <p className="text-base text-muted-foreground">
-                At Balloon Group, I lead a team of designers in various projects. Apart from SaaS Websites/e-commerce/B2B UI Designs, and strategic design decisions, I built the company's <a href="https://www.fastforward.ai/" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">Webflow site</a>. Before ending my time there, I spearheaded the Design System implementation from scratch.
+                At Balloon Group, I led a team of 4 designers across SaaS, e-commerce, and B2B projects — including a Chilean telecom/ISP and a Magento build for Circle K. Alongside the day-to-day design work, I built the company's <a href="https://www.fastforward.ai/" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">Webflow site</a>, and before I left, I built their design system from scratch — the project below.
               </p>
             </div>
 
@@ -174,17 +171,8 @@ export default function Work() {
 
                 <h4 className="text-xl uppercase tracking-wide [font-family:var(--font-disket)] mt-8 mb-4">Conclusion</h4>
                 <p>
-                  As a Product Designer for Balloon Group, I recognized the need to build and develop a design system from the ground up. By acknowledging the importance of consistency, efficiency and scalability, I embarked on a journey to empower the teams and enhance our website development process. Through thorough research, collaboration and iterative development, a proper Design System that brought numerous benefits, including collaboration, speed and consistency, was established.
+                  As a Product Designer for Balloon Group, I recognized the need to build and develop a design system from the ground up. By acknowledging the importance of consistency, efficiency and scalability, I embarked on a journey to empower the teams and enhance our website development process. Through thorough research, collaboration and iterative development, a proper Design System that brought numerous benefits, including collaboration, speed and consistency, was established — adopted across the team and used as the foundation for every new client project for the rest of my time there. I'd also begun scoping documentation in Zeroheight and a Storybook integration to make the system self-service for engineering — work that was just getting started when I moved on.
                 </p>
-
-                <h4 className="text-xl uppercase tracking-wide [font-family:var(--font-disket)] mt-8 mb-4">Next Steps</h4>
-                <p className="text-sm text-muted-foreground [font-family:var(--font-disket)]">(Planned before my time there ended)</p>
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>Documenting the Design System. (Currently researching tools for this, looking into Zeroheight)</li>
-                  <li>Integration with Storybook (In progress)</li>
-                  <li>Bare-bones variant. I want to build an unbranded version of the DS. This can further be used while working with clients</li>
-                  <li>Training and adoption: Work with the teams, offer workshops, and foster adoption and testing throughout the company</li>
-                </ul>
               </div>
             </div>
           </div>
@@ -201,8 +189,7 @@ export default function Work() {
                 <div className="space-y-4">
                   <h3 className="text-2xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">Insurance Broker & Event Staffing</h3>
                   <p className="text-base text-muted-foreground">
-                    I've worked as a contractor designing UI for a B2B Insurance Broker company, and an event staffing platform.
-                    In both cases, the process had already started and I was hired to take their existing designs further, organizing and creating styleguides, while bringing good practices to their Figma files. The end result was beautiful UI, with great usability.
+                    Both of these came to me mid-flight — existing products, existing designs, but no system holding them together. The job wasn't starting from zero; it was finding the patterns already hiding in their Figma files and turning them into a styleguide the team could actually keep using after I left. Same instinct as the design systems work at Balloon Group and Nera, just compressed into a few weeks instead of a year.
                   </p>
                   <div className="grid grid-cols-2 gap-6">
                     <button 
@@ -278,7 +265,7 @@ export default function Work() {
                 <div className="space-y-4">
                   <h3 className="text-2xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">Dashboard Design</h3>
                   <p className="text-base text-muted-foreground">
-                    This is a prototype I built for a Travel Budget Managing App. The project had some tricky requirements, including taking appart and re-designing their Information Architecture. Design had to be custom and no existing Design System was used.
+                    This is a prototype I built for a Travel Budget Managing App. No design system to lean on here — just a budgeting tool whose information architecture had grown organically into something nobody could navigate. I took it apart and rebuilt the IA from scratch before touching any UI, since the structure was the actual problem, not the visual layer.
                   </p>
                   <div className="grid grid-cols-2 gap-6">
                     <button 
@@ -330,7 +317,7 @@ export default function Work() {
                 <div className="space-y-4">
                   <h3 className="text-2xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">Arcana Beard Oil</h3>
                   <p className="text-base text-muted-foreground">
-                    A passion project focused on creating a unique brand identity for a beard oil product. The project encompassed product development, packaging design, and brand strategy.
+                    Brand identity, packaging, and product development for a beard oil line — purely for the fun of building a brand from nothing.
                   </p>
                   <div className="grid grid-cols-1 gap-6">
                     <button 
@@ -371,7 +358,7 @@ export default function Work() {
                 <div className="space-y-4">
                   <h3 className="text-2xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">Concepto Fabre</h3>
                   <p className="text-base text-muted-foreground">
-                    A minimalist monochrome branding project for a luxury sleepwear brand. The design draws inspiration from origami and Japanese cranes, creating a clean and sophisticated visual identity through a concise brandbook.
+                    A monochrome identity for a sleepwear brand, built around origami folds and the shape of a crane in flight.
                   </p>
                   <div className="grid grid-cols-1 gap-6">
                     <button 

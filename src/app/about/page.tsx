@@ -26,13 +26,10 @@ export default function About() {
           <div className="space-y-6">
             <h2 className="text-4xl mb-8 uppercase tracking-wide [font-family:var(--font-disket-bold)]">TL;DR</h2>
             <p className="text-base text-muted-foreground">
-            I'm Poa, a Senior Product Designer with a strong background in fast-paced startup environments. I have led end-to-end design projects, focusing on refining user experiences and driving product growth. Problem-solving is at the core of my approach, as I prioritize user needs and craft high-quality designs that enhance satisfaction and engagement.
+            I'm Poa, a Senior Product Designer who spends more time figuring out which problem is worth solving than pushing pixels. I've led that thinking end-to-end — discovery, strategy, systems, execution — across a fast-paced agency and a startup, and I stay close enough to engineering to know what's actually feasible.
             </p>
             <p className="text-base text-muted-foreground">
-            In past roles, I have driven strategic initiatives that improved key product metrics and user retention. I specialize in overseeing the entire design process—from strategy and research to UX/UI execution—while collaborating closely with cross-functional teams.
-            </p>
-            <p className="text-base text-muted-foreground">
-            My expertise lies in creating intuitive interfaces and fostering collaboration between design, engineering, and product teams. I am committed to craftsmanship, innovation, pushing boundaries, and delivering solutions that meet user needs while aligning with business objectives.
+            The work spans simplifying financial decisions for non-technical users at an agtech fintech, and building design systems that get adopted, not just shipped. Numbers and specifics live in the case studies below — this is just the shape of how I think.
             </p>
             <div className="space-y-6">
               {/* Currently Reading */}
@@ -118,16 +115,10 @@ export default function About() {
         return (
           <div className="space-y-6">
             <h2 className="text-4xl mb-8 uppercase tracking-wide [font-family:var(--font-disket-bold)]">Background</h2>
-            <p className="text-base text-muted-foreground">I'm a passionate Product Designer with expertise in UX/UI, Branding, Web Design and Illustration. I've got a keen eye for detail and a deep understanding of design principles. I strive to craft digital solutions that not only look visually appealing but also deliver great functionality.</p>
-            <p className="text-base text-muted-foreground">              As a Product Designer, I've worked on designing UI for e-commerce sites, B2B 
-              and institutional websites, as well as developing Design Systems. I collaborate 
-              with Product Owners and Engineers to ensure that the design significantly 
-              enhances product metrics and user engagement.</p>
-              <p className="text-base text-muted-foreground">              I have a knack for front-end coding, occasionally tackling a little project 
-              on the side. This enables me to bridge the gap between design and development 
-              teams effectively. I have worked with teams in Argentina, Mexico, and the 
-              United States.</p>
-              <p className="text-base text-muted-foreground">I've lead a Design Team in a fast paced agency, dealing with various clients simoultaneously, and I've also worked in a startup environment, where I've been able to wear many hats, from UI Designer, to Design Lead, to Product Designer.</p>
+            <p className="text-base text-muted-foreground">What I actually do is figure out which problem is worth solving before anyone touches Figma. That means running discovery workshops, sitting with users, and pushing back on requirements that solve the wrong thing. Execution — the interface, the system, the components — follows from that, not the other way around.</p>
+            <p className="text-base text-muted-foreground">That approach has played out across very different problems: simplifying financing decisions for farmers who aren't designers or technologists, untangling fragmented IA for e-commerce and B2B platforms, and building the shared systems that let a team ship consistently instead of re-solving the same problem per project. The common thread isn't the industry — it's getting underneath a messy problem before committing to a solution.</p>
+              <p className="text-base text-muted-foreground">I'm technical enough to stay close to that execution layer when it matters: I write front-end code, I can read what's feasible versus what's expensive, and that's saved good ideas from getting lost in translation between design and engineering more than once. I've done this across teams in Argentina, Mexico, and the United States.</p>
+              <p className="text-base text-muted-foreground">I've led a design team through a fast-paced agency juggling multiple clients at once, and worked inside a startup where the job changes shape constantly — strategy one week, a shipped component the next. Both taught me the same thing: the title matters less than whether the right problem got solved.</p>
           </div>
         )
       case "values":
@@ -137,7 +128,7 @@ export default function About() {
             <p className="text-base text-muted-foreground"><span className="font-bold">Craftsmanship. Usefulness. Authenticity.</span> These are the core values that guide my work and way of designing (and living).</p>
             <p className="text-base text-muted-foreground">I strive to imbue them in all my endeavors. I've always been drawn to making things—whether illustrations, products, forged metal, or carved wooden swords—and <span className="font-bold">I've always been fascinated by the process of creation.</span> Design is a mindset, not something you switch on and off for work.</p>
             <p className="text-base text-muted-foreground"><span className="font-bold">Collaboration and communication</span> are paramount. Climbing to the summit alone is a lonely and dangerous path. Triumph is a team effort, and tightly knit teams create the greatest products.</p>
-            <p className="text-base text-muted-foreground">If and when I use AI, it is solely as a tool for productivity and as a co-developer. Under no circumstances will I ever use it for creative purposes, <span className="font-bold">as I am morally and vehemently against it</span>.</p>
+            <p className="text-base text-muted-foreground">AI is a tool I use for productivity — accelerating implementation, drafting code, speeding up the mechanical parts of the work. But the creative act itself — illustration, brand identity, the actual artistic decisions — stays mine. I won't outsource that to a model, and <span className="font-bold">I'm fairly firm about it</span>.</p>
             <p className="text-2xl text-muted-foreground text-center">☩</p>
           </div>
         )
@@ -161,147 +152,14 @@ export default function About() {
             {/* Introduction */}
             <div className="space-y-4">
               <p className="text-base text-muted-foreground">
-                I specialize in designing user interfaces and digital products. The mix of design, user experience, marketing,
-                branding, and business/domain knowledge is where I thrive. Throughout my career, I have taught myself to code in front end languages, allowing me to put the vision I have
-                for a product exactly as I've visualised it.
+                A quick summary — the full breakdown, with numbers, lives in the PDF.
               </p>
-            </div>
-
-            {/* Experience */}
-            <div className="space-y-6">
-              <h3 className="text-2xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">Experience</h3>
-              
-              {/* Nera */}
-              <div className="space-y-4 border border-border dark:border-gray-800 p-6 bg-card">
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
-                  <h4 className="text-xl [font-family:var(--font-disket-bold)]">Product Designer</h4>
-                  <span className="text-muted-foreground [font-family:var(--font-disket)]">Sept 2023 - Present</span>
-                </div>
-                <h5 className="text-lg text-primary [font-family:var(--font-disket)]">Nera</h5>
-                <ul className="space-y-2 text-base text-muted-foreground list-disc pl-6">
-                  <li>Evolve Design System: Collaborate with the expansion and development of the existing design system, focusing on scalability, incorporating latest tools and methods.</li>
-                  <li>Craft Intuitive Interfaces: Design captivating and user-centric interfaces that enhance the overall product experience.</li>
-                  <li>Cross-Functional Collaboration: Collaborate seamlessly with other UX designers, developers, and product owner.</li>
-                  <li>Drive Innovation: Keep abreast of industry trends, emerging technologies, and user behaviors.</li>
-                  <li>Prototype wireframes and flows to foster communication and understanding.</li>
-                </ul>
-              </div>
-
-              {/* Balloon Group */}
-              <div className="space-y-4 border border-border dark:border-gray-800 p-6 bg-card">
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
-                  <h4 className="text-xl [font-family:var(--font-disket-bold)]">Lead Product Designer</h4>
-                  <span className="text-muted-foreground [font-family:var(--font-disket)]">May 2021 - Sept 2023</span>
-                </div>
-                <h5 className="text-lg text-primary [font-family:var(--font-disket)]">Balloon Group</h5>
-                <ul className="space-y-2 text-base text-muted-foreground list-disc pl-6">
-                  <li>Ensuring that the design work is of sufficient quality and that all directives are being followed.</li>
-                  <li>Developing and maintaining Design Systems for the company and its clients.</li>
-                  <li>Collaborating with other departments to achieve Design goals.</li>
-                  <li>Conducting and guiding Discovery workshops with clients.</li>
-                  <li>Coordinating department meetings.</li>
-                </ul>
-              </div>
-
-              {/* Freelance */}
-              <div className="space-y-4 border border-border dark:border-gray-800 p-6 bg-card">
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
-                  <h4 className="text-xl [font-family:var(--font-disket-bold)]">UI Designer Contractor</h4>
-                  <span className="text-muted-foreground [font-family:var(--font-disket)]">2022 - 2023</span>
-                </div>
-                <h5 className="text-lg text-primary [font-family:var(--font-disket)]">Various Clients</h5>
-                <ul className="space-y-2 text-base text-muted-foreground list-disc pl-6">
-                  <li>Designed and improved the usability of an Insurance app (Kinsu).</li>
-                  <li>Designed the interface for a web app, expanding existing design systems (PPL Events).</li>
-                  <li>Website redesign and e-commerce development for Ecoaqua.</li>
-                  <li>Branding & Web Redesign for Oriens Energía.</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Education */}
-            <div className="space-y-6">
-              <h3 className="text-2xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">Education</h3>
-              
-              <div className="space-y-4 border border-border dark:border-gray-800 p-6 bg-card">
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
-                  <h4 className="text-xl [font-family:var(--font-disket-bold)]">UX/UI Design, Research and Management</h4>
-                  <span className="text-muted-foreground [font-family:var(--font-disket)]">Dec 2022 - Present</span>
-                </div>
-                <h5 className="text-lg text-primary [font-family:var(--font-disket)]">The Interaction Design Foundation</h5>
-              </div>
-
-              <div className="space-y-4 border border-border dark:border-gray-800 p-6 bg-card">
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
-                  <h4 className="text-xl [font-family:var(--font-disket-bold)]">Industrial Design</h4>
-                  <span className="text-muted-foreground [font-family:var(--font-disket)]">Aug 2017 - Jun 2021</span>
-                </div>
-                <h5 className="text-lg text-primary [font-family:var(--font-disket)]">University of Buenos Aires (UBA - FADU)</h5>
-              </div>
-            </div>
-
-            {/* Skills */}
-            <div className="space-y-6">
-              <h3 className="text-2xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">Skills</h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {/* UX/UI */}
-                <div className="space-y-2 border border-border dark:border-gray-800 p-4 bg-card">
-                  <h4 className="text-lg [font-family:var(--font-disket-bold)] text-primary">UX/UI</h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
-                    <li>Product discovery</li>
-                    <li>UX research</li>
-                    <li>User testing</li>
-                    <li>Information architecture</li>
-                    <li>Wireframing</li>
-                    <li>Prototyping</li>
-                    <li>UI design</li>
-                  </ul>
-                </div>
-
-                {/* Design */}
-                <div className="space-y-2 border border-border dark:border-gray-800 p-4 bg-card">
-                  <h4 className="text-lg [font-family:var(--font-disket-bold)] text-primary">Design</h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
-                    <li>Illustration</li>
-                    <li>Interaction design</li>
-                    <li>Design system</li>
-                    <li>Design sprints</li>
-                    <li>A/B testing</li>
-                  </ul>
-                </div>
-
-                {/* Tools */}
-                <div className="space-y-2 border border-border dark:border-gray-800 p-4 bg-card">
-                  <h4 className="text-lg [font-family:var(--font-disket-bold)] text-primary">Tools</h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
-                    <li>Figma</li>
-                    <li>Adobe Illustrator</li>
-                    <li>Notion</li>
-                    <li>Jira</li>
-                    <li>HTML</li>
-                    <li>CSS</li>
-                    <li>ReactJs</li>
-                    <li>Amplitude</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* Languages */}
-            <div className="space-y-6">
-              <h3 className="text-2xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">Languages</h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2 border border-border dark:border-gray-800 p-4 bg-card">
-                  <h4 className="text-lg [font-family:var(--font-disket-bold)] text-primary">Spanish</h4>
-                  <p className="text-sm text-muted-foreground">Native</p>
-                </div>
-                <div className="space-y-2 border border-border dark:border-gray-800 p-4 bg-card">
-                  <h4 className="text-lg [font-family:var(--font-disket-bold)] text-primary">English</h4>
-                  <p className="text-sm text-muted-foreground">Professional</p>
-                </div>
-              </div>
+              <p className="text-base text-muted-foreground">
+                I'm a Senior Product Designer working across discovery, strategy, design systems, and execution. Currently at Nera (agtech fintech), previously leading a 4-person design team at Balloon Group. My focus is finding the right problem before building the solution — and I have the front-end fluency to stay close to what's actually feasible to ship.
+              </p>
+              <p className="text-base text-muted-foreground font-medium">
+                Download the CV above for the full experience, metrics, and skills breakdown.
+              </p>
             </div>
           </div>
         )
@@ -309,11 +167,8 @@ export default function About() {
         return (
           <div className="space-y-6">
             <h2 className="text-4xl mb-8 uppercase tracking-wide [font-family:var(--font-disket-bold)]">Other Interests</h2>
-            <p className="text-base text-muted-foreground">Beyond design, I love a good book, and I'm an avid sports enthusiast, with 
-              a particular love for football and surfing. Additionally, I'm an Illustrator, 
-              Tattoo Artist, and I'm diving into Concept Design. These endeavours allow me 
-              to channel my creativity in a different medium, exploring the fusion of art 
-              and personal expression.</p>
+            <p className="text-base text-muted-foreground">I'm building a cove for myself in a frantic world. I ride motorcycles, train Muay Thai, weld and build things with my hands, cook, and tend a garden planted for color in every season — Japanese maples, ginkgo, chrysanthemums, zinnias, apricots, plums, almonds. I'm also a tattoo artist (still training), an illustrator, and lately exploring concept design. Most of it comes back to the same instinct: making things, slowly, on purpose.</p>
+            <p className="text-base text-muted-foreground">I'm a father and husband first — my daughter is the actual center of all this.</p>
           </div>
         )
     }

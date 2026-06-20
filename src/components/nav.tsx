@@ -35,6 +35,12 @@ export function Nav() {
           >
             Work
           </Link>
+          <Link 
+            href="/now" 
+            className="text-sm lg:text-base text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Now
+          </Link>
           <ThemeToggle />
         </div>
       </div>

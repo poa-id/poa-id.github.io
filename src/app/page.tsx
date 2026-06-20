@@ -74,9 +74,8 @@ export default function Home() {
                   </Link>
                 </p>
                 <p className="text-base text-muted-foreground font-light">
-                  I'm a <span className="font-medium">Senior Product Designer</span> from Argentina. 
-                  I've collaborated with various clients, locally and internationally.
-                  Throughout my career, I've participated in design projects from concept to completion. I specialize in crafting product interfaces <span className="font-medium">that actually help users</span>, meeting business objectives with their needs. Let's get in touch!
+                  I'm a <span className="font-medium">Senior Product Designer</span> from Argentina, working across local and international clients.
+                  My focus is figuring out which problem actually needs solving — then building the system and interface <span className="font-medium">that solves it</span>. Let's talk!
                 </p>
               </div>
               <Link 
