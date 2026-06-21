@@ -138,8 +138,8 @@ export default function About() {
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-4xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">CV</h2>
               <a 
-                href="/cv-product-design-OssorioArana.pdf" 
-                download
+                href="/PedroOssorioArana-CV.pdf" 
+                download="PedroOssorioArana-CV.pdf"
                 className="inline-flex items-center px-4 py-2 bg-transparent text-foreground border border-foreground dark:border-foreground hover:bg-foreground hover:text-background dark:hover:bg-gray-300 dark:hover:text-gray-900 transition-all duration-200 [font-family:var(--font-disket)]"
               >
                 Download CV
