@@ -6,7 +6,7 @@ import Link from "next/link"
 
 export function ContactButtons() {
   return (
-    <div className="fixed bottom-8 right-8 z-40">
+    <div className="fixed bottom-8 right-8 z-40 hidden lg:block">
       <Link
         href="/correspondence"
         className="flex items-center gap-2 px-4 py-3 bg-white/95 hover:bg-white dark:bg-[#0F1015]/95 dark:hover:bg-[#0F1015] border border-border dark:border-gray-800 shadow-sm transition-colors group"
