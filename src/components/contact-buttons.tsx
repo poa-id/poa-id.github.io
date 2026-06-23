@@ -1,65 +1,22 @@
 "use client"
 
 import * as React from "react"
-import { Linkedin, Mail } from "lucide-react"
+import { Mail } from "lucide-react"
 import Link from "next/link"
 
 export function ContactButtons() {
-  const [showTooltip, setShowTooltip] = React.useState(false)
-  const tooltipTimeout = React.useRef<NodeJS.Timeout | null>(null)
-
-  const copyEmail = async () => {
-    await navigator.clipboard.writeText("pjoa93@gmail.com")
-    setShowTooltip(true)
-    
-    if (tooltipTimeout.current) {
-      clearTimeout(tooltipTimeout.current)
-    }
-    
-    tooltipTimeout.current = setTimeout(() => {
-      setShowTooltip(false)
-    }, 2000)
-  }
-
-  React.useEffect(() => {
-    return () => {
-      if (tooltipTimeout.current) {
-        clearTimeout(tooltipTimeout.current)
-      }
-    }
-  }, [])
-
   return (
-    <div className="fixed bottom-8 right-8 flex items-center gap-4">
+    <div className="fixed bottom-8 right-8 z-40">
       <Link
-        href="https://www.linkedin.com/in/pedro-ossorio-arana/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="p-3 bg-white/10 hover:bg-white/20 dark:bg-white/5 dark:hover:bg-white/10 backdrop-blur-sm transition-colors"
-        aria-label="Visit LinkedIn profile"
+        href="/correspondence"
+        className="flex items-center gap-2 px-4 py-3 bg-white/95 hover:bg-white dark:bg-[#0F1015]/95 dark:hover:bg-[#0F1015] border border-border dark:border-gray-800 shadow-sm transition-colors group"
+        aria-label="Open correspondence"
       >
-        <Linkedin className="w-5 h-5 text-white" />
+        <Mail className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+        <span className="text-xs uppercase tracking-wide [font-family:var(--font-disket)] text-muted-foreground group-hover:text-foreground transition-colors hidden sm:inline">
+          Correspondence
+        </span>
       </Link>
-      
-      <div className="relative group">
-        <button
-          onClick={copyEmail}
-          className="p-3 bg-white/10 hover:bg-white/20 dark:bg-white/5 dark:hover:bg-white/10 backdrop-blur-sm transition-colors"
-          aria-label="Copy email address"
-        >
-          <Mail className="w-5 h-5 text-white" />
-        </button>
-        
-        {showTooltip && (
-          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 text-sm text-white bg-gray-900/90 dark:bg-gray-800/90 whitespace-nowrap">
-            Copied to clipboard!
-          </div>
-        )}
-        
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 text-sm text-white bg-gray-900/90 dark:bg-gray-800/90 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-          Click to copy
-        </div>
-      </div>
     </div>
   )
-} 
+}

@@ -3,13 +3,21 @@
 import * as React from "react"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
+import { useGamification } from "@/contexts/gamification-provider"
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
+  const { recordThemeToggle } = useGamification()
+
+  const handleToggle = () => {
+    const nextTheme = theme === "light" ? "dark" : "light"
+    setTheme(nextTheme)
+    recordThemeToggle(nextTheme)
+  }
 
   return (
     <button
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+      onClick={handleToggle}
       className="relative w-8 h-8 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
       aria-label="Toggle theme"
     >

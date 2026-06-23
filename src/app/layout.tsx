@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import { Montserrat } from 'next/font/google';
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { GamificationShell } from "@/components/gamification-shell";
 
 const disketBold = localFont({
   src: '../../public/fonts/Disket-Mono-Bold.ttf',
@@ -41,7 +42,9 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          {children}
+          <GamificationShell>
+            {children}
+          </GamificationShell>
         </ThemeProvider>
       </body>
     </html>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150" role="img" aria-hidden="true">
+  <defs>
+    <mask id="scroll-open-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="150" height="150">
+      <image href="./map-scroll-open.png" width="150" height="150" />
+    </mask>
+  </defs>
+  <rect width="150" height="150" fill="currentColor" mask="url(#scroll-open-mask)" />
+</svg>
