@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { ShelfShell } from "@/components/shelf-shell"
 import { RoomHeader } from "@/components/room-header"
+import { RoomRelic } from "@/components/room-relic"
 import { useCubeFaceThemeForSlug } from "@/hooks/use-cube-face-theme"
 import {
   SHELF_CURRENT_BOOKS,
@@ -118,7 +119,7 @@ function ShelfSectionContent({ section }: { section: ShelfSection }) {
   switch (section) {
     case "foundations":
       return (
-        <section className="space-y-6">
+        <section className="relative space-y-6">
           <header className="space-y-2">
             <h2 className="text-2xl lg:text-3xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">
               Foundations
@@ -137,6 +138,10 @@ function ShelfSectionContent({ section }: { section: ShelfSection }) {
               </li>
             ))}
           </ul>
+          <RoomRelic
+            id="die"
+            className="absolute bottom-0 right-2 sm:right-6 translate-y-1"
+          />
         </section>
       )
     case "onMyDesk":

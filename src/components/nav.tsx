@@ -4,14 +4,15 @@ import * as React from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ThemeToggle } from "./theme-toggle"
+import { HALL_DESKTOP_COLUMN, HALL_MOBILE_GRID } from "@/lib/hall-layout"
 
 export function Nav() {
   return (
     <nav className="fixed top-0 w-full border-b bg-white dark:bg-[#0F1015] dark:border-gray-800 z-50">
       <div className="w-full mx-auto flex items-center justify-between h-14 lg:h-24">
-        <div className="w-full lg:w-1/2 flex items-center">
-          <div className="w-full lg:w-4/5 mx-auto px-4 lg:px-0">
-            <Link href="/" className="flex items-center py-2">
+        <div className="w-full lg:w-1/2 flex items-center min-w-0">
+          <div className={`${HALL_MOBILE_GRID} ${HALL_DESKTOP_COLUMN}`}>
+            <Link href="/" className="col-span-1 flex items-center py-2 lg:col-span-auto">
               <Image
                 src="/logo.svg"
                 alt="Poa"

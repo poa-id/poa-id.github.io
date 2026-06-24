@@ -1,20 +1,17 @@
 "use client"
 
 import { Nav } from "@/components/nav"
-import { ContactButtons } from "@/components/contact-buttons"
-import { WritingEntryEdge, WritingEntryInline } from "@/components/writing-entry"
+import { HallActions } from "@/components/hall-actions"
+import { WritingEntryEdge } from "@/components/writing-entry"
 import {
   GardenEntryEdge,
-  GardenEntryInline,
   HearthEntryEdge,
-  HearthEntryInline,
   ShelfEntryEdge,
-  ShelfEntryInline,
 } from "@/components/cube-edge-tabs"
-import Link from "next/link"
 import { useTheme } from "next-themes"
 import { useGamification } from "@/contexts/gamification-provider"
 import { ROOMS } from "@/lib/room-content"
+import { HALL_CONTENT_SPAN, HALL_DESKTOP_COLUMN, HALL_MOBILE_GRID } from "@/lib/hall-layout"
 import { useState, useEffect } from "react"
 
 type LightVideoKey = "forest" | "snow" | "water"
@@ -25,7 +22,7 @@ function MobileHallWelcome() {
   if (!welcome) return null
 
   return (
-    <section className="w-full max-w-sm mx-auto space-y-3">
+    <section className={`${HALL_CONTENT_SPAN} space-y-3`}>
       <h1 className="text-xl tracking-wide leading-tight [font-family:var(--font-disket-bold)]">
         {welcome.name}
       </h1>
@@ -56,12 +53,7 @@ function MobileHallWelcome() {
         {welcome.closing}
       </p>
 
-      <Link
-        href="/work"
-        className="inline-flex mt-4 px-5 py-2 text-sm bg-transparent text-foreground border border-foreground dark:border-foreground hover:bg-foreground hover:text-background dark:hover:bg-gray-300 dark:hover:text-gray-900 transition-all duration-200 [font-family:var(--font-disket)]"
-      >
-        View My Work
-      </Link>
+      <HallActions compact />
     </section>
   )
 }
@@ -137,9 +129,6 @@ export default function Home() {
           <div className="w-1/2 bg-background border-r border-gray-200 dark:border-gray-800" />
           <div className="w-1/2 bg-[#0C0E15]" />
         </div>
-        <div className="hidden lg:block">
-          <ContactButtons />
-        </div>
       </main>
     )
   }
@@ -149,8 +138,10 @@ export default function Home() {
       <Nav />
 
       {/* Mobile: Hall welcome only — no map, no cube */}
-      <div className="lg:hidden fixed top-14 inset-x-0 bottom-0 z-0 flex items-center justify-center px-5 overflow-hidden bg-background">
-        <MobileHallWelcome />
+      <div className="lg:hidden fixed top-14 inset-x-0 bottom-0 z-0 flex items-center overflow-hidden bg-background">
+        <div className={`${HALL_MOBILE_GRID} ${HALL_DESKTOP_COLUMN}`}>
+          <MobileHallWelcome />
+        </div>
       </div>
 
       {/* Desktop: full spatial hall */}
@@ -159,7 +150,8 @@ export default function Home() {
         <div className="fixed top-24 inset-x-0 bottom-0 z-0 flex flex-row isolate overflow-hidden">
           <div className="w-1/2 bg-background border-r border-gray-200 dark:border-gray-800">
             <div className="h-full flex items-center justify-center">
-              <section className="w-4/5 space-y-6">
+              <div className={`${HALL_MOBILE_GRID} ${HALL_DESKTOP_COLUMN}`}>
+                <section className={`${HALL_CONTENT_SPAN} space-y-6`}>
                 {welcome && (
                   <>
                     <h1 className="text-4xl tracking-wide [font-family:var(--font-disket-bold)]">
@@ -193,25 +185,9 @@ export default function Home() {
                     </p>
                   </>
                 )}
-                <Link
-                  href="/work"
-                  className="inline-flex mt-8 px-6 py-3 bg-transparent text-foreground border border-foreground dark:border-foreground hover:bg-foreground hover:text-background dark:hover:bg-gray-300 dark:hover:text-gray-900 transition-all duration-200 [font-family:var(--font-disket)]"
-                >
-                  View My Work
-                </Link>
-                <WritingEntryInline />
-                <div className="flex flex-wrap gap-x-4 gap-y-2 mt-4">
-                  <GardenEntryInline />
-                  <HearthEntryInline />
-                  <ShelfEntryInline />
-                  <Link
-                    href="/forge"
-                    className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors [font-family:var(--font-disket)]"
-                  >
-                    Forge
-                  </Link>
-                </div>
-              </section>
+                <HallActions />
+                </section>
+              </div>
             </div>
           </div>
 
@@ -292,10 +268,6 @@ export default function Home() {
         <GardenEntryEdge />
         <ShelfEntryEdge />
         <HearthEntryEdge />
-      </div>
-
-      <div className="hidden lg:block">
-        <ContactButtons />
       </div>
     </main>
   )

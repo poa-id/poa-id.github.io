@@ -2,6 +2,7 @@
 
 import { SurfaceEntryEdge, SurfaceEntryInline } from "@/components/mines-entry"
 import { RoomHeader } from "@/components/room-header"
+import { RoomRelic } from "@/components/room-relic"
 import { useCubeFaceThemeForSlug } from "@/hooks/use-cube-face-theme"
 import { ROOMS } from "@/lib/room-content"
 
@@ -16,12 +17,17 @@ export default function MinesPage() {
     >
       <SurfaceEntryEdge />
 
+      <RoomRelic
+        id="lantern"
+        className="fixed top-11 left-1/2 translate-x-[5.25rem] z-30 lg:top-9 lg:translate-x-[5.75rem]"
+      />
+
       <div className="lg:hidden px-6 pt-4">
         <SurfaceEntryInline />
       </div>
 
       <main className="flex-1 flex items-center justify-center px-6 py-12 lg:pt-16">
-        <div className="max-w-md space-y-8">
+        <div className="max-w-md space-y-8 w-full">
           <RoomHeader roomId="deep" textMuted={theme.textMuted} align="center" />
 
           {game && (

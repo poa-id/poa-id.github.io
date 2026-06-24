@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { HearthShell } from "@/components/hearth-shell"
 import { RoomHeader } from "@/components/room-header"
+import { RoomRelic } from "@/components/room-relic"
 import { useCubeFaceThemeForSlug } from "@/hooks/use-cube-face-theme"
 import {
   HEARTH_SECTION_INTROS,
@@ -15,13 +16,19 @@ function HearthSectionContent({ section }: { section: HearthSection }) {
   const sectionMeta = HEARTH_SECTIONS.find((s) => s.id === section)!
 
   return (
-    <section className="space-y-6">
+    <section className="relative space-y-6 pb-12">
       <h2 className="text-2xl lg:text-3xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">
         {sectionMeta.label}
       </h2>
       <p className="text-sm leading-relaxed [font-family:var(--font-disket)] opacity-85">
         {HEARTH_SECTION_INTROS[section]}
       </p>
+      {section === "home" && (
+        <RoomRelic
+          id="key"
+          className="absolute bottom-0 right-0 sm:right-8"
+        />
+      )}
     </section>
   )
 }

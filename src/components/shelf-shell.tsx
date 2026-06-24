@@ -1,7 +1,6 @@
 "use client"
 
 import { ThemeToggle } from "@/components/theme-toggle"
-import { ShelfDieRelic } from "@/components/shelf-die-relic"
 import { ShelfReturnEdge, ShelfReturnInline } from "@/components/cube-edge-tabs"
 import { useCubeFaceThemeForSlug } from "@/hooks/use-cube-face-theme"
 import {
@@ -75,7 +74,6 @@ export function ShelfShell({
         </nav>
 
         <div className="absolute right-4 lg:right-6 flex items-center gap-3">
-          <ShelfDieRelic />
           <ThemeToggle />
         </div>
       </header>

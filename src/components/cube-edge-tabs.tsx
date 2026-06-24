@@ -1,10 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { useCubeFaceThemeForSlug } from "@/hooks/use-cube-face-theme"
 import { type ThemedFaceSlug } from "@/lib/cube-face-themes"
-import { HALL_LABEL } from "@/lib/cube-labels"
+import { HALL_LABEL, SURFACE_LABEL } from "@/lib/cube-labels"
 
 const chevron = {
   left: "M15 19l-7-7 7-7",
@@ -112,7 +111,6 @@ function ThemedHorizontalEdgeTab({
   position,
   ariaLabel,
   slug,
-  iconSrc,
 }: {
   href: string
   label: string
@@ -120,7 +118,6 @@ function ThemedHorizontalEdgeTab({
   position: "top" | "bottom"
   ariaLabel: string
   slug: ThemedFaceSlug
-  iconSrc?: string
 }) {
   const palette = useCubeFaceThemeForSlug(slug)
   const isTop = position === "top"
@@ -137,23 +134,15 @@ function ThemedHorizontalEdgeTab({
       aria-label={ariaLabel}
     >
       {chevronDir === "up" && (
-        iconSrc ? (
-          <Image src={iconSrc} alt="" width={16} height={16} className="h-4 w-4 shrink-0 opacity-80 group-hover:opacity-100" />
-        ) : (
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 shrink-0" style={{ color: palette.textMuted }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={chevron.up} />
-          </svg>
-        )
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 shrink-0" style={{ color: palette.textMuted }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={chevron.up} />
+        </svg>
       )}
       <span className="text-sm uppercase tracking-wide [font-family:var(--font-disket)]">{label}</span>
       {chevronDir === "down" && (
-        iconSrc ? (
-          <Image src={iconSrc} alt="" width={16} height={16} className="h-4 w-4 shrink-0 opacity-80 group-hover:opacity-100 rotate-180" />
-        ) : (
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 shrink-0" style={{ color: palette.textMuted }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={chevron.down} />
-          </svg>
-        )
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 shrink-0" style={{ color: palette.textMuted }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={chevron.down} />
+        </svg>
       )}
     </Link>
   )
@@ -320,21 +309,15 @@ export function SurfaceEntryEdge() {
   return (
     <ThemedHorizontalEdgeTab
       href="/"
-      label={HALL_LABEL}
+      label={SURFACE_LABEL}
       chevronDir="up"
       position="top"
-      ariaLabel={`Return to ${HALL_LABEL}`}
+      ariaLabel={`Return to ${SURFACE_LABEL}`}
       slug="deep"
-      iconSrc="/images/certh-43.png"
     />
   )
 }
 
 export function SurfaceEntryInline() {
-  return (
-    <Link href="/" className="lg:hidden inline-flex items-center gap-2 text-sm text-[#c4a882]/70 hover:text-[#c4a882] transition-colors [font-family:var(--font-disket)]">
-      <Image src="/images/certh-43.png" alt="" width={16} height={16} className="h-4 w-4 shrink-0" />
-      {HALL_LABEL}
-    </Link>
-  )
+  return <InlineCubeLink href="/" label={SURFACE_LABEL} chevronDir="up" />
 }
