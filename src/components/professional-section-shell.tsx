@@ -11,6 +11,7 @@ import {
 
 interface ProfessionalSectionShellProps {
   nav: React.ReactNode
+  navMeta?: React.ReactNode
   children: React.ReactNode
   darkContent?: boolean
   overlay?: React.ReactNode
@@ -18,6 +19,7 @@ interface ProfessionalSectionShellProps {
 
 export function ProfessionalSectionShell({
   nav,
+  navMeta,
   children,
   darkContent = false,
   overlay,
@@ -27,7 +29,12 @@ export function ProfessionalSectionShell({
       <Nav />
       {overlay}
       <div className={PROFESSIONAL_PAGE_FRAME}>
-        <div className={PROFESSIONAL_NAV_STRIP}>
+        <div className={`${PROFESSIONAL_NAV_STRIP} relative`}>
+          {navMeta ? (
+            <div className="absolute top-3 right-4 lg:top-4 lg:right-6 z-10">
+              {navMeta}
+            </div>
+          ) : null}
           <nav className={PROFESSIONAL_NAV_INNER} aria-label="Section">
             {nav}
           </nav>

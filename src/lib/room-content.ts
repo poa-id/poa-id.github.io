@@ -68,7 +68,7 @@ export const ROOMS: Record<RoomId, RoomContent> = {
     question: "What am I cultivating?",
     marginalia: "What is tended grows.",
     body:
-      "A forge changes metal through heat and force,\nA garden changes living things through care.\n\nThis room is about the things that improve slowly through attention.",
+      "A garden changes living things through care.\n\nThis room is about the things that improve slowly through attention.",
     topics: [
       "Gardening & bonsai",
       "Muay Thai & kettlebells",

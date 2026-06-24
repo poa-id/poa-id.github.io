@@ -34,8 +34,7 @@ export default function NowPage() {
               className="underline hover:text-foreground transition-colors"
             >
               nownownow.com
-            </a>
-            . Last updated: June 2026.
+            </a>.
           </p>
           <div className="flex justify-center">
             <Image
@@ -146,6 +145,11 @@ export default function NowPage() {
   return (
     <ProfessionalSectionShell
       darkContent={theme === "dark"}
+      navMeta={
+        <p className="text-[10px] lg:text-xs text-muted-foreground [font-family:var(--font-disket)]">
+          Last updated: June 2026
+        </p>
+      }
       nav={
         <>
           {sections.map(({ id, label }) => (
