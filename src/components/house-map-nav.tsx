@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { usePathname } from "next/navigation"
 import { HallCubeMap } from "@/components/hall-cube-map"
 import { MapAnnotationPanel } from "@/components/map-annotation-panel"
+import { MapAchievementsTray } from "@/components/map-achievements-tray"
 import { MapRelicsTray } from "@/components/map-relics-tray"
 import { MapScrollIcon } from "@/components/map-scroll-icon"
 import { getFaceForPath, isDeepPath } from "@/lib/cube-faces"
@@ -88,12 +89,13 @@ export function HouseMapNav() {
                 />
               </div>
 
-              <aside className="w-full lg:w-52 shrink-0 border-t lg:border-t-0 lg:border-l border-[#3d3830] flex flex-col px-4 py-4 min-h-[10rem]">
+              <aside className="w-full lg:w-52 shrink-0 border-t lg:border-t-0 lg:border-l border-[#3d3830] flex flex-col px-4 py-4">
                 <MapAnnotationPanel
                   direction={selectedDirection}
                   visitedFaces={visitedFaces}
                   deepMapUnlocked={deepMapUnlocked}
                 />
+                <MapAchievementsTray />
                 <MapRelicsTray />
               </aside>
             </div>

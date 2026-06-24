@@ -9,7 +9,7 @@ export const ACHIEVEMENTS: Record<string, Achievement> = {
   face_front: {
     id: "face_front",
     title: "At the Hall",
-    description: "You found the front of the cube.",
+    description: "You crossed the threshold of the house.",
   },
   face_left: {
     id: "face_left",
@@ -29,7 +29,7 @@ export const ACHIEVEMENTS: Record<string, Achievement> = {
   face_top: {
     id: "face_top",
     title: "At the Hearth",
-    description: "You found the human center of the cube.",
+    description: "You found where the house keeps its heart.",
   },
   face_bottom: {
     id: "face_bottom",
@@ -49,13 +49,13 @@ export const ACHIEVEMENTS: Record<string, Achievement> = {
   },
   cube_explorer: {
     id: "cube_explorer",
-    title: "Cube Explorer",
-    description: "You've visited three faces of the cube.",
+    title: "Getting Your Bearings",
+    description: "Three rooms noted on the floor plan.",
   },
   cube_complete: {
     id: "cube_complete",
-    title: "Full Rotation",
-    description: "You've walked every face of the cube.",
+    title: "Full Survey",
+    description: "Every room on the floor plan is charted.",
   },
   deep_delve: {
     id: "deep_delve",

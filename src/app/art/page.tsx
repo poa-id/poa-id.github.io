@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Nav } from "@/components/nav"
+import { ProfessionalSectionShell } from "@/components/professional-section-shell"
+import { sectionTabClass } from "@/lib/professional-layout"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 
@@ -235,34 +236,24 @@ export default function Art() {
   ]
 
   return (
-    <main className="min-h-screen w-full">
-      <Nav />
-      {renderLightbox()}
-      <div className="fixed top-24 bottom-0 w-full flex flex-col lg:flex-row">
-        <div className="w-full lg:w-1/2 bg-background border-b lg:border-b-0 lg:border-r border-border dark:border-gray-800 flex flex-col items-center justify-center relative py-6 lg:py-0">
-          <nav className="flex lg:flex-col space-x-4 lg:space-x-0 lg:space-y-6 items-center overflow-x-auto w-full lg:w-auto px-6 lg:px-0">
-            {navItems.map(({ id, label }) => (
-              <button
-                key={id}
-                onClick={() => handleSectionChange(id)}
-                className={`text-base lg:text-xl uppercase tracking-wide transition-colors whitespace-nowrap ${
-                  currentSection === id
-                    ? "[font-family:var(--font-disket-bold)] text-foreground"
-                    : "[font-family:var(--font-disket)] text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </nav>
-        </div>
-
-        <div className={`w-full lg:w-1/2 ${theme === "dark" ? "bg-[#0F1015]" : "bg-background"} overflow-y-auto h-full content-scroll`}>
-          <div className="w-[90%] lg:w-4/5 mx-auto py-8 lg:py-12">
-            {renderContent()}
-          </div>
-        </div>
-      </div>
-    </main>
+    <ProfessionalSectionShell
+      darkContent={theme === "dark"}
+      overlay={renderLightbox()}
+      nav={
+        <>
+          {navItems.map(({ id, label }) => (
+            <button
+              key={id}
+              onClick={() => handleSectionChange(id)}
+              className={sectionTabClass(currentSection === id)}
+            >
+              {label}
+            </button>
+          ))}
+        </>
+      }
+    >
+      {renderContent()}
+    </ProfessionalSectionShell>
   )
 }

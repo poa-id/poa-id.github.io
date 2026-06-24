@@ -10,7 +10,7 @@ export function MapRelicsTray() {
   const [hovered, setHovered] = useState<RelicId | null>(null)
 
   return (
-    <div className="border-t border-[#3d3830]/60 pt-3 mt-auto">
+    <div className="shrink-0 border-t border-[#3d3830]/60 pt-3 mt-auto">
       <p className="text-[9px] uppercase tracking-widest text-[#6a6258] mb-2 [font-family:var(--font-disket)]">
         Relics
       </p>

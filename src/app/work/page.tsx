@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Nav } from "@/components/nav"
+import { ProfessionalSectionShell } from "@/components/professional-section-shell"
+import { sectionTabClass } from "@/lib/professional-layout"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 
@@ -400,63 +401,39 @@ export default function Work() {
   }
 
   return (
-    <main className="min-h-screen w-full">
-      <Nav />
-      {renderLightbox()}
-      <div className="fixed top-24 bottom-0 w-full flex flex-col lg:flex-row">
-        {/* Left side - Navigation */}
-        <div className="w-full lg:w-1/2 bg-background border-b lg:border-b-0 lg:border-r border-border dark:border-gray-800 flex flex-col items-center justify-center relative py-6 lg:py-0">
-          <nav className="flex lg:flex-col space-x-4 lg:space-x-0 lg:space-y-6 items-center overflow-x-auto w-full lg:w-auto px-6 lg:px-0">
-            <button
-              onClick={() => handleSectionChange("nera")}
-              className={`text-base lg:text-xl uppercase tracking-wide transition-colors whitespace-nowrap ${
-                currentSection === "nera" 
-                  ? "[font-family:var(--font-disket-bold)] text-foreground" 
-                  : "[font-family:var(--font-disket)] text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              Nera
-            </button>
-            <button
-              onClick={() => handleSectionChange("balloon")}
-              className={`text-base lg:text-xl uppercase tracking-wide transition-colors whitespace-nowrap ${
-                currentSection === "balloon" 
-                  ? "[font-family:var(--font-disket-bold)] text-foreground" 
-                  : "[font-family:var(--font-disket)] text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              Balloon Group
-            </button>
-            <button
-              onClick={() => handleSectionChange("freelance")}
-              className={`text-base lg:text-xl uppercase tracking-wide transition-colors whitespace-nowrap ${
-                currentSection === "freelance" 
-                  ? "[font-family:var(--font-disket-bold)] text-foreground" 
-                  : "[font-family:var(--font-disket)] text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              Contractor
-            </button>
-            <button
-              onClick={() => handleSectionChange("personal")}
-              className={`text-base lg:text-xl uppercase tracking-wide transition-colors whitespace-nowrap ${
-                currentSection === "personal" 
-                  ? "[font-family:var(--font-disket-bold)] text-foreground" 
-                  : "[font-family:var(--font-disket)] text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              Personal
-            </button>
-          </nav>
-        </div>
-
-        {/* Right side - Content */}
-        <div className={`w-full lg:w-1/2 ${theme === 'dark' ? 'bg-[#0F1015]' : 'bg-background'} overflow-y-auto h-full content-scroll`}>
-          <div className="w-[90%] lg:w-4/5 mx-auto py-8 lg:py-12">
-            {renderContent()}
-          </div>
-        </div>
-      </div>
-    </main>
+    <ProfessionalSectionShell
+      darkContent={theme === "dark"}
+      overlay={renderLightbox()}
+      nav={
+        <>
+          <button
+            onClick={() => handleSectionChange("nera")}
+            className={sectionTabClass(currentSection === "nera")}
+          >
+            Nera
+          </button>
+          <button
+            onClick={() => handleSectionChange("balloon")}
+            className={sectionTabClass(currentSection === "balloon")}
+          >
+            Balloon Group
+          </button>
+          <button
+            onClick={() => handleSectionChange("freelance")}
+            className={sectionTabClass(currentSection === "freelance")}
+          >
+            Contractor
+          </button>
+          <button
+            onClick={() => handleSectionChange("personal")}
+            className={sectionTabClass(currentSection === "personal")}
+          >
+            Personal
+          </button>
+        </>
+      }
+    >
+      {renderContent()}
+    </ProfessionalSectionShell>
   )
 } 

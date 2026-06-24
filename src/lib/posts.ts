@@ -9,6 +9,7 @@ export interface PostMeta {
   title: string
   date: string
   tags: string[]
+  excerpt?: string
 }
 
 export interface Post extends PostMeta {
@@ -36,6 +37,7 @@ export function getAllPosts(): PostMeta[] {
       title: data.title || slug,
       date: data.date || "",
       tags: data.tags || [],
+      excerpt: data.excerpt || data.description || undefined,
     }
   })
 
@@ -55,6 +57,7 @@ export function getPostBySlug(slug: string): Post | null {
     title: data.title || slug,
     date: data.date || "",
     tags: data.tags || [],
+    excerpt: data.excerpt || data.description || undefined,
     content,
   }
 }

@@ -3,6 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { Mail } from "lucide-react"
 import { ThemeToggle } from "./theme-toggle"
 import { HALL_DESKTOP_COLUMN, HALL_MOBILE_GRID } from "@/lib/hall-layout"
 
@@ -47,6 +48,13 @@ export function Nav() {
             className="text-xs lg:text-base text-muted-foreground hover:text-foreground transition-colors"
           >
             Now
+          </Link>
+          <Link
+            href="/correspondence"
+            className="lg:hidden inline-flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+            aria-label="Correspondence"
+          >
+            <Mail className="w-4 h-4" />
           </Link>
           <ThemeToggle />
         </div>

@@ -52,8 +52,6 @@ function MobileHallWelcome() {
       <p className="text-xs text-muted-foreground font-light [font-family:var(--font-disket)]">
         {welcome.closing}
       </p>
-
-      <HallActions compact />
     </section>
   )
 }
@@ -138,9 +136,14 @@ export default function Home() {
       <Nav />
 
       {/* Mobile: Hall welcome only — no map, no cube */}
-      <div className="lg:hidden fixed top-14 inset-x-0 bottom-0 z-0 flex items-center overflow-hidden bg-background">
-        <div className={`${HALL_MOBILE_GRID} ${HALL_DESKTOP_COLUMN}`}>
-          <MobileHallWelcome />
+      <div className="lg:hidden fixed top-14 inset-x-0 bottom-0 z-0 flex flex-col bg-background overflow-hidden">
+        <div className="flex-1 min-h-0 flex items-center overflow-y-auto">
+          <div className={`${HALL_MOBILE_GRID} ${HALL_DESKTOP_COLUMN} py-4`}>
+            <MobileHallWelcome />
+          </div>
+        </div>
+        <div className={`shrink-0 ${HALL_MOBILE_GRID} ${HALL_DESKTOP_COLUMN} pb-5`}>
+          <HallActions compact className="mt-0" />
         </div>
       </div>
 
