@@ -1,5 +1,5 @@
 export function sectionTabClass(active: boolean) {
-  return `text-sm lg:text-xl uppercase tracking-wide transition-colors whitespace-nowrap shrink-0 ${
+  return `cursor-pointer text-sm lg:text-xl uppercase tracking-wide transition-colors whitespace-nowrap shrink-0 ${
     active
       ? "[font-family:var(--font-disket-bold)] text-foreground"
       : "[font-family:var(--font-disket)] text-muted-foreground hover:text-foreground"

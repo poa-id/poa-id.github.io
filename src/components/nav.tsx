@@ -13,7 +13,7 @@ export function Nav() {
       <div className="w-full mx-auto flex items-center justify-between h-14 lg:h-24">
         <div className="w-full lg:w-1/2 flex items-center min-w-0">
           <div className={`${HALL_MOBILE_GRID} ${HALL_DESKTOP_COLUMN}`}>
-            <Link href="/" className="col-span-1 flex items-center py-2 lg:col-span-auto">
+            <Link href="/" className="col-span-1 flex items-center py-2 lg:col-span-auto cursor-pointer">
               <Image
                 src="/logo.svg"
                 alt="Poa"
@@ -27,31 +27,31 @@ export function Nav() {
         <div className="flex items-center space-x-3 lg:space-x-8 px-4 lg:px-8">
           <Link 
             href="/about" 
-            className="text-xs lg:text-base text-muted-foreground hover:text-foreground transition-colors"
+            className="text-xs lg:text-base text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
           >
             About
           </Link>
           <Link 
             href="/work" 
-            className="text-xs lg:text-base text-muted-foreground hover:text-foreground transition-colors"
+            className="text-xs lg:text-base text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
           >
             Work
           </Link>
           <Link 
             href="/art" 
-            className="text-xs lg:text-base text-muted-foreground hover:text-foreground transition-colors"
+            className="text-xs lg:text-base text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
           >
             Art
           </Link>
           <Link 
             href="/now" 
-            className="text-xs lg:text-base text-muted-foreground hover:text-foreground transition-colors"
+            className="text-xs lg:text-base text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
           >
             Now
           </Link>
           <Link
             href="/correspondence"
-            className="lg:hidden inline-flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+            className="lg:hidden inline-flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
             aria-label="Correspondence"
           >
             <Mail className="w-4 h-4" />
