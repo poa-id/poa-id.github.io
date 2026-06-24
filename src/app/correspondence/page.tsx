@@ -45,8 +45,8 @@ export default function CorrespondencePage() {
 
             <div className="space-y-3 text-sm leading-relaxed text-muted-foreground [font-family:var(--font-disket)]">
               <p>
-                If something here resonated with you—a piece of work, an essay, an
-                idea, or simply a room you found yourself returning to—you&apos;re
+                If something here resonated with you, whether a piece of work, an essay, an
+                idea, or simply a room you found yourself returning to, you&apos;re
                 welcome to write.
               </p>
               <p>I read all correspondence</p>

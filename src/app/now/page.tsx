@@ -65,12 +65,12 @@ export default function NowPage() {
               >
                 @lacasitapinterest
               </a>{" "}
-              on Instagram — deco, house reformation projects, and the garden.
+              on Instagram for deco, house reformation projects, and the garden.
               It's become its own thing, separate from design work, but it scratches the same
               itch: take something unfinished and make it make sense.
             </p>
             <p className="text-base text-muted-foreground">
-              Practicing intentional, slow living — actively trying to reduce noise and clutter,
+              Practicing intentional, slow living. Actively trying to reduce noise and clutter,
               in the house and otherwise.
             </p>
           </div>
@@ -81,11 +81,11 @@ export default function NowPage() {
             <h2 className="text-4xl mb-8 uppercase tracking-wide [font-family:var(--font-disket-bold)]">Making</h2>
             <p className="text-base text-muted-foreground">
               Welding a wood cart soon, and scouting for a shipping container to convert into a
-              workshop/gym. Also figuring out how to get back into knifemaking — smithing got
+              workshop/gym. Also figuring out how to get back into knifemaking. Smithing got
               dropped when I lived in an apartment, but I have a house now, so it's coming back.
             </p>
             <p className="text-base text-muted-foreground">
-              Practicing concept art and illustration — currently drawing my friends' D&D
+              Practicing concept art and illustration, currently drawing my friends' D&D
               characters.
             </p>
           </div>
@@ -96,7 +96,7 @@ export default function NowPage() {
             <h2 className="text-4xl mb-8 uppercase tracking-wide [font-family:var(--font-disket-bold)]">The Guild</h2>
             <p className="text-base text-muted-foreground">
               Building a small set of personal software tools under one umbrella I call The
-              Guild — each one replacing a subscription I don't believe in with something I
+              Guild. Each one replaces a subscription I don't believe in with something I
               actually own. Same philosophy across all of them: intentional software, built for
               a real need, not growth metrics.
             </p>
@@ -126,7 +126,7 @@ export default function NowPage() {
             <h2 className="text-4xl mb-8 uppercase tracking-wide [font-family:var(--font-disket-bold)]">Training</h2>
             <p className="text-base text-muted-foreground">
               Muay Thai and kickboxing a couple times a week, plus kettlebell training and
-              mobility work — less about performance, more about staying strong and durable. I
+              mobility work. Less about performance, more about staying strong and durable. I
               have one daughter and we're planning on more, so this is also just future-proofing
               my body for the years of being a dad that are still ahead of me.
             </p>

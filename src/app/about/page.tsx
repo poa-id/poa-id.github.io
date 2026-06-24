@@ -27,10 +27,10 @@ export default function About() {
           <div className="space-y-6">
             <h2 className="text-4xl mb-8 uppercase tracking-wide [font-family:var(--font-disket-bold)]">TL;DR</h2>
             <p className="text-base text-muted-foreground">
-            I'm Poa, a Senior Product Designer who spends more time figuring out which problem is worth solving than pushing pixels. I've led that thinking end-to-end — discovery, strategy, systems, execution — across a fast-paced agency and a startup, and I stay close enough to engineering to know what's actually feasible.
+            I'm Poa, a Senior Product Designer who spends more time figuring out which problem is worth solving than pushing pixels. I've led that thinking end-to-end, from discovery through strategy, systems, and execution, across a fast-paced agency and a startup. I stay close enough to engineering to know what's actually feasible.
             </p>
             <p className="text-base text-muted-foreground">
-            The work spans simplifying financial decisions for non-technical users at an agtech fintech, and building design systems that get adopted, not just shipped. Numbers and specifics live in the case studies below — this is just the shape of how I think.
+            The work spans simplifying financial decisions for non-technical users at an agtech fintech, and building design systems that get adopted, not just shipped. Numbers and specifics live in the case studies below. This is just the shape of how I think.
             </p>
           </div>
         )
@@ -38,10 +38,10 @@ export default function About() {
         return (
           <div className="space-y-6">
             <h2 className="text-4xl mb-8 uppercase tracking-wide [font-family:var(--font-disket-bold)]">Background</h2>
-            <p className="text-base text-muted-foreground">What I actually do is figure out which problem is worth solving before anyone touches Figma. That means running discovery workshops, sitting with users, and pushing back on requirements that solve the wrong thing. Execution — the interface, the system, the components — follows from that, not the other way around.</p>
-            <p className="text-base text-muted-foreground">That approach has played out across very different problems: simplifying financing decisions for farmers who aren't designers or technologists, untangling fragmented IA for e-commerce and B2B platforms, and building the shared systems that let a team ship consistently instead of re-solving the same problem per project. The common thread isn't the industry — it's getting underneath a messy problem before committing to a solution.</p>
+            <p className="text-base text-muted-foreground">What I actually do is figure out which problem is worth solving before anyone touches Figma. That means running discovery workshops, sitting with users, and pushing back on requirements that solve the wrong thing. Execution follows from that: the interface, the system, the components. Not the other way around.</p>
+            <p className="text-base text-muted-foreground">That approach has played out across very different problems: simplifying financing decisions for farmers who aren't designers or technologists, untangling fragmented IA for e-commerce and B2B platforms, and building the shared systems that let a team ship consistently instead of re-solving the same problem per project. The common thread isn't the industry. It's getting underneath a messy problem before committing to a solution.</p>
               <p className="text-base text-muted-foreground">I'm technical enough to stay close to that execution layer when it matters: I write front-end code, I can read what's feasible versus what's expensive, and that's saved good ideas from getting lost in translation between design and engineering more than once. I've done this across teams in Argentina, Mexico, and the United States.</p>
-              <p className="text-base text-muted-foreground">I've led a design team through a fast-paced agency juggling multiple clients at once, and worked inside a startup where the job changes shape constantly — strategy one week, a shipped component the next. Both taught me the same thing: the title matters less than whether the right problem got solved.</p>
+              <p className="text-base text-muted-foreground">I've led a design team through a fast-paced agency juggling multiple clients at once, and worked inside a startup where the job changes shape constantly. Strategy one week, a shipped component the next. Both taught me the same thing: the title matters less than whether the right problem got solved.</p>
           </div>
         )
       case "values":
@@ -49,9 +49,9 @@ export default function About() {
           <div className="space-y-6">
             <h2 className="text-4xl mb-8 uppercase tracking-wide [font-family:var(--font-disket-bold)]">Values</h2>
             <p className="text-base text-muted-foreground"><span className="font-bold">Craftsmanship. Usefulness. Authenticity.</span> These are the core values that guide my work and way of designing (and living).</p>
-            <p className="text-base text-muted-foreground">I strive to imbue them in all my endeavors. I've always been drawn to making things—whether illustrations, products, forged metal, or carved wooden swords—and <span className="font-bold">I've always been fascinated by the process of creation.</span> Design is a mindset, not something you switch on and off for work.</p>
+            <p className="text-base text-muted-foreground">I strive to imbue them in all my endeavors. I've always been drawn to making things, whether illustrations, products, forged metal, or carved wooden swords, and <span className="font-bold">I've always been fascinated by the process of creation.</span> Design is a mindset, not something you switch on and off for work.</p>
             <p className="text-base text-muted-foreground"><span className="font-bold">Collaboration and communication</span> are paramount. Climbing to the summit alone is a lonely and dangerous path. Triumph is a team effort, and tightly knit teams create the greatest products.</p>
-            <p className="text-base text-muted-foreground">AI is a tool I use for productivity — accelerating implementation, drafting code, speeding up the mechanical parts of the work. But the creative act itself — illustration, brand identity, the actual artistic decisions — stays mine. I won't outsource that to a model, and <span className="font-bold">I'm fairly firm about it</span>.</p>
+            <p className="text-base text-muted-foreground">AI is a tool I use for productivity: accelerating implementation, drafting code, speeding up the mechanical parts of the work. But the creative act itself, illustration, brand identity, the actual artistic decisions, stays mine. I won't outsource that to a model, and <span className="font-bold">I'm fairly firm about it</span>.</p>
             <p className="text-2xl text-muted-foreground text-center">☩</p>
           </div>
         )
@@ -75,10 +75,10 @@ export default function About() {
             {/* Introduction */}
             <div className="space-y-4">
               <p className="text-base text-muted-foreground">
-                A quick summary — the full breakdown, with numbers, lives in the PDF.
+                A quick summary. The full breakdown, with numbers, lives in the PDF.
               </p>
               <p className="text-base text-muted-foreground">
-                I'm a Senior Product Designer working across discovery, strategy, design systems, and execution. Currently at Nera (agtech fintech), previously leading a 4-person design team at Balloon Group. My focus is finding the right problem before building the solution — and I have the front-end fluency to stay close to what's actually feasible to ship.
+                I'm a Senior Product Designer working across discovery, strategy, design systems, and execution. Currently at Nera (agtech fintech), previously leading a 4-person design team at Balloon Group. My focus is finding the right problem before building the solution. I have enough front-end fluency to stay close to what's actually feasible to ship.
               </p>
               <p className="text-base text-muted-foreground font-medium">
                 Download the CV above for the full experience, metrics, and skills breakdown.
@@ -90,8 +90,8 @@ export default function About() {
         return (
           <div className="space-y-6">
             <h2 className="text-4xl mb-8 uppercase tracking-wide [font-family:var(--font-disket-bold)]">Other Interests</h2>
-            <p className="text-base text-muted-foreground">I'm building a cove for myself in a frantic world. I ride motorcycles, train Muay Thai, weld and build things with my hands, cook, and tend a garden planted for color in every season — Japanese maples, ginkgo, chrysanthemums, zinnias, apricots, plums, almonds. I'm also a tattoo artist (still training), an illustrator, and lately exploring concept design. Most of it comes back to the same instinct: making things, slowly, on purpose.</p>
-            <p className="text-base text-muted-foreground">I'm a father and husband first — my daughter is the actual center of all this.</p>
+            <p className="text-base text-muted-foreground">I'm building a cove for myself in a frantic world. I ride motorcycles, train Muay Thai, weld and build things with my hands, cook, and tend a garden planted for color in every season: Japanese maples, ginkgo, chrysanthemums, zinnias, apricots, plums, almonds. I'm also a tattoo artist (still training), an illustrator, and lately exploring concept design. Most of it comes back to the same instinct: making things, slowly, on purpose.</p>
+            <p className="text-base text-muted-foreground">I'm a father and husband first. My daughter is the actual center of all this.</p>
           </div>
         )
     }

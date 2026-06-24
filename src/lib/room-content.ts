@@ -109,7 +109,7 @@ export const ROOMS: Record<RoomId, RoomContent> = {
     question: "What am I building a life around?",
     marginalia: "A life built close to the ground.",
     body:
-      "Family first — everything else orbits that. The house projects, meals, the ordinary rhythm of an embodied life close to the ground, but looking upwards.",
+      "Family first. Everything else orbits that. The house projects, meals, the ordinary rhythm of an embodied life close to the ground, but looking upwards.",
     topics: [
       "Father & husband",
       "House & garden projects",

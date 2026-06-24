@@ -219,7 +219,7 @@ export default function Art() {
             <div className="space-y-2">
               <h2 className="text-4xl mb-2 uppercase tracking-wide [font-family:var(--font-disket-bold)]">Digital Tattoo</h2>
               <p className="text-base text-muted-foreground mb-8">
-                Digital flash — same intent as the painted sheets, drawn on screen.
+                Digital flash, same intent as the painted sheets, drawn on screen.
               </p>
             </div>
             {renderGrid(digitalTattooPieces)}

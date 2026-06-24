@@ -10,9 +10,9 @@ export const HEARTH_SECTIONS: { id: HearthSection; label: string }[] = [
 export const HEARTH_SECTION_INTROS: Record<HearthSection, string> = {
   family: "Father and husband.",
   home:
-    "House projects with my wife. @lacasitapinterest on Instagram — deco, reform, the garden. Building a cove in a frantic world.",
+    "House projects with my wife. @lacasitapinterest on Instagram for deco, reform, and the garden. Building a cove in a frantic world.",
   cooking:
-    "Cooking when there's time. The table as the center of gravity — hospitality, friends, family and seasonal ingredients when possible.",
+    "Cooking when there's time. The table as the center of gravity: hospitality, friends, family and seasonal ingredients when possible.",
   rhythms:
     "Morning training, work, making things in the gaps. Seasons, routines, the holy ordinary texture of a life (I think) well lived.",
 }

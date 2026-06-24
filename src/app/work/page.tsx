@@ -75,7 +75,7 @@ export default function Work() {
               <h2 className="text-4xl mb-2 uppercase tracking-wide [font-family:var(--font-disket-bold)]">Nera</h2>
               <p className="text-lg mb-8 text-muted-foreground [font-family:var(--font-disket)]">Product Designer - Aug 23 / Present</p>
               <p className="text-base text-muted-foreground">
-              Nera builds financing and payments infrastructure for agricultural businesses, working with banking partners — which means the real design problem is making complex eligibility and transaction logic legible to people who aren't financial specialists. That's the problem I spend most of my time on.
+              Nera builds financing and payments infrastructure for agricultural businesses, working with banking partners. The real design problem is making complex eligibility and transaction logic legible to people who aren't financial specialists. That's what I spend most of my time on.
               </p>
             </div>
 
@@ -84,11 +84,11 @@ export default function Work() {
               <div className="space-y-4">
                 <h3 className="text-2xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">Impact</h3>
                 <ul className="space-y-4 text-base text-muted-foreground list-disc pl-6">
-                  <li>Found a critical drop-off point in the flow driving our highest transaction volume, using funnel analysis in Amplitude — redesigned it and cut abandonment by 16%.</li>
+                  <li>Found a critical drop-off point in the flow driving our highest transaction volume using funnel analysis in Amplitude, redesigned it, and cut abandonment by 16%.</li>
                   <li>Own the design system end-to-end: 275+ components in production, shared across a 4-designer team and shipped to engineering as a versioned npm package, not just a Figma file.</li>
                   <li>Run user interviews directly with farmers and suppliers to catch where financial logic breaks down before it ships as confusing UI.</li>
-                  <li>Push back in roadmap discussions when a requested feature solves a symptom, not the underlying problem — and bring data to make that case.</li>
-                  <li>Work close enough to engineering to know what's actually expensive to build, which shapes which tradeoffs I propose.</li>
+                  <li>Push back in roadmap discussions when a requested feature solves a symptom, not the underlying problem, and bring data to make that case.</li>
+                  <li>Stay close to engineering on build cost, so the tradeoffs I propose are realistic.</li>
                 </ul>
               </div>
             </div>
@@ -101,7 +101,7 @@ export default function Work() {
               <h2 className="text-4xl mb-2 uppercase tracking-wide [font-family:var(--font-disket-bold)]">Balloon Group</h2>
               <p className="text-lg mb-8 text-muted-foreground [font-family:var(--font-disket)]">Design Lead - May 21 / Aug 23</p>
               <p className="text-base text-muted-foreground">
-                At Balloon Group, I led a team of 4 designers across SaaS, e-commerce, and B2B projects — including a Chilean telecom/ISP and a Magento build for Circle K. Alongside the day-to-day design work, I built the company's <a href="https://www.fastforward.ai/" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">Webflow site</a>, and before I left, I built their design system from scratch — the project below.
+                At Balloon Group, I led a team of 4 designers across SaaS, e-commerce, and B2B projects, including a Chilean telecom/ISP and a Magento build for Circle K. Alongside the day-to-day design work, I built the company's <a href="https://www.fastforward.ai/" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">Webflow site</a>. Before I left, I built their design system from scratch. That project is below.
               </p>
             </div>
 
@@ -128,7 +128,7 @@ export default function Work() {
 
               <div className="prose dark:prose-invert max-w-none">
                 <p>
-                  As the Product Designer at Balloon Group—an agency specializing in e-commerce solutions and development—I embarked on the journey of building and developing a design system from scratch. In this article, I will dive deep into the reasons behind my decision, sharing my perspective on the need for a design system and outlining the step-by-step approach I took to ensure its successful implementation.
+                  As the Product Designer at Balloon Group, an agency specializing in e-commerce solutions and development, I embarked on the journey of building and developing a design system from scratch. In this article, I will dive deep into the reasons behind my decision, sharing my perspective on the need for a design system and outlining the step-by-step approach I took to ensure its successful implementation.
                 </p>
 
                 <h4 className="text-xl uppercase tracking-wide [font-family:var(--font-disket)] mt-8 mb-4">Identifying the Need</h4>
@@ -172,7 +172,7 @@ export default function Work() {
 
                 <h4 className="text-xl uppercase tracking-wide [font-family:var(--font-disket)] mt-8 mb-4">Conclusion</h4>
                 <p>
-                  As a Product Designer for Balloon Group, I recognized the need to build and develop a design system from the ground up. By acknowledging the importance of consistency, efficiency and scalability, I embarked on a journey to empower the teams and enhance our website development process. Through thorough research, collaboration and iterative development, a proper Design System that brought numerous benefits, including collaboration, speed and consistency, was established — adopted across the team and used as the foundation for every new client project for the rest of my time there. I'd also begun scoping documentation in Zeroheight and a Storybook integration to make the system self-service for engineering — work that was just getting started when I moved on.
+                  As a Product Designer for Balloon Group, I recognized the need to build and develop a design system from the ground up. By acknowledging the importance of consistency, efficiency and scalability, I embarked on a journey to empower the teams and enhance our website development process. Through thorough research, collaboration and iterative development, a proper Design System that brought numerous benefits, including collaboration, speed and consistency, was established. The team adopted it as the foundation for every new client project for the rest of my time there. I'd also begun scoping documentation in Zeroheight and a Storybook integration to make the system self-service for engineering. That work was just getting started when I moved on.
                 </p>
               </div>
             </div>
@@ -190,7 +190,7 @@ export default function Work() {
                 <div className="space-y-4">
                   <h3 className="text-2xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">Insurance Broker & Event Staffing</h3>
                   <p className="text-base text-muted-foreground">
-                    Both of these came to me mid-flight — existing products, existing designs, but no system holding them together. The job wasn't starting from zero; it was finding the patterns already hiding in their Figma files and turning them into a styleguide the team could actually keep using after I left. Same instinct as the design systems work at Balloon Group and Nera, just compressed into a few weeks instead of a year.
+                    Both of these came to me mid-flight: existing products, existing designs, but no system holding them together. The job wasn't starting from zero; it was finding the patterns already hiding in their Figma files and turning them into a styleguide the team could actually keep using after I left. Same instinct as the design systems work at Balloon Group and Nera, just compressed into a few weeks instead of a year.
                   </p>
                   <div className="grid grid-cols-2 gap-6">
                     <button 
@@ -266,7 +266,7 @@ export default function Work() {
                 <div className="space-y-4">
                   <h3 className="text-2xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">Dashboard Design</h3>
                   <p className="text-base text-muted-foreground">
-                    This is a prototype I built for a Travel Budget Managing App. No design system to lean on here — just a budgeting tool whose information architecture had grown organically into something nobody could navigate. I took it apart and rebuilt the IA from scratch before touching any UI, since the structure was the actual problem, not the visual layer.
+                    This is a prototype I built for a Travel Budget Managing App. No design system to lean on. The budgeting tool's information architecture had grown organically into something nobody could navigate. I took it apart and rebuilt the IA from scratch before touching any UI, since the structure was the actual problem, not the visual layer.
                   </p>
                   <div className="grid grid-cols-2 gap-6">
                     <button 
@@ -318,7 +318,7 @@ export default function Work() {
                 <div className="space-y-4">
                   <h3 className="text-2xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">Arcana Beard Oil</h3>
                   <p className="text-base text-muted-foreground">
-                    Brand identity, packaging, and product development for a beard oil line — purely for the fun of building a brand from nothing.
+                    Brand identity, packaging, and product development for a beard oil line, purely for the fun of building a brand from nothing.
                   </p>
                   <div className="grid grid-cols-1 gap-6">
                     <button 

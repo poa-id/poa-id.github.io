@@ -15,15 +15,15 @@ export const GARDEN_SECTIONS: { id: GardenSection; label: string }[] = [
 
 export const GARDEN_SECTION_INTROS: Record<GardenSection, string> = {
   gardening:
-    "Japanese maples, ginkgo, chrysanthemums, zinnias, apricots, plums, almonds — planted for color through the seasons. My wife runs @lacasitapinterest documenting the house and garden.",
+    "Japanese maples, ginkgo, chrysanthemums, zinnias, apricots, plums, almonds, planted for color through the seasons. My wife runs @lacasitapinterest documenting the house and garden.",
   training:
-    "Muay Thai and kickboxing a couple times a week, plus kettlebells and mobility. Less about performance, more about staying durable — I have a daughter and we're planning on more.",
+    "Muay Thai and kickboxing a couple times a week, plus kettlebells and mobility. Less about performance, more about staying durable. I have a daughter and we're planning on more.",
   trades:
-    "Welding a wood cart soon. Scouting a shipping container for a workshop/gym. Knifemaking is coming back now that there's a house with a yard — smithing got dropped in the apartment years.",
+    "Welding a wood cart soon. Scouting a shipping container for a workshop/gym. Knifemaking is coming back now that there's a house with a yard. Smithing got dropped in the apartment years.",
   skills:
-    "Concept art practice right now — drawing my friends' D&D characters. Tattoo apprenticeship ongoing. Things that compound slowly if you show up.",
+    "Concept art practice right now: drawing my friends' D&D characters. Tattoo apprenticeship ongoing. Things that compound slowly if you show up.",
   stewardship:
-    "Intentional slow living. Reducing noise and clutter in the house and otherwise. Taking care of land, tools, body — the unglamorous maintenance work.",
+    "Intentional slow living. Reducing noise and clutter in the house and otherwise. Taking care of land, tools, body. The unglamorous maintenance work.",
 }
 
 export const GARDEN_SECTION_TOPICS: Record<GardenSection, string> = {
