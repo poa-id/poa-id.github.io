@@ -1,0 +1,286 @@
+.osrs-skills-stage {
+  --osrs-scale: 2;
+  --osrs-cell: #474740;
+  --osrs-cell-hi: #505047;
+  --osrs-gap: #1c1b16;
+  --osrs-rivet: #1c1b16;
+  --osrs-frame-col: 26px;
+  --osrs-inner-w: 235px;
+  --osrs-inner-h: 335px;
+  width: calc((var(--osrs-inner-w) + var(--osrs-frame-col) * 2) * var(--osrs-scale));
+  height: calc(var(--osrs-inner-h) * var(--osrs-scale));
+  position: relative;
+  flex-shrink: 0;
+}
+
+.osrs-skills-fit {
+  height: 100%;
+  width: max-content;
+  max-height: 100%;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.osrs-skills-shell {
+  position: relative;
+  width: calc(var(--osrs-inner-w) + var(--osrs-frame-col) * 2);
+  height: var(--osrs-inner-h);
+  transform-origin: top left;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  user-select: none;
+  zoom: var(--osrs-scale);
+}
+
+@supports not (zoom: 1) {
+  .osrs-skills-shell {
+    transform: scale(var(--osrs-scale));
+  }
+}
+
+.osrs-frame-left,
+.osrs-frame-right {
+  position: absolute;
+  display: block;
+  top: 0;
+  width: var(--osrs-frame-col);
+  height: 100%;
+  object-fit: fill;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.osrs-frame-left {
+  left: 0;
+}
+
+.osrs-frame-right {
+  right: 0;
+}
+
+.osrs-skills-panel {
+  box-sizing: border-box;
+  position: absolute;
+  inset: 0 var(--osrs-frame-col);
+  z-index: 2;
+  width: auto;
+  height: 100%;
+  padding: 6px 6px 24px;
+  background: #3a3932;
+  overflow: hidden;
+}
+
+.osrs-skills-panel::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  height: 18px;
+  background: #090a07;
+  border-top: 1px solid #171711;
+  box-shadow: inset 0 1px 0 #39382f;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.osrs-skills-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  gap: 1px;
+  width: 223px;
+  height: 305px;
+  padding: 1px;
+  box-sizing: border-box;
+  background: var(--osrs-gap);
+  border: 1px solid #25241e;
+}
+
+.osrs-skill-cell {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  min-width: 0;
+  min-height: 0;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: default;
+  background-color: var(--osrs-cell);
+  background-image: url("/skills/stone-noise.png");
+  background-size: 16px 16px;
+  background-repeat: repeat;
+  image-rendering: pixelated;
+  box-shadow:
+    inset 1px 1px 0 #67655a,
+    inset -1px -1px 0 #2f2e28;
+  outline: none;
+}
+
+/* Concave corner cuts — quarter-circles meet into full circular hubs */
+.osrs-skill-cell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  background:
+    radial-gradient(circle at 0 0, var(--osrs-rivet) 0 3.5px, transparent 3.6px),
+    radial-gradient(circle at 100% 0, var(--osrs-rivet) 0 3.5px, transparent 3.6px),
+    radial-gradient(circle at 0 100%, var(--osrs-rivet) 0 3.5px, transparent 3.6px),
+    radial-gradient(circle at 100% 100%, var(--osrs-rivet) 0 3.5px, transparent 3.6px);
+}
+
+.osrs-skill-cell[href] {
+  cursor: pointer;
+}
+
+.osrs-skill-cell:hover,
+.osrs-skill-cell:focus-visible {
+  background-color: var(--osrs-cell-hi);
+}
+
+.osrs-skill-cell:focus-visible {
+  box-shadow:
+    inset 1px 1px 0 #67655a,
+    inset -1px -1px 0 #2f2e28,
+    inset 0 0 0 1px #ffff00;
+}
+
+.osrs-skill-icon {
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  width: 32px;
+  height: 32px;
+  margin-top: -16px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.osrs-level,
+.osrs-total-level,
+.osrs-tooltip {
+  font-family: var(--font-runescape-small), "RuneScape Small", monospace;
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  letter-spacing: 0;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  font-smooth: never;
+}
+
+.osrs-level-box {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  z-index: 3;
+  width: 26px;
+  height: 26px;
+  margin-top: -13px;
+  pointer-events: none;
+}
+
+.osrs-level {
+  position: absolute;
+  color: #ff0;
+  font-size: 18px;
+  line-height: 12px;
+  text-shadow: 1px 1px #000;
+  pointer-events: none;
+}
+
+.osrs-level-current {
+  left: 0;
+  top: 0;
+}
+
+.osrs-level-base {
+  right: 0;
+  bottom: 0;
+  left: auto;
+}
+
+.osrs-level-slash {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 32px;
+  height: 1.4px;
+  margin-left: -18px;
+  margin-top: -1px;
+  background: #000;
+  transform: rotate(-45deg);
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.osrs-total-level {
+  position: absolute;
+  z-index: 8;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffff00;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.osrs-tooltip {
+  position: absolute;
+  z-index: 20;
+  width: max-content;
+  min-width: 72px;
+  max-width: 140px;
+  padding: 3px 5px 4px;
+  color: #ffff00;
+  background: rgba(8, 8, 6, 0.96);
+  border: 1px solid #000;
+  box-shadow: inset 0 0 0 1px #5d5a4d;
+  font-size: 12px;
+  line-height: 13px;
+  text-shadow: 1px 1px 0 #000;
+  pointer-events: none;
+}
+
+.osrs-tooltip--desc {
+  max-width: 168px;
+}
+
+.osrs-tooltip span {
+  display: block;
+  white-space: nowrap;
+}
+
+.osrs-tooltip span:first-child {
+  color: #ff981f;
+}
+
+.osrs-tooltip span:nth-child(3) {
+  color: #ffffff;
+}
+
+.osrs-tooltip-desc {
+  white-space: normal !important;
+  margin-top: 3px;
+  color: #c6c6b8 !important;
+  line-height: 14px;
+}
