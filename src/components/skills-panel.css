@@ -113,7 +113,7 @@
   min-height: 0;
   text-decoration: none;
   overflow: hidden;
-  cursor: default;
+  cursor: pointer;
   background-color: var(--osrs-cell);
   background-image: url("/skills/stone-noise.png");
   background-size: 16px 16px;
@@ -153,6 +153,16 @@
     inset 1px 1px 0 #67655a,
     inset -1px -1px 0 #2f2e28,
     inset 0 0 0 1px #ffff00;
+}
+
+.osrs-skill-cell--selected,
+.osrs-skill-cell--selected:hover,
+.osrs-skill-cell--selected:focus-visible {
+  background-color: var(--osrs-cell-hi);
+  box-shadow:
+    inset 1px 1px 0 #8a8778,
+    inset -1px -1px 0 #23221c,
+    inset 0 0 0 2px #ffff00;
 }
 
 .osrs-skill-icon {

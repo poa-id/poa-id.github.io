@@ -1,111 +1,282 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import localFont from "next/font/local";
 import { SkillsPanel } from "@/components/SkillsPanel";
-import { skillLevelStages } from "@/data/skills";
+import {
+  getSkillTooltipLabel,
+  skillLevelStages,
+  skills,
+  type LifeSkill,
+} from "@/data/skills";
 import { PROFESSIONAL_PAGE_FRAME } from "@/lib/professional-layout";
+import "./skills-page.css";
+
+const runescape = localFont({
+  src: [
+    {
+      path: "../../public/fonts/runescape.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/runescape.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-runescape",
+  display: "block",
+  adjustFontFallback: false,
+  fallback: ["monospace"],
+});
+
+const runescapeBold = localFont({
+  src: [
+    {
+      path: "../../public/fonts/runescape_bold.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/runescape_bold.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-runescape-bold",
+  display: "block",
+  adjustFontFallback: false,
+  fallback: ["monospace"],
+});
+
+const runescapeSmall = localFont({
+  src: [
+    {
+      path: "../../public/fonts/runescape_small.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/runescape_small.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-runescape-small",
+  display: "block",
+  adjustFontFallback: false,
+  fallback: ["monospace"],
+});
 
 type MobileView = "text" | "panel";
 
-export function SkillsPageContent() {
-  const [mobileView, setMobileView] = useState<MobileView>("text");
+function SkillDetail({
+  skill,
+  onClear,
+}: {
+  skill: LifeSkill;
+  onClear: () => void;
+}) {
+  const rankLabel = getSkillTooltipLabel(skill);
+  const journal = skill.milestones ?? [];
 
   return (
-    <div className={`${PROFESSIONAL_PAGE_FRAME} overflow-hidden`}>
-      <section
-        className={`w-full lg:flex-1 min-w-0 min-h-0 overflow-y-auto overscroll-contain bg-white dark:bg-[#0F1015] border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-gray-800 lg:h-full lg:block ${
-          mobileView === "text" ? "h-full" : "hidden"
-        }`}
-      >
-        <div className="w-[90%] lg:w-[min(48rem,88%)] mx-auto py-8 lg:py-12 pb-28 lg:pb-12 space-y-10 lg:space-y-14">
-          <div className="space-y-4 lg:space-y-5">
-            <h1 className="text-3xl lg:text-4xl uppercase tracking-wide text-gray-900 dark:text-white [font-family:var(--font-disket-bold)]">
-              The Skillbook
-            </h1>
-            <p className="text-sm lg:text-base text-gray-500 dark:text-gray-400 [font-family:var(--font-disket)] leading-relaxed">
-              Every discipline here reflects a part of the life I&apos;m trying
-              to build. Some are crafts of the hand, others train the body, the
-              mind, or the spirit. Some have obvious measures of progress;
-              others, like Prayer or Hearthkeeping, resist quantification.
-              Their levels are necessarily subjective, this skillbook is simply
-              an honest attempt to map a lifetime of learning into a familiar
-              language.
-            </p>
-            <p className="hidden lg:block text-sm lg:text-base text-gray-500 dark:text-gray-400 [font-family:var(--font-disket)] leading-relaxed">
-              Hover a discipline to see its current level.
-            </p>
-            <p className="lg:hidden text-sm text-gray-500 dark:text-gray-400 [font-family:var(--font-disket)] leading-relaxed">
-              Open the skill panel to tap a discipline and see its current
-              level.
-            </p>
-          </div>
+    <div className="space-y-5">
+      <button type="button" className="skillbook-back-btn" onClick={onClear}>
+        ← Back to Skillbook
+      </button>
 
-          <div className="space-y-4 lg:space-y-5">
-            <h2 className="text-xl lg:text-2xl uppercase tracking-wide text-gray-900 dark:text-white [font-family:var(--font-disket-bold)]">
-              How Levels Work
-            </h2>
-            <p className="text-sm lg:text-base text-gray-500 dark:text-gray-400 [font-family:var(--font-disket)] leading-relaxed">
+      <div className="space-y-2">
+        <h2 className="skillbook-subtitle">{skill.name}</h2>
+        <p className="skillbook-meta">
+          Level {skill.level}
+          {rankLabel ? ` · ${rankLabel}` : ""}
+        </p>
+        {skill.category ? (
+          <p
+            className={`skillbook-category skillbook-category--${skill.category.toLowerCase()}`}
+          >
+            {skill.category}
+          </p>
+        ) : null}
+        {skill.description ? (
+          <p className="skillbook-desc">{skill.description}</p>
+        ) : null}
+        {skill.level === "??" ? (
+          <p className="skillbook-desc">
+            This discipline resists a single number. Its journal still tells the
+            story of the practice.
+          </p>
+        ) : null}
+      </div>
+
+      <div className="space-y-2">
+        <h3 className="skillbook-subtitle" style={{ fontSize: "1.2rem" }}>
+          Journal
+        </h3>
+        {journal.length === 0 ? (
+          <p className="skillbook-hint">
+            The story of this skill is still being written.
+          </p>
+        ) : (
+          <div className="skillbook-journal pt-1">
+            {journal.map((entry, index) => (
+              <div
+                key={`${entry.year}-${entry.title}-${index}`}
+                className="skillbook-journal-entry"
+              >
+                <div className="skillbook-journal-year">{entry.year}</div>
+                <div className="skillbook-journal-body">
+                  <div className="skillbook-journal-title">{entry.title}</div>
+                  {entry.detail ? (
+                    <div className="skillbook-journal-detail">{entry.detail}</div>
+                  ) : null}
+                  {typeof entry.level === "number" ? (
+                    <div className="skillbook-journal-level">
+                      Level {entry.level}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function WelcomeCopy({
+  levelsOpen,
+  onToggleLevels,
+}: {
+  levelsOpen: boolean;
+  onToggleLevels: () => void;
+}) {
+  return (
+    <div className="space-y-5">
+      <div className="space-y-4">
+        <h1 className="skillbook-title">The Skillbook</h1>
+        <p className="skillbook-copy">
+          Every discipline here reflects a part of the life I&apos;m trying to
+          build. Some are crafts of the hand, others train the body, the mind,
+          or the spirit. Some have obvious measures of progress; others, like
+          Prayer or Hearthkeeping, resist quantification. Their levels are
+          necessarily subjective, this skillbook is simply an honest attempt to
+          map a lifetime of learning into a familiar language.
+        </p>
+        <p className="skillbook-hint hidden lg:block">
+          Hover a discipline to see its current level. Click a skill to read its
+          journal.
+        </p>
+        <p className="skillbook-hint lg:hidden">
+          Open the skill panel, then tap a discipline for its level and journal.
+        </p>
+      </div>
+
+      <div>
+        <button
+          type="button"
+          className="skillbook-levels-btn"
+          onClick={onToggleLevels}
+          aria-expanded={levelsOpen}
+        >
+          {levelsOpen ? "Hide how levels work" : "How levels work"}
+        </button>
+
+        {levelsOpen ? (
+          <div className="skillbook-levels-panel">
+            <h2 className="skillbook-levels-title">How Levels Work</h2>
+            <p className="skillbook-levels-intro">
               The levels aren&apos;t arbitrary. They&apos;re my attempt to
               translate real-world competence into the familiar language
               obviously inspired by OSRS. Advancement is based on independence,
               consistency, teaching, and the quality of work, not simply time
               invested or grind.
             </p>
-
-            <div className="overflow-x-auto -mx-1 px-1">
-              <table className="w-full min-w-[28rem] border-collapse text-left text-xs lg:text-sm [font-family:var(--font-disket)]">
-                <thead>
-                  <tr className="border-b border-gray-200 dark:border-gray-800">
-                    <th className="py-2 pr-3 font-normal text-gray-900 dark:text-white whitespace-nowrap text-right w-12">
-                      Level
-                    </th>
-                    <th className="py-2 pr-3 font-normal text-gray-900 dark:text-white whitespace-nowrap">
-                      Stage
-                    </th>
-                    <th className="py-2 font-normal text-gray-900 dark:text-white">
-                      Description
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {skillLevelStages.map((row) => (
-                    <tr
-                      key={row.level}
-                      className="border-b border-gray-100 dark:border-gray-800/80 align-top"
-                    >
-                      <td className="py-2.5 pr-3 text-gray-900 dark:text-white text-right tabular-nums whitespace-nowrap">
-                        {row.level}
-                      </td>
-                      <td className="py-2.5 pr-3 text-gray-700 dark:text-gray-300 whitespace-nowrap">
-                        {row.stage}
-                      </td>
-                      <td className="py-2.5 text-gray-500 dark:text-gray-400 leading-relaxed">
-                        {row.description}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="space-y-1">
+              {skillLevelStages.map((row) => (
+                <div key={row.level} className="skillbook-milestone">
+                  <div className="skillbook-milestone-level">{row.level}</div>
+                  <div className="skillbook-milestone-body">
+                    <div className="skillbook-milestone-stage">{row.stage}</div>
+                    <div className="skillbook-milestone-copy">
+                      {row.description}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+export function SkillsPageContent() {
+  const [mobileView, setMobileView] = useState<MobileView>("text");
+  const [selectedSkillId, setSelectedSkillId] = useState<string | null>(null);
+  const [levelsOpen, setLevelsOpen] = useState(false);
+
+  const selectedSkill = useMemo(
+    () => skills.find((skill) => skill.id === selectedSkillId) ?? null,
+    [selectedSkillId],
+  );
+
+  function handleSelectSkill(skillId: string | null) {
+    setSelectedSkillId(skillId);
+    if (skillId) {
+      setLevelsOpen(false);
+      setMobileView("text");
+    }
+  }
+
+  return (
+    <div
+      className={`${PROFESSIONAL_PAGE_FRAME} overflow-hidden skillbook-shell ${runescape.variable} ${runescapeBold.variable} ${runescapeSmall.variable} ${runescape.className}`}
+    >
+      <section
+        className={`skillbook-copy-col w-full lg:flex-1 min-w-0 min-h-0 overflow-y-auto overscroll-contain lg:h-full lg:block ${
+          mobileView === "text" ? "h-full" : "hidden"
+        }`}
+      >
+        <div className="w-[90%] lg:w-[min(42rem,86%)] mx-auto py-8 lg:py-12 pb-28 lg:pb-12">
+          {selectedSkill ? (
+            <SkillDetail
+              skill={selectedSkill}
+              onClear={() => setSelectedSkillId(null)}
+            />
+          ) : (
+            <WelcomeCopy
+              levelsOpen={levelsOpen}
+              onToggleLevels={() => setLevelsOpen((open) => !open)}
+            />
+          )}
         </div>
       </section>
 
       <section
-        className={`w-full min-h-0 h-full items-stretch justify-center overflow-hidden bg-black dark:bg-[#0F1015] py-3 pb-24 lg:pb-4 lg:py-4 lg:pr-4 lg:w-auto lg:shrink-0 lg:flex ${
+        className={`skillbook-panel-slot w-full min-h-0 h-full items-stretch justify-center overflow-hidden py-3 pb-24 lg:pb-4 lg:py-4 lg:pr-4 lg:w-auto lg:shrink-0 lg:flex ${
           mobileView === "panel" ? "flex" : "hidden"
         }`}
       >
-        <SkillsPanel fit scale={3} />
+        <SkillsPanel
+          fit
+          scale={3}
+          selectedSkillId={selectedSkillId}
+          onSelectSkill={handleSelectSkill}
+        />
       </section>
 
-      <div className="lg:hidden fixed bottom-0 inset-x-0 z-30 border-t border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-[#0F1015]/95 backdrop-blur-sm px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+      <div className="lg:hidden fixed bottom-0 inset-x-0 z-30 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <button
           type="button"
           onClick={() =>
             setMobileView((view) => (view === "text" ? "panel" : "text"))
           }
-          className="w-full min-h-11 px-4 py-3 text-sm uppercase tracking-wide text-gray-900 dark:text-white [font-family:var(--font-disket-bold)] border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+          className="skillbook-toggle w-full min-h-11 px-4 py-3 text-base"
         >
           {mobileView === "text" ? "View skills" : "About the Skillbook"}
         </button>

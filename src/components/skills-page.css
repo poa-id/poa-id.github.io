@@ -1,0 +1,277 @@
+/* Full-page Skillbook shell — OSRS website aesthetic */
+
+.skillbook-shell {
+  --skillbook-yellow: #ffff00;
+  --skillbook-orange: #ff981f;
+  --skillbook-cyan: #00ffff;
+  --skillbook-white: #ffffff;
+  --skillbook-muted: #c8c8b4;
+  --skillbook-shadow: 1px 1px #000;
+  --skillbook-shadow-lg: 2px 2px #000;
+  --skillbook-body: 18px;
+  --font-rs: var(--font-runescape), "RuneScape", monospace;
+  --font-rs-bold: var(--font-runescape-bold), "RuneScape Bold", monospace;
+  --font-rs-small: var(--font-runescape-small), "RuneScape Small", monospace;
+
+  background-color: #000;
+}
+
+.skillbook-copy-col {
+  background-color: #000;
+  background-image: url("/skills/osrs-stone-bg.png");
+  /* Fit column width; keep native aspect; tile vertically */
+  background-size: 100% auto;
+  background-position: center top;
+  background-repeat: repeat-y;
+  image-rendering: auto;
+}
+
+.skillbook-shell,
+.skillbook-shell * {
+  font-synthesis: none;
+}
+
+.skillbook-copy,
+.skillbook-levels,
+.skillbook-toggle,
+.skillbook-levels-btn,
+.skillbook-back-btn,
+.skillbook-hint,
+.skillbook-meta,
+.skillbook-category,
+.skillbook-desc,
+.skillbook-levels-intro,
+.skillbook-milestone-level,
+.skillbook-milestone-stage,
+.skillbook-milestone-copy,
+.skillbook-journal-year,
+.skillbook-journal-title,
+.skillbook-journal-detail {
+  font-family: var(--font-rs);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+}
+
+.skillbook-title,
+.skillbook-subtitle,
+.skillbook-levels-title {
+  font-family: var(--font-rs-bold);
+  font-weight: 400;
+  color: var(--skillbook-yellow);
+  text-shadow: var(--skillbook-shadow-lg);
+  letter-spacing: 0;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+}
+
+.skillbook-title {
+  font-size: clamp(1.85rem, 4vw, 2.65rem);
+  line-height: 1.15;
+}
+
+.skillbook-subtitle {
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  line-height: 1.2;
+  color: var(--skillbook-orange);
+}
+
+.skillbook-copy {
+  color: var(--skillbook-white);
+  text-shadow: var(--skillbook-shadow);
+  font-size: var(--skillbook-body);
+  line-height: 1.55;
+}
+
+.skillbook-hint {
+  color: var(--skillbook-muted);
+  text-shadow: var(--skillbook-shadow);
+  font-size: var(--skillbook-body);
+  line-height: 1.45;
+}
+
+.skillbook-meta {
+  color: var(--skillbook-yellow);
+  text-shadow: var(--skillbook-shadow);
+  font-size: var(--skillbook-body);
+  line-height: 1.4;
+}
+
+.skillbook-category {
+  text-shadow: var(--skillbook-shadow);
+  font-size: var(--skillbook-body);
+}
+
+.skillbook-category--craft {
+  color: #a86a2a;
+}
+
+.skillbook-category--discipline {
+  color: #7c93b6;
+}
+
+.skillbook-category--vocation {
+  color: #c8b15a;
+}
+
+.skillbook-desc {
+  color: var(--skillbook-muted);
+  text-shadow: var(--skillbook-shadow);
+  font-size: var(--skillbook-body);
+  line-height: 1.5;
+}
+
+.skillbook-levels-btn,
+.skillbook-back-btn {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--skillbook-cyan);
+  text-shadow: var(--skillbook-shadow);
+  font-size: var(--skillbook-body);
+  line-height: 1.4;
+  text-align: left;
+}
+
+.skillbook-levels-btn:hover,
+.skillbook-back-btn:hover,
+.skillbook-levels-btn:focus-visible,
+.skillbook-back-btn:focus-visible {
+  color: var(--skillbook-yellow);
+  outline: none;
+}
+
+.skillbook-milestone {
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
+  gap: 0.35rem 0.75rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.45);
+}
+
+.skillbook-milestone-level {
+  color: var(--skillbook-yellow);
+  text-shadow: var(--skillbook-shadow);
+  text-align: right;
+  font-size: var(--skillbook-body);
+}
+
+.skillbook-milestone-body {
+  min-width: 0;
+}
+
+.skillbook-milestone-stage {
+  color: var(--skillbook-white);
+  text-shadow: var(--skillbook-shadow);
+  font-size: var(--skillbook-body);
+}
+
+.skillbook-milestone-copy {
+  color: var(--skillbook-muted);
+  text-shadow: var(--skillbook-shadow);
+  font-size: 16px;
+  line-height: 1.45;
+  margin-top: 0.15rem;
+}
+
+.skillbook-milestone--current {
+  background: rgba(0, 0, 0, 0.28);
+  box-shadow: inset 0 0 0 1px #ffff00;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+  margin-left: -0.4rem;
+  margin-right: -0.4rem;
+}
+
+.skillbook-milestone--current .skillbook-milestone-stage {
+  color: var(--skillbook-yellow);
+}
+
+.skillbook-journal-entry {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: 0.25rem 0.85rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.45);
+}
+
+.skillbook-journal-year {
+  color: var(--skillbook-orange);
+  text-shadow: var(--skillbook-shadow);
+  font-size: var(--skillbook-body);
+  line-height: 1.35;
+  text-align: right;
+}
+
+.skillbook-journal-body {
+  min-width: 0;
+}
+
+.skillbook-journal-title {
+  color: var(--skillbook-white);
+  text-shadow: var(--skillbook-shadow);
+  font-size: var(--skillbook-body);
+  line-height: 1.35;
+}
+
+.skillbook-journal-detail {
+  color: var(--skillbook-muted);
+  text-shadow: var(--skillbook-shadow);
+  font-size: 16px;
+  line-height: 1.45;
+  margin-top: 0.2rem;
+}
+
+.skillbook-journal-level {
+  color: var(--skillbook-yellow);
+  text-shadow: var(--skillbook-shadow);
+  font-size: 16px;
+  margin-top: 0.25rem;
+}
+
+.skillbook-levels-panel {
+  margin-top: 1rem;
+  padding: 0.75rem 0.85rem;
+  background: rgba(8, 8, 6, 0.72);
+  border: 1px solid #000;
+  box-shadow: inset 0 0 0 1px #5d5a4d;
+}
+
+.skillbook-levels-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.skillbook-levels-intro {
+  color: var(--skillbook-muted);
+  text-shadow: var(--skillbook-shadow);
+  font-size: var(--skillbook-body);
+  line-height: 1.45;
+  margin-bottom: 0.75rem;
+}
+
+.skillbook-panel-slot {
+  background: #000;
+}
+
+.skillbook-toggle {
+  border: 1px solid #000;
+  box-shadow: inset 0 0 0 1px #5d5a4d;
+  background: rgba(8, 8, 6, 0.88);
+  color: var(--skillbook-yellow);
+  text-shadow: var(--skillbook-shadow);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: var(--skillbook-body);
+}
+
+.skillbook-toggle:hover,
+.skillbook-toggle:focus-visible {
+  color: var(--skillbook-orange);
+  outline: none;
+}

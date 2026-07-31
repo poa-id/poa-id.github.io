@@ -72,9 +72,13 @@ function clampTooltip(x: number, y: number, skill?: LifeSkill) {
 export function SkillsPanel({
   scale = 2,
   fit = false,
+  selectedSkillId = null,
+  onSelectSkill,
 }: {
   scale?: number;
   fit?: boolean;
+  selectedSkillId?: string | null;
+  onSelectSkill?: (skillId: string | null) => void;
 }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [liveScale, setLiveScale] = useState(scale);
@@ -94,7 +98,6 @@ export function SkillsPanel({
     const update = () => {
       const { height } = host.getBoundingClientRect();
       if (height <= 0) return;
-      // Snug width follows height-scaled panel; no side padding inside the host.
       const next = Math.min(height / PANEL_NATIVE_HEIGHT, scale);
       setLiveScale(Math.max(0.8, Math.round(next * 100) / 100));
     };
@@ -144,6 +147,11 @@ export function SkillsPanel({
     setTooltip(null);
   }
 
+  function selectSkill(skill: LifeSkill) {
+    if (!onSelectSkill) return;
+    onSelectSkill(selectedSkillId === skill.id ? null : skill.id);
+  }
+
   function handleMouseEnter(skill: LifeSkill, event: MouseEvent<HTMLElement>) {
     const pos = positionFromPointer(event, skill);
     if (!pos) return;
@@ -162,16 +170,21 @@ export function SkillsPanel({
     showTooltip(skill, pos.x, pos.y);
   }
 
-  function handleKeyDown(event: KeyboardEvent<HTMLElement>, href?: string) {
-    if (!href) return;
+  function handleClick(skill: LifeSkill, event: MouseEvent<HTMLElement>) {
+    event.preventDefault();
+    selectSkill(skill);
+  }
+
+  function handleKeyDown(event: KeyboardEvent<HTMLElement>, skill: LifeSkill) {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      window.location.assign(href);
+      selectSkill(skill);
     }
   }
 
   function renderSkill(skill: LifeSkill) {
     const rankLabel = getSkillTooltipLabel(skill);
+    const selected = selectedSkillId === skill.id;
     const content = (
       <>
         <Image
@@ -192,30 +205,21 @@ export function SkillsPanel({
     );
 
     const commonProps = {
-      className: "osrs-skill-cell",
+      className: `osrs-skill-cell${selected ? " osrs-skill-cell--selected" : ""}`,
       tabIndex: 0 as const,
+      role: "button" as const,
+      "aria-pressed": selected,
       onMouseEnter: (event: MouseEvent<HTMLElement>) => handleMouseEnter(skill, event),
       onMouseMove: (event: MouseEvent<HTMLElement>) => handleMouseMove(skill, event),
       onMouseLeave: hideTooltip,
       onFocus: (event: FocusEvent<HTMLElement>) => handleFocus(skill, event),
       onBlur: hideTooltip,
+      onClick: (event: MouseEvent<HTMLElement>) => handleClick(skill, event),
+      onKeyDown: (event: KeyboardEvent<HTMLElement>) => handleKeyDown(event, skill),
       "aria-label": rankLabel
         ? `${skill.name}, level ${skill.level}, ${rankLabel}`
         : `${skill.name}, level ${skill.level}`,
     };
-
-    if (skill.href) {
-      return (
-        <a
-          key={skill.id}
-          href={skill.href}
-          {...commonProps}
-          onKeyDown={(event) => handleKeyDown(event, skill.href)}
-        >
-          {content}
-        </a>
-      );
-    }
 
     return (
       <div key={skill.id} {...commonProps}>
@@ -253,32 +257,36 @@ export function SkillsPanel({
             <div className="osrs-total-level">Total level: {totalLevel}</div>
           </div>
 
-          {tooltip ? (() => {
-            const rankLabel = getSkillTooltipLabel(tooltip.skill);
-            return (
-              <div
-                className={`osrs-tooltip${tooltip.skill.description ? " osrs-tooltip--desc" : ""}`}
-                style={{ left: tooltip.x, top: tooltip.y }}
-                role="tooltip"
-              >
-                <span>{tooltip.skill.name}</span>
-                <span>Level {tooltip.skill.level}</span>
-                {tooltip.skill.category ? (
-                  <span
-                    className={`osrs-tooltip-category osrs-tooltip-category--${tooltip.skill.category.toLowerCase()}`}
+          {tooltip
+            ? (() => {
+                const rankLabel = getSkillTooltipLabel(tooltip.skill);
+                return (
+                  <div
+                    className={`osrs-tooltip${tooltip.skill.description ? " osrs-tooltip--desc" : ""}`}
+                    style={{ left: tooltip.x, top: tooltip.y }}
+                    role="tooltip"
                   >
-                    {tooltip.skill.category}
-                  </span>
-                ) : null}
-                {rankLabel ? (
-                  <span className="osrs-tooltip-rank">{rankLabel}</span>
-                ) : null}
-                {tooltip.skill.description ? (
-                  <span className="osrs-tooltip-desc">{tooltip.skill.description}</span>
-                ) : null}
-              </div>
-            );
-          })() : null}
+                    <span>{tooltip.skill.name}</span>
+                    <span>Level {tooltip.skill.level}</span>
+                    {tooltip.skill.category ? (
+                      <span
+                        className={`osrs-tooltip-category osrs-tooltip-category--${tooltip.skill.category.toLowerCase()}`}
+                      >
+                        {tooltip.skill.category}
+                      </span>
+                    ) : null}
+                    {rankLabel ? (
+                      <span className="osrs-tooltip-rank">{rankLabel}</span>
+                    ) : null}
+                    {tooltip.skill.description ? (
+                      <span className="osrs-tooltip-desc">
+                        {tooltip.skill.description}
+                      </span>
+                    ) : null}
+                  </div>
+                );
+              })()
+            : null}
         </div>
       </div>
     </div>

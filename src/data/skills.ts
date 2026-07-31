@@ -2,6 +2,19 @@ export type SkillCategory = "Craft" | "Discipline" | "Vocation";
 
 export type SkillLevel = number | "??";
 
+/**
+ * A dated entry in a skill's progress journal.
+ * Entries accumulate over time: when a skill matures and new milestones are
+ * written, older ones remain as a timeline of the path taken.
+ */
+export type SkillJournalMilestone = {
+  year: number;
+  title: string;
+  detail?: string;
+  /** Optional skill level at the time of this entry */
+  level?: number;
+};
+
 export type LifeSkill = {
   id: string;
   name: string;
@@ -11,6 +24,8 @@ export type LifeSkill = {
   rank?: string;
   tooltipLabel?: string;
   description?: string;
+  /** Chronological progress journal — append-only story of the skill */
+  milestones?: SkillJournalMilestone[];
   countsTowardTotal?: boolean;
   href?: string;
 };
@@ -22,8 +37,8 @@ export type SkillLevelStage = {
 };
 
 /**
- * Milestone ranks used by tooltips and the levels table.
- * Intermediate levels inherit the highest milestone at or below them.
+ * Rank thresholds used by tooltips and the "How levels work" reference.
+ * Separate from each skill's personal journal milestones.
  */
 export const skillLevelStages: SkillLevelStage[] = [
   {
@@ -108,6 +123,13 @@ export const skillLevelStages: SkillLevelStage[] = [
 /**
  * Grid order is row-major: 3 columns × 8 rows.
  * Edit `level` to change displayed values; reorder this array to change positions.
+ * Append journal entries to `milestones` — never remove old ones; they form the timeline.
+ *
+ * Example:
+ * milestones: [
+ *   { year: 2024, title: "Bought my first house", detail: "..." },
+ *   { year: 2028, title: "Finished paying the mortgage", level: 40 },
+ * ]
  *
  * Columns (top → bottom):
  * 1. Muay Thai, Strength, Constitution, Ranged, Prayer, Tattooing, Art, Design
