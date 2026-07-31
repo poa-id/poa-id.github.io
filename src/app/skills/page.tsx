@@ -24,10 +24,10 @@ export default function SkillsPage() {
                 Every discipline here reflects a part of the life I&apos;m trying
                 to build. Some are crafts of the hand, others train the body, the
                 mind, or the spirit. Some have obvious measures of progress;
-                others, like Prayer, Hearthkeeping, Homesteading, or Design,
-                resist quantification. Their levels are necessarily subjective,
-                this skillbook is simply an honest attempt to map a lifetime of
-                learning into a familiar language.
+                others, like Prayer or Hearthkeeping, resist quantification.
+                Their levels are necessarily subjective, this skillbook is simply
+                an honest attempt to map a lifetime of learning into a familiar
+                language.
               </p>
               <p className="text-sm lg:text-base text-gray-500 dark:text-gray-400 [font-family:var(--font-disket)] leading-relaxed">
                 Hover a discipline to see its current level.

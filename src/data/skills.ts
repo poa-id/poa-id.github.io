@@ -1,8 +1,13 @@
+export type SkillCategory = "Craft" | "Discipline" | "Vocation";
+
+export type SkillLevel = number | "??";
+
 export type LifeSkill = {
   id: string;
   name: string;
-  level: number;
+  level: SkillLevel;
   icon: string;
+  category?: SkillCategory;
   rank?: string;
   tooltipLabel?: string;
   description?: string;
@@ -105,65 +110,76 @@ export const skillLevelStages: SkillLevelStage[] = [
  * Edit `level` to change displayed values; reorder this array to change positions.
  *
  * Columns (top → bottom):
- * 1. Muay Thai, Strength, Constitution, Archery, Prayer, Tattooing, Art, Design
- * 2. Hitpoints, Gardening, Cooking, Hearthkeeping, Writing, Music, Homesteading, Commerce
+ * 1. Muay Thai, Strength, Constitution, Ranged, Prayer, Tattooing, Art, Design
+ * 2. Experience, Gardening, Cooking, Hearthkeeping, Writing, Music, Homesteading, Commerce
  * 3. Metalworking, Bladesmithing, Woodcutting, Woodworking, Bowmaking, Crafting, Construction, Mentoring
  */
 export const skills: LifeSkill[] = [
-  { id: "muay-thai", name: "Muay Thai", level: 1, icon: "/skills/icons-32/muaythai.png" },
+  { id: "muay-thai", name: "Muay Thai", level: 15, category: "Discipline", icon: "/skills/icons-32/muaythai.png" },
   {
-    id: "hitpoints",
-    name: "Hitpoints",
+    id: "experience",
+    name: "Experience",
     tooltipLabel: "Age",
     level: 33,
     icon: "/skills/icons-32/hitpoints.png",
     countsTowardTotal: false,
   },
-  { id: "metalworking", name: "Metalworking", level: 1, icon: "/skills/icons-32/metalworking.png" },
+  { id: "metalworking", name: "Metalworking", level: 10, category: "Craft", icon: "/skills/icons-32/metalworking.png" },
 
-  { id: "strength", name: "Strength", level: 1, icon: "/skills/icons-32/strength.png" },
-  { id: "gardening", name: "Gardening", level: 1, icon: "/skills/icons-32/gardening.png" },
-  { id: "bladesmithing", name: "Bladesmithing", level: 1, icon: "/skills/icons-32/bladesmithing.png" },
+  { id: "strength", name: "Strength", level: 35, category: "Discipline", icon: "/skills/icons-32/strength.png" },
+  { id: "gardening", name: "Gardening", level: 38, category: "Discipline", icon: "/skills/icons-32/gardening.png" },
+  { id: "bladesmithing", name: "Bladesmithing", level: 12, category: "Craft", icon: "/skills/icons-32/bladesmithing.png" },
 
-  { id: "constitution", name: "Constitution", level: 1, icon: "/skills/icons-32/constitution.png" },
-  { id: "cooking", name: "Cooking", level: 1, icon: "/skills/icons-32/cooking.png" },
-  { id: "woodcutting", name: "Woodcutting", level: 1, icon: "/skills/icons-32/woodcutting.png" },
+  { id: "constitution", name: "Constitution", level: 32, category: "Discipline", icon: "/skills/icons-32/constitution.png" },
+  { id: "cooking", name: "Cooking", level: 36, category: "Craft", icon: "/skills/icons-32/cooking.png" },
+  { id: "woodcutting", name: "Woodcutting", level: 30, category: "Craft", icon: "/skills/icons-32/woodcutting.png" },
 
-  { id: "archery", name: "Archery", level: 1, icon: "/skills/icons-32/archery.png" },
+  { id: "ranged", name: "Ranged", level: 10, category: "Discipline", icon: "/skills/icons-32/archery.png" },
   {
     id: "hearthkeeping",
     name: "Hearthkeeping",
-    level: 1,
+    level: "??",
+    category: "Vocation",
     icon: "/skills/icons-32/hearthkeeping.png",
+    countsTowardTotal: false,
     description:
-      "The stewardship of the home through family, maintenance, hospitality, and daily rituals.",
+      "The lifelong practice of cultivating a home where family, hospitality, order, beauty, and tradition can flourish.",
   },
-  { id: "woodworking", name: "Woodworking", level: 1, icon: "/skills/icons-32/woodworking.png" },
+  { id: "woodworking", name: "Woodworking", level: 18, category: "Craft", icon: "/skills/icons-32/woodworking.png" },
 
-  { id: "prayer", name: "Prayer", level: 1, icon: "/skills/icons-32/prayer.png" },
-  { id: "writing", name: "Writing", level: 1, icon: "/skills/icons-32/writing.png" },
-  { id: "bowmaking", name: "Bowmaking", level: 1, icon: "/skills/icons-32/bowmaking.png" },
+  {
+    id: "prayer",
+    name: "Prayer",
+    level: "??",
+    category: "Vocation",
+    icon: "/skills/icons-32/prayer.png",
+    countsTowardTotal: false,
+  },
+  { id: "writing", name: "Writing", level: 32, category: "Discipline", icon: "/skills/icons-32/writing.png" },
+  { id: "bowmaking", name: "Bowmaking", level: 8, category: "Craft", icon: "/skills/icons-32/bowmaking.png" },
 
-  { id: "tattooing", name: "Tattooing", level: 1, icon: "/skills/icons-32/tattooing.png" },
-  { id: "music", name: "Music", level: 1, icon: "/skills/icons-32/music.png" },
-  { id: "crafting", name: "Crafting", level: 1, icon: "/skills/icons-32/crafting.png" },
+  { id: "tattooing", name: "Tattooing", level: 38, category: "Craft", icon: "/skills/icons-32/tattooing.png" },
+  { id: "music", name: "Music", level: 26, category: "Discipline", icon: "/skills/icons-32/music.png" },
+  { id: "crafting", name: "Crafting", level: 27, category: "Craft", icon: "/skills/icons-32/crafting.png" },
 
-  { id: "art", name: "Art", level: 1, icon: "/skills/icons-32/art.png" },
+  { id: "art", name: "Art", level: 28, category: "Discipline", icon: "/skills/icons-32/art.png" },
   {
     id: "homesteading",
     name: "Homesteading",
-    level: 1,
+    level: 35,
+    category: "Vocation",
     icon: "/skills/icons-32/homesteading.png",
     description:
       "Cultivating a resilient home through preservation, repair, and self-sufficiency where possible.",
   },
-  { id: "construction", name: "Construction", level: 1, icon: "/skills/icons-32/construction.png" },
+  { id: "construction", name: "Construction", level: 22, category: "Craft", icon: "/skills/icons-32/construction.png" },
 
-  { id: "design", name: "Design", level: 1, icon: "/skills/icons-32/design.png" },
+  { id: "design", name: "Design", level: 45, category: "Discipline", icon: "/skills/icons-32/design.png" },
   {
     id: "commerce",
     name: "Commerce",
-    level: 1,
+    level: 28,
+    category: "Discipline",
     icon: "/skills/icons-32/trading.png",
     description:
       "Creating, exchanging, and stewarding value through trade, entrepreneurship, investing, negotiation, and sound financial judgment.",
@@ -171,7 +187,8 @@ export const skills: LifeSkill[] = [
   {
     id: "mentoring",
     name: "Mentoring",
-    level: 1,
+    level: 22,
+    category: "Vocation",
     icon: "/skills/icons-32/mentoring.png",
     description:
       "Developing people through teaching, coaching, encouragement, and leading by example.",
@@ -188,12 +205,16 @@ export function getSkillRank(level: number): string {
 }
 
 export function getTotalLevel(skillList: LifeSkill[] = skills): number {
-  return skillList.reduce(
-    (sum, skill) => sum + (skill.countsTowardTotal === false ? 0 : skill.level),
-    0,
-  );
+  return skillList.reduce((sum, skill) => {
+    if (skill.countsTowardTotal === false) return sum;
+    if (typeof skill.level !== "number") return sum;
+    return sum + skill.level;
+  }, 0);
 }
 
-export function getSkillTooltipLabel(skill: LifeSkill): string {
-  return skill.tooltipLabel ?? skill.rank ?? getSkillRank(skill.level);
+export function getSkillTooltipLabel(skill: LifeSkill): string | null {
+  if (skill.tooltipLabel) return skill.tooltipLabel;
+  if (skill.rank) return skill.rank;
+  if (typeof skill.level !== "number") return null;
+  return getSkillRank(skill.level);
 }

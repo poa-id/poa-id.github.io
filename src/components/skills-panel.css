@@ -274,8 +274,20 @@
   color: #ff981f;
 }
 
-.osrs-tooltip span:nth-child(3) {
+.osrs-tooltip-rank {
   color: #ffffff;
+}
+
+.osrs-tooltip-category--craft {
+  color: #a86a2a;
+}
+
+.osrs-tooltip-category--discipline {
+  color: #7c93b6;
+}
+
+.osrs-tooltip-category--vocation {
+  color: #c8b15a;
 }
 
 .osrs-tooltip-desc {

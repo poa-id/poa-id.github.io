@@ -50,9 +50,9 @@ const PANEL_NATIVE_WIDTH = FRAME.col * 2 + FRAME.innerW;
 const PANEL_NATIVE_HEIGHT = FRAME.bar * 2 + FRAME.innerH;
 const TOOLTIP_OFFSET = 10;
 const TOOLTIP_EST_WIDTH = 110;
-const TOOLTIP_EST_HEIGHT = 42;
+const TOOLTIP_EST_HEIGHT = 55;
 const TOOLTIP_DESC_EST_WIDTH = 168;
-const TOOLTIP_DESC_EST_HEIGHT = 96;
+const TOOLTIP_DESC_EST_HEIGHT = 109;
 
 type TooltipState = {
   skill: LifeSkill;
@@ -199,7 +199,9 @@ export function SkillsPanel({
       onMouseLeave: hideTooltip,
       onFocus: (event: FocusEvent<HTMLElement>) => handleFocus(skill, event),
       onBlur: hideTooltip,
-      "aria-label": `${skill.name}, level ${skill.level}, ${rankLabel}`,
+      "aria-label": rankLabel
+        ? `${skill.name}, level ${skill.level}, ${rankLabel}`
+        : `${skill.name}, level ${skill.level}`,
     };
 
     if (skill.href) {
@@ -251,20 +253,32 @@ export function SkillsPanel({
             <div className="osrs-total-level">Total level: {totalLevel}</div>
           </div>
 
-          {tooltip ? (
-            <div
-              className={`osrs-tooltip${tooltip.skill.description ? " osrs-tooltip--desc" : ""}`}
-              style={{ left: tooltip.x, top: tooltip.y }}
-              role="tooltip"
-            >
-              <span>{tooltip.skill.name}</span>
-              <span>Level {tooltip.skill.level}</span>
-              <span>{getSkillTooltipLabel(tooltip.skill)}</span>
-              {tooltip.skill.description ? (
-                <span className="osrs-tooltip-desc">{tooltip.skill.description}</span>
-              ) : null}
-            </div>
-          ) : null}
+          {tooltip ? (() => {
+            const rankLabel = getSkillTooltipLabel(tooltip.skill);
+            return (
+              <div
+                className={`osrs-tooltip${tooltip.skill.description ? " osrs-tooltip--desc" : ""}`}
+                style={{ left: tooltip.x, top: tooltip.y }}
+                role="tooltip"
+              >
+                <span>{tooltip.skill.name}</span>
+                <span>Level {tooltip.skill.level}</span>
+                {tooltip.skill.category ? (
+                  <span
+                    className={`osrs-tooltip-category osrs-tooltip-category--${tooltip.skill.category.toLowerCase()}`}
+                  >
+                    {tooltip.skill.category}
+                  </span>
+                ) : null}
+                {rankLabel ? (
+                  <span className="osrs-tooltip-rank">{rankLabel}</span>
+                ) : null}
+                {tooltip.skill.description ? (
+                  <span className="osrs-tooltip-desc">{tooltip.skill.description}</span>
+                ) : null}
+              </div>
+            );
+          })() : null}
         </div>
       </div>
     </div>
