@@ -136,6 +136,13 @@
   font-size: var(--skillbook-body);
   line-height: 1.4;
   text-align: left;
+  text-decoration: none;
+}
+
+a.skillbook-levels-btn:hover,
+a.skillbook-levels-btn:focus-visible {
+  color: var(--skillbook-yellow);
+  outline: none;
 }
 
 .skillbook-levels-btn:hover,

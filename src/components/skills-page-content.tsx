@@ -109,6 +109,13 @@ function SkillDetail({
             story of the practice.
           </p>
         ) : null}
+        {skill.href ? (
+          <p>
+            <a href={skill.href} className="skillbook-levels-btn">
+              {skill.linkLabel ?? "See related work"}
+            </a>
+          </p>
+        ) : null}
       </div>
 
       <div className="space-y-2">

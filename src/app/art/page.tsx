@@ -1,12 +1,19 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { ProfessionalSectionShell } from "@/components/professional-section-shell"
 import { sectionTabClass } from "@/lib/professional-layout"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 
 type Section = "illustration" | "tattoos" | "flash" | "digital-tattoo"
+
+const SECTIONS: Section[] = ["illustration", "tattoos", "flash", "digital-tattoo"]
+
+function isSection(value: string | null): value is Section {
+  return value !== null && SECTIONS.includes(value as Section)
+}
 
 interface ArtPiece {
   src: string
@@ -46,12 +53,23 @@ const sectionPieces: Record<Section, ArtPiece[]> = {
 
 export default function Art() {
   const { theme } = useTheme()
+  const router = useRouter()
   const [currentSection, setCurrentSection] = useState<Section>("illustration")
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const section = params.get("section")
+    if (isSection(section)) {
+      setCurrentSection(section)
+      setLightboxIndex(null)
+    }
+  }, [])
 
   const handleSectionChange = (section: Section) => {
     setCurrentSection(section)
     setLightboxIndex(null)
+    router.replace(`/art?section=${section}`, { scroll: false })
     const contentDiv = document.querySelector(".content-scroll")
     if (contentDiv) {
       contentDiv.scrollTop = 0

@@ -28,6 +28,8 @@ export type LifeSkill = {
   milestones?: SkillJournalMilestone[];
   countsTowardTotal?: boolean;
   href?: string;
+  /** Label for the skill journal CTA link (requires href) */
+  linkLabel?: string;
 };
 
 export type SkillLevelStage = {
@@ -180,7 +182,21 @@ export const skills: LifeSkill[] = [
   { id: "writing", name: "Writing", level: 32, category: "Discipline", icon: "/skills/icons-32/writing.png" },
   { id: "bowmaking", name: "Bowmaking", level: 8, category: "Craft", icon: "/skills/icons-32/bowmaking.png" },
 
-  { id: "tattooing", name: "Tattooing", level: 38, category: "Craft", icon: "/skills/icons-32/tattooing.png" },
+  {
+    id: "tattooing",
+    name: "Tattooing",
+    level: 38,
+    category: "Craft",
+    icon: "/skills/icons-32/tattooing.png",
+    href: "/art?section=tattoos",
+    linkLabel: "Check tattoos here",
+    milestones: [
+      { year: 2020, title: "First tattoo." },
+      { year: 2022, title: "Completed the first hundred tattoos." },
+      { year: 2024, title: "Entered a traditional tattoo apprenticeship." },
+      { year: 2026, title: "Opened a private studio." },
+    ],
+  },
   { id: "music", name: "Music", level: 26, category: "Discipline", icon: "/skills/icons-32/music.png" },
   { id: "crafting", name: "Crafting", level: 27, category: "Craft", icon: "/skills/icons-32/crafting.png" },
 
