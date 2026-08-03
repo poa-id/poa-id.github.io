@@ -201,7 +201,7 @@ a.skillbook-levels-btn:focus-visible {
 
 .skillbook-journal-entry {
   display: grid;
-  grid-template-columns: 3.5rem 1fr;
+  grid-template-columns: minmax(4.75rem, auto) 1fr;
   gap: 0.25rem 0.85rem;
   padding: 0.55rem 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.45);
@@ -213,6 +213,15 @@ a.skillbook-levels-btn:focus-visible {
   font-size: var(--skillbook-body);
   line-height: 1.35;
   text-align: right;
+  white-space: nowrap;
+}
+
+.skillbook-journal-year:empty {
+  visibility: hidden;
+}
+
+.skillbook-journal-entry--undated {
+  grid-template-columns: 1fr;
 }
 
 .skillbook-journal-body {

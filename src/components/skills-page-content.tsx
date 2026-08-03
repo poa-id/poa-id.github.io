@@ -131,9 +131,11 @@ function SkillDetail({
             {journal.map((entry, index) => (
               <div
                 key={`${entry.year}-${entry.title}-${index}`}
-                className="skillbook-journal-entry"
+                className={`skillbook-journal-entry${entry.year === "" ? " skillbook-journal-entry--undated" : ""}`}
               >
-                <div className="skillbook-journal-year">{entry.year}</div>
+                {entry.year !== "" ? (
+                  <div className="skillbook-journal-year">{entry.year}</div>
+                ) : null}
                 <div className="skillbook-journal-body">
                   <div className="skillbook-journal-title">{entry.title}</div>
                   {entry.detail ? (
