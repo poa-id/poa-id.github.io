@@ -93,77 +93,89 @@ export const STUDY_CONSTRAINTS: Record<Study, string[]> = {
 export interface AntiShortcut {
   text: string
   extra?: string
+  requireAny?: string[]
 }
 
 export const ANTI_SHORTCUTS: AntiShortcut[] = [
   {
     text: "No glowing eyes.",
     extra: "If the subject is unnatural, show it through proportion, behavior and context.",
+    requireAny: ["creature", "beast", "character", "group-scene", "eyes"],
   },
   {
     text: "No magical particles.",
     extra: "The supernatural quality must be communicated through scale, anatomy, environment or composition rather than VFX.",
+    requireAny: ["spell-moment", "supernatural", "sacred", "strange"],
   },
   {
     text: "No floating rocks.",
+    requireAny: ["spell-moment", "supernatural", "mountain", "environment-land", "strange"],
   },
   {
     text: "No generic plate armor.",
     extra: "If armor is present, it must look locally made, repaired and specific to the body wearing it.",
+    requireAny: ["warrior", "soldier", "guard", "watch", "armored", "combat"],
   },
   {
     text: "No dramatic lightning in the sky.",
+    requireAny: ["open", "storm", "sky"],
   },
   {
     text: "No symmetrical hero pose.",
+    requireAny: ["character", "group-scene", "gesture"],
   },
   {
     text: "No unexplained glowing runes.",
-  },
-  {
-    text: "Avoid excessive ornamental detail.",
-    extra: "Spend drawing time on structure, weight and light.",
+    requireAny: ["spell-moment", "sacred", "scholarly", "supernatural"],
   },
   {
     text: "Avoid generic medieval European castle imagery.",
     extra: "If a fortification is needed, invent from local materials and a practical plan.",
+    requireAny: ["fortified", "fortress"],
   },
   {
     text: "No lens flares, energy beams or comic-book speed lines.",
+    requireAny: ["spell-moment", "supernatural"],
   },
   {
     text: "No perfect unblemished metal.",
     extra: "Every worked surface should show manufacture or use.",
+    requireAny: ["iron", "steel", "bronze", "copper", "metal"],
   },
   {
     text: "No conveniently posed dead tree pointing at the subject.",
+    requireAny: ["forest", "vegetation", "growth"],
   },
   {
     text: "No cloak-as-silhouette cheat.",
     extra: "If a cloak is present, it has weight, thickness and a reason to hang that way.",
+    requireAny: ["character", "group-scene"],
   },
   {
     text: "No extra pairs of wings unless the anatomy can explain launch, landing and rest.",
+    requireAny: ["winged", "wings", "avian", "creature", "beast"],
   },
   {
     text: "No skulls used as decoration.",
     extra: "Bone may appear if it belongs to a body, a trade or a burial.",
+    requireAny: ["death", "sacred", "creature", "beast"],
   },
   {
     text: "No glowing crystals as a substitute for lighting design.",
+    requireAny: ["underground", "spell-moment", "strange"],
   },
   {
     text: "No identical crowd clones.",
     extra: "Even background figures need variation in age, load and attention.",
+    requireAny: ["group-scene"],
   },
   {
     text: "No rumpled 'fantasy map' landscape with a landmark in every quadrant.",
+    requireAny: ["environment-land"],
   },
   {
     text: "No antlered helmets or spiked pauldrons unless the brief's culture would actually make them.",
-  },
-  {
-    text: "Supernatural quality must be communicated through scale, anatomy, environment or composition rather than VFX.",
+    requireAny: ["warrior", "soldier", "guard", "armored"],
   },
 ]
 

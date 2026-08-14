@@ -14,7 +14,6 @@ import {
   ADAPTATIONS,
   ANATOMY_PROHIBITIONS,
   BODY_PLANS,
-  CREATURE_ANATOMY_NOTES,
   CREATURE_FAMILIES,
   ECO_ROLES,
   type AdaptationDef,
@@ -23,6 +22,14 @@ import {
   type EcoRoleDef,
 } from "@/data/commissions/creature-taxonomy"
 import type { EnvironmentDef } from "@/data/commissions/environments"
+import {
+  anatomyDirectionFor,
+  bodyPlanWeight,
+  mergeCapabilities,
+  visibleBodyPlanLabel,
+  type AnatomyCapabilities,
+} from "@/lib/commissions/anatomy"
+import { pluralize } from "@/lib/commissions/grammar"
 import type { SeededRng } from "@/lib/commissions/random"
 import type {
   BeingTaxonomy,
@@ -111,14 +118,9 @@ function characterPhrase(species: SpeciesDef, age: AgeId, build: BuildId, role: 
   return withArticle(`${ageDef.adjective} ${buildDef.adjective} ${species.noun} ${roleLabel}`)
 }
 
-function groupPhrase(species: SpeciesDef, age: AgeId, build: BuildId, role: RoleDef): string {
-  const ageDef = AGES.find((item) => item.id === age)!
-  const buildDef = BUILDS.find((item) => item.id === build)!
-  const roleLabel = role.label.toLowerCase()
-  if (age === "child") {
-    return withArticle(`${roleLabel} crew of ${buildDef.adjective} ${species.noun} children`)
-  }
-  return withArticle(`${roleLabel} crew of ${ageDef.adjective} ${buildDef.adjective} ${species.plural}`)
+function groupPhrase(species: SpeciesDef, role: RoleDef, size: string): string {
+  const rolePlural = pluralize(role.label.toLowerCase())
+  return `A crew of ${size} ${species.noun} ${rolePlural}`
 }
 
 function pickCharacter(
@@ -133,19 +135,23 @@ function pickCharacter(
   const build = pickBuild(rng, species, age)
   const ageLabel = AGES.find((item) => item.id === age)!.label
   const buildLabel = BUILDS.find((item) => item.id === build)!.label
+  const size = grouped ? rng.pick(["three", "four", "five", "six"]) : undefined
 
   return {
     species,
     taxonomy: {
       kind: "character",
       species: species.label,
-      age: ageLabel,
-      build: buildLabel,
-      role: role.label,
-      summary: `${species.label} · ${ageLabel} · ${buildLabel} · ${role.label}`,
+      age: grouped ? "Mixed ages" : ageLabel,
+      build: grouped ? "Mixed builds" : buildLabel,
+      role: grouped ? `${role.label} crew` : role.label,
+      summary: grouped
+        ? `${species.label} · ${role.label} crew · ${size} · mixed ages and builds`
+        : `${species.label} · ${ageLabel} · ${buildLabel} · ${role.label}`,
+      groupSize: size,
     },
-    phrase: grouped
-      ? groupPhrase(species, age, build, role)
+    phrase: grouped && size
+      ? groupPhrase(species, role, size)
       : characterPhrase(species, age, build, role),
   }
 }
@@ -156,7 +162,7 @@ function pickFamily(rng: SeededRng, beastly: boolean): CreatureFamilyDef {
 }
 
 function pickBodyPlan(rng: SeededRng, family: CreatureFamilyDef): BodyPlanDef {
-  return rng.weightedPick(BODY_PLANS, (plan) => family.bodyPlanBias[plan.id] ?? 0.35)
+  return rng.weightedPick(BODY_PLANS, (plan) => bodyPlanWeight(family, plan))
 }
 
 function pickEcoRole(rng: SeededRng, family: CreatureFamilyDef, body: BodyPlanDef): EcoRoleDef {
@@ -183,6 +189,20 @@ function adaptationMatches(adaptation: AdaptationDef, env: EnvironmentDef): bool
   return adaptation.envTags.some((tag) => env.tags.includes(tag))
 }
 
+function creatureSummary(
+  family: CreatureFamilyDef,
+  body: BodyPlanDef,
+  role: EcoRoleDef,
+  adaptation: AdaptationDef
+): { bodyPlan: string; summary: string } {
+  const bodyLabel = visibleBodyPlanLabel(family, body)
+  const parts = [family.label, bodyLabel, role.label, adaptation.label].filter(Boolean)
+  return {
+    bodyPlan: bodyLabel ?? body.label,
+    summary: parts.join(" · "),
+  }
+}
+
 function creaturePhrase(
   family: CreatureFamilyDef,
   body: BodyPlanDef,
@@ -190,7 +210,10 @@ function creaturePhrase(
   adaptation: AdaptationDef,
   env: EnvironmentDef
 ): string {
-  const core = `${body.adjective} ${family.adjective} ${role.noun}`
+  const bodyLabel = visibleBodyPlanLabel(family, body)
+  const core = bodyLabel
+    ? `${body.adjective} ${family.adjective} ${role.noun}`
+    : `${family.adjective} ${role.noun}`
   if (adaptationMatches(adaptation, env)) return withArticle(core)
   return withArticle(`${core} adapted to ${adaptation.label.toLowerCase()} conditions`)
 }
@@ -204,6 +227,7 @@ function pickCreature(
   const body = pickBodyPlan(rng, family)
   const role = pickEcoRole(rng, family, body)
   const adaptation = pickAdaptation(rng, env)
+  const visible = creatureSummary(family, body, role, adaptation)
 
   return {
     family,
@@ -211,10 +235,10 @@ function pickCreature(
     taxonomy: {
       kind: "creature",
       family: family.label,
-      bodyPlan: body.label,
+      bodyPlan: visible.bodyPlan,
       ecologicalRole: role.label,
       adaptation: adaptation.label,
-      summary: `${family.label} · ${body.label} · ${role.label} · ${adaptation.label}`,
+      summary: visible.summary,
     },
     phrase: creaturePhrase(family, body, role, adaptation, env),
   }
@@ -263,6 +287,8 @@ function composeAnatomyDirection(
     character: boolean
     hybrid: boolean
     study: Study
+    capabilities?: AnatomyCapabilities
+    familyId?: string
   }
 ): string | undefined {
   const relevant =
@@ -274,7 +300,8 @@ function composeAnatomyDirection(
 
   if (args.character && args.hybrid) return rng.pick(HYBRID_ANATOMY_NOTES)
   if (args.character) return rng.pick(CHARACTER_ANATOMY_NOTES)
-  return rng.pick(CREATURE_ANATOMY_NOTES)
+  if (args.capabilities) return anatomyDirectionFor(args.capabilities, args.familyId ?? "")
+  return anatomyDirectionFor(args.capabilities ?? mergeCapabilities(CREATURE_FAMILIES[0], BODY_PLANS[0]), args.familyId ?? "")
 }
 
 export function generateTaxonomy(
@@ -317,10 +344,13 @@ export function generateTaxonomy(
 
   if (subject === "creature" || subject === "beast") {
     const picked = pickCreature(rng, args.environment, subject === "beast")
+    const capabilities = mergeCapabilities(picked.family, picked.body)
     const anatomyDirection = composeAnatomyDirection(rng, {
       character: false,
       hybrid: picked.family.id === "hybrid",
       study: args.study,
+      capabilities,
+      familyId: picked.family.id,
     })
     const extraConstraints: string[] = []
     if (rng.chance(args.difficulty === "apprentice" ? 0.3 : 0.4)) {
@@ -381,6 +411,7 @@ export interface CharacterIdentity {
   materialTags: string[]
   hybrid: boolean
   sourceAnimals: string[]
+  groupSize?: string
 }
 
 export interface CreatureIdentity {
@@ -390,6 +421,7 @@ export interface CreatureIdentity {
   ecoRole: EcoRoleDef
   preferredEnvTags: string[]
   materialTags: string[]
+  capabilities: AnatomyCapabilities
 }
 
 export function pickCharacterIdentity(
@@ -403,6 +435,7 @@ export function pickCharacterIdentity(
   const build = pickBuild(rng, species, age)
   const ageLabel = AGES.find((item) => item.id === age)!.label
   const buildLabel = BUILDS.find((item) => item.id === build)!.label
+  const size = grouped ? rng.pick(["three", "four", "five", "six"]) : undefined
 
   return {
     species,
@@ -410,18 +443,22 @@ export function pickCharacterIdentity(
     taxonomy: {
       kind: "character",
       species: species.label,
-      age: ageLabel,
-      build: buildLabel,
-      role: role.label,
-      summary: `${species.label} · ${ageLabel} · ${buildLabel} · ${role.label}`,
+      age: grouped ? "Mixed ages" : ageLabel,
+      build: grouped ? "Mixed builds" : buildLabel,
+      role: grouped ? `${role.label} crew` : role.label,
+      summary: grouped
+        ? `${species.label} · ${role.label} crew · ${size} · mixed ages and builds`
+        : `${species.label} · ${ageLabel} · ${buildLabel} · ${role.label}`,
+      groupSize: size,
     },
-    phrase: grouped
-      ? groupPhrase(species, age, build, role)
+    phrase: grouped && size
+      ? groupPhrase(species, role, size)
       : characterPhrase(species, age, build, role),
     preferredEnvTags: role.envTags ?? [],
     materialTags: species.materialTags,
     hybrid: species.hybrid,
     sourceAnimals: species.sourceAnimals,
+    groupSize: size,
   }
 }
 
@@ -429,15 +466,21 @@ export function pickCreatureIdentity(rng: SeededRng, beastly: boolean): Creature
   const family = pickFamily(rng, beastly)
   const body = pickBodyPlan(rng, family)
   const ecoRole = pickEcoRole(rng, family, body)
+  const capabilities = mergeCapabilities(family, body)
   const preferredEnvTags = [
     ...new Set([...(BODY_ENV_TAGS[body.id] ?? []), ...(ECO_ENV_TAGS[ecoRole.id] ?? [])]),
   ]
+  const bodyLabel = visibleBodyPlanLabel(family, body)
+  const phraseCore = bodyLabel
+    ? `${body.adjective} ${family.adjective} ${ecoRole.noun}`
+    : `${family.adjective} ${ecoRole.noun}`
 
   return {
     family,
     body,
     ecoRole,
-    phraseCore: `${body.adjective} ${family.adjective} ${ecoRole.noun}`,
+    capabilities,
+    phraseCore,
     preferredEnvTags,
     materialTags: family.materialTags,
   }
@@ -488,14 +531,25 @@ export function finishLivingTaxonomy(
     return 0.2 + envHits * 2 + bodyHits * 1.6
   })
 
+  const visible = creatureSummary(creature.family, creature.body, creature.ecoRole, adaptation)
+  const extraConstraints: string[] = []
+  if (rng.chance(args.difficulty === "apprentice" ? 0.3 : 0.4)) {
+    const prohibitions = ANATOMY_PROHIBITIONS.filter((item) => {
+      if (/wings/i.test(item) && creature.capabilities.hasWings) return false
+      if (/humanoid musculature/i.test(item) && creature.family.id === "construct-creature") return false
+      return true
+    })
+    if (prohibitions.length > 0) extraConstraints.push(rng.pick(prohibitions))
+  }
+
   return {
     being: {
       kind: "creature",
       family: creature.family.label,
-      bodyPlan: creature.body.label,
+      bodyPlan: visible.bodyPlan,
       ecologicalRole: creature.ecoRole.label,
       adaptation: adaptation.label,
-      summary: `${creature.family.label} · ${creature.body.label} · ${creature.ecoRole.label} · ${adaptation.label}`,
+      summary: visible.summary,
     },
     phrase: withArticle(creature.phraseCore),
     realismAnchor: pickAnchor(rng, {
@@ -510,10 +564,10 @@ export function finishLivingTaxonomy(
       character: false,
       hybrid: creature.family.id === "hybrid",
       study: args.study,
+      capabilities: creature.capabilities,
+      familyId: creature.family.id,
     }),
     materialTags: creature.family.materialTags,
-    extraConstraints: rng.chance(args.difficulty === "apprentice" ? 0.3 : 0.4)
-      ? [rng.pick(ANATOMY_PROHIBITIONS)]
-      : [],
+    extraConstraints,
   }
 }

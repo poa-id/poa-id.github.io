@@ -80,6 +80,9 @@ export const ENVIRONMENTS: EnvironmentDef[] = [
   { id: "salt-marsh", name: "flooded coastal salt marsh", article: "a", tags: ["coastal", "water", "swamp", "growth", "wetland"] },
   { id: "irrigation", name: "clay irrigation ditch", article: "a", tags: ["agricultural", "water", "rural"] },
   { id: "kitchen", name: "working kitchen", article: "a", tags: ["domestic", "interior", "civic"] },
+  { id: "tidal-inlet", name: "tidal inlet", article: "a", tags: ["coastal", "water", "rural"] },
+  { id: "farmyard", name: "working farmyard", article: "a", tags: ["agricultural", "rural", "domestic"] },
+  { id: "wooded-ridge", name: "wooded ridge", article: "a", tags: ["forest", "rural", "sky"] },
 ]
 
 export function environmentPhrase(env: EnvironmentDef): string {
@@ -223,6 +226,38 @@ const PLACE_OVERRIDES: Record<
   forge: {
     features: ["hearth", "anvil", "darkened shop walls"],
     materials: ["iron", "steel", "charred-wood", "ash"],
+  },
+  "tidal-inlet": {
+    features: ["muddy bank", "mooring posts", "reeds", "working boats"],
+    materials: ["wood", "rope", "shallow-water", "mud"],
+  },
+  farmyard: {
+    features: ["packed earth", "fencing", "stacked tools", "orchard edge"],
+    materials: ["wood", "mud", "iron"],
+  },
+  "wooded-ridge": {
+    features: ["tree line", "a packed path", "fields below"],
+    materials: ["bark", "foliage", "wood"],
+  },
+  granary: {
+    features: ["staddlestones", "sacks", "a loading hatch"],
+    materials: ["wood", "rough-stone", "iron"],
+  },
+  boathouse: {
+    features: ["water door", "wet floor", "hanging gear"],
+    materials: ["wood", "rotten-wood", "rope", "shallow-water"],
+  },
+  "watch-post": {
+    features: ["ladder", "roofed platform", "a used horn"],
+    materials: ["wood", "rope", "iron"],
+  },
+  "root-cellar": {
+    features: ["packed earth walls", "stored roots", "a low doorway"],
+    materials: ["wood", "rough-stone", "wet-surfaces"],
+  },
+  "mushroom-cellar": {
+    features: ["damp beds", "harvest baskets", "a used lamp"],
+    materials: ["fungus", "wood", "wet-surfaces"],
   },
 }
 

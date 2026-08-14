@@ -19,6 +19,8 @@ export interface SceneEntityDef {
   requireAllEnvTags?: string[]
   forbidEnvTags?: string[]
   preferEnvIds?: string[]
+  forbidEnvIds?: string[]
+  number?: "singular" | "plural"
   studyAffinity: Partial<Record<Study, number>>
   titleNouns: string[]
   scaleProblem?: boolean
@@ -361,7 +363,7 @@ export const SCENE_ENTITIES: SceneEntityDef[] = [
     },
     elements: ["wheel-house", "loading door", "mill race", "patched wall"],
     compatibleEnvTags: ["rural", "water", "industrial", "agricultural"],
-    preferEnvIds: ["mill-race"],
+    preferEnvIds: ["mill-race", "irrigation", "flood-plain"],
     studyAffinity: { architecture: 3.6, perspective: 3.4, materials: 2.4, lighting: 2, scale: 2.2 },
     titleNouns: ["Mill", "Race", "Wheel"],
     scaleProblem: true,
@@ -431,7 +433,8 @@ export const SCENE_ENTITIES: SceneEntityDef[] = [
     },
     elements: ["staddlestones", "ladder", "loading hatch"],
     compatibleEnvTags: ["agricultural", "rural"],
-    preferEnvIds: ["granary", "farmland"],
+    preferEnvIds: ["farmyard", "farmland", "snow-farm", "orchard"],
+    forbidEnvIds: ["granary"],
     studyAffinity: { architecture: 3.4, perspective: 3, scale: 2.4, materials: 2 },
     titleNouns: ["Granary", "Hatch", "Ladder"],
     scaleProblem: true,
@@ -478,7 +481,8 @@ export const SCENE_ENTITIES: SceneEntityDef[] = [
     },
     elements: ["ladder", "platform", "bell or horn"],
     compatibleEnvTags: ["forest", "rural", "fortified", "agricultural"],
-    preferEnvIds: ["watch-post"],
+    preferEnvIds: ["wooded-ridge", "coppice", "hedgerow", "farmland"],
+    forbidEnvIds: ["watch-post"],
     studyAffinity: { architecture: 3, perspective: 3.2, scale: 2.6, composition: 2.2 },
     titleNouns: ["Watch", "Post", "Ladder"],
     scaleProblem: true,
@@ -503,7 +507,8 @@ export const SCENE_ENTITIES: SceneEntityDef[] = [
     },
     elements: ["water door", "boat", "nets", "wet floor"],
     compatibleEnvTags: ["water", "coastal", "domestic"],
-    preferEnvIds: ["boathouse", "fishing-village"],
+    preferEnvIds: ["tidal-inlet", "fishing-village", "coastline", "salt-marsh"],
+    forbidEnvIds: ["boathouse"],
     studyAffinity: { architecture: 3, lighting: 2.8, materials: 2.6, atmosphere: 2 },
     titleNouns: ["Boathouse", "Quay", "Net"],
   }),
@@ -688,6 +693,7 @@ export const SCENE_ENTITIES: SceneEntityDef[] = [
     what: "A working mushroom crop on damp shelves or a cellar floor, with baskets and a used lamp",
     physicalDescription: "These are cultivated fruiting bodies, not a fantasy cave of giant mushrooms. Show beds, moisture, and harvest.",
     placement: "are growing",
+    number: "plural",
     tags: ["vegetation", "stationary", "agricultural", "interior"],
     materials: ["fungus", "wood", "wet-surfaces", "wicker"],
     materialWhere: {
@@ -710,6 +716,7 @@ export const SCENE_ENTITIES: SceneEntityDef[] = [
     what: "A dense stand of reeds being cut, with bundled stems and a wet path through the bed",
     physicalDescription: "Build plant masses through clustering, overlap and variation in height. The cut bundles prove human use.",
     placement: "fill",
+    number: "plural",
     tags: ["vegetation", "stationary", "wetland"],
     materials: ["foliage", "shallow-water", "mud", "rope"],
     materialWhere: {

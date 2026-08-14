@@ -76,6 +76,7 @@ export interface CharacterTaxonomy {
   build: string
   role: string
   summary: string
+  groupSize?: string
 }
 
 export interface CreatureTaxonomy {

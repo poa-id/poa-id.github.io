@@ -27,14 +27,7 @@ export function unique<T>(items: T[]): T[] {
   return [...new Set(items)]
 }
 
-export function withArticle(rest: string): string {
-  const first = rest.trim().split(/\s+/)[0] ?? rest
-  return `${/^[aeiou]/i.test(first) ? "An" : "A"} ${rest}`
-}
-
-export function articleFor(word: string): "a" | "an" {
-  return /^[aeiou]/i.test(word.trim()) ? "an" : "a"
-}
+export { articleFor, withArticle } from "@/lib/commissions/grammar"
 
 export function sentence(text: string): string {
   const trimmed = text.trim().replace(/\s+/g, " ")
@@ -54,20 +47,50 @@ export function joinFeatures(features: string[]): string {
   return `${features.slice(0, -1).join(", ")}, and ${features[features.length - 1]}`
 }
 
-export function lightingCompatible(light: LightingDef, place: PlaceContext): boolean {
-  const tags = place.tags
+export function lightingCompatible(
+  light: LightingDef,
+  place: PlaceContext,
+  sceneTags: string[] = []
+): boolean {
+  const tags = [...place.tags, ...sceneTags]
+  if (light.requiresAny && !anyOverlap(light.requiresAny, tags) && !light.establish) {
+    return false
+  }
+  if (light.id === "dapple" && !tags.includes("forest") && !place.vegetation) return false
+  if (light.natural) {
+    switch (light.id) {
+      case "snow-glare":
+      case "twilight":
+      case "cold-morning":
+        return tags.includes("cold") && !place.interior
+      case "underwater":
+        return (
+          (tags.includes("flood") ||
+            tags.includes("swamp") ||
+            tags.includes("wetland") ||
+            place.env.id === "coral-pool") &&
+          !place.interior
+        )
+      case "water-bounce":
+      case "wet-bounce":
+      case "after-rain":
+        return place.wet
+      case "golden-hour":
+      case "dawn":
+      case "noon":
+      case "backlight":
+      case "storm":
+        return !place.interior
+      default:
+        return true
+    }
+  }
+
   switch (light.id) {
-    case "dapple":
-      return tags.includes("forest")
     case "firelight":
       return tags.includes("fire") || (tags.includes("domestic") && place.interior)
     case "forge-glow":
       return tags.includes("fire") || tags.includes("industrial")
-    case "snow-glare":
-    case "twilight":
-      return tags.includes("cold") && !place.interior
-    case "underwater":
-      return (tags.includes("flood") || tags.includes("swamp") || tags.includes("wetland") || place.env.id === "coral-pool") && !place.interior
     case "subterranean":
       return tags.includes("underground")
     case "hearth-interior":
@@ -82,23 +105,16 @@ export function lightingCompatible(light: LightingDef, place: PlaceContext): boo
       return tags.includes("underground") || tags.includes("swamp") || tags.includes("strange")
     case "procession-lamps":
       return tags.includes("civic") || tags.includes("sacred")
-    case "water-bounce":
-    case "wet-bounce":
-    case "after-rain":
-      return place.wet
-    case "golden-hour":
-    case "dawn":
-    case "noon":
-    case "backlight":
-    case "storm":
-      return !place.interior
+    case "fog-lamp":
+      return true
     default:
       return true
   }
 }
 
-export function accentCompatible(accent: string, place: PlaceContext, hasBeing: boolean): boolean {
+export function accentCompatible(accent: string, place: PlaceContext, hasBeing: boolean, sceneTags: string[] = []): boolean {
   const text = accent.toLowerCase()
+  const tags = [...place.tags, ...sceneTags]
   if (/(puddle|wet-ground|wet surfaces|wet-stone|caustic|rain|moisture on)/.test(text) && !place.wet) {
     return false
   }
@@ -114,6 +130,9 @@ export function accentCompatible(accent: string, place: PlaceContext, hasBeing: 
     return false
   }
   if (/grease and ceramic/.test(text) && !place.tags.includes("domestic") && !place.interior) {
+    return false
+  }
+  if (/(lantern|lamp)\b/.test(text) && !anyOverlap(["lamp", "lantern", "carriedLight"], tags)) {
     return false
   }
   return true

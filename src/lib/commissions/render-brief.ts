@@ -1,5 +1,7 @@
 import { STUDY_BY_ID } from "@/data/commissions/studies"
-import { articleFor, joinFeatures, sentence, withArticle } from "@/lib/commissions/compatibility"
+import { emergingContact, overlapContact } from "@/lib/commissions/anatomy"
+import { articleFor, countOf, impliedPhrase, occupies, withArticle } from "@/lib/commissions/grammar"
+import { joinFeatures, sentence } from "@/lib/commissions/compatibility"
 import type { SeededRng } from "@/lib/commissions/random"
 import type { SceneModel, VisibleMaterial } from "@/lib/commissions/scene-model"
 import type { Study } from "@/lib/commissions/types"
@@ -121,6 +123,9 @@ const PLACE_GLOSS: Record<string, string> = {
   "salt-marsh": "a flooded coastal salt marsh of reed beds, mud and standing water",
   irrigation: "a clay irrigation ditch cutting through worked fields",
   kitchen: "a working kitchen",
+  "tidal-inlet": "a tidal inlet of muddy banks, mooring posts and working boats",
+  farmyard: "a working farmyard of packed earth, fencing and stacked tools",
+  "wooded-ridge": "a wooded ridge with a view over fields",
 }
 
 const BODY_PLAN_PREFIX: Record<string, string> = {
@@ -164,39 +169,32 @@ function featurePhrase(model: SceneModel, count = 3): string {
   return joinFeatures(model.setting.features.slice(0, count))
 }
 
-function feedingContact(model: SceneModel): string {
-  const family = model.being?.kind === "creature" ? model.being.family.toLowerCase() : ""
-  if (/avian|raptor/.test(family)) return "beak, talons and the ground"
-  if (/piscine|cetacean/.test(family)) return "the mouth and the water"
-  if (/insect|arachnid/.test(family)) return "mouthparts and the limbs among the growth"
-  return "muzzle, neck and feet"
-}
-
 function creatureLead(model: SceneModel): string {
   const being = model.being
   if (being?.kind !== "creature") return leadNoun(model.what)
   const family = being.family.toLowerCase()
   const role = being.ecologicalRole.toLowerCase()
   const prefix = BODY_PLAN_PREFIX[being.bodyPlan] ?? ""
-  return withArticle(`${prefix}${family} ${role}`.replace(/\s+/g, " ").trim())
+  const prefixed = prefix && !family.startsWith(prefix.trim()) ? `${prefix}${family} ${role}` : `${family} ${role}`
+  return withArticle(prefixed.replace(/\s+/g, " ").trim())
 }
 
 function characterLead(model: SceneModel): string {
   const being = model.being
   if (being?.kind !== "character") return leadNoun(model.what)
+  if (model.subject.category === "group-scene") {
+    return model.what.replace(/[.!?]$/, "")
+  }
   const species = being.species.replace(/\s+humanoid$/i, "").toLowerCase()
-  const role = being.role.toLowerCase()
+  const role = being.role.toLowerCase().replace(/ crew$/, "")
   const age = being.age.toLowerCase()
   const build = being.build.toLowerCase()
-  if (model.subject.category === "group-scene") {
-    return withArticle(`${role} crew of ${age} ${build} ${species}`)
-  }
   return withArticle(`${age} ${build} ${species} ${role}`)
 }
 
 function compositionName(model: SceneModel): string {
   if (model.being?.kind === "character") {
-    const role = model.being.role.toLowerCase()
+    const role = model.being.role.toLowerCase().replace(/ crew$/, "")
     return model.subject.category === "group-scene" ? `the ${role} crew` : `the ${role}`
   }
   return model.subject.noun
@@ -206,34 +204,46 @@ function objectLead(model: SceneModel): string {
   return leadNoun(model.what)
 }
 
+function localContextPhrase(model: SceneModel): string {
+  return joinFeatures((model.setting.localContext.length > 0 ? model.setting.localContext : model.setting.features).slice(0, 3))
+}
+
 function sceneParagraph(model: SceneModel): string {
   const place = placeGloss(model)
   const features = featurePhrase(model)
+  const context = localContextPhrase(model)
   const situation = model.narrative.situationId
   const category = model.subject.category
+  const number = model.grammaticalNumber
 
   if (category === "creature" || category === "beast") {
     const lead = creatureLead(model)
     if (situation === "moving-through-cover") {
-      return sentence(
-        `${lead} moves through ${place}. It picks its way among ${features}`
-      )
+      return sentence(`${lead} moves through ${place}, picking a path among ${features}`)
     }
     if (situation === "feeding-in-place") {
-      return sentence(`${lead} feeds among ${features} in ${place}`)
+      const feeding = model.feeding?.action ?? "feeds"
+      return sentence(`${lead} ${feeding} among ${features} in ${place}`)
     }
     if (situation === "drinking-at-water") {
       return sentence(`${lead} drinks and wades at the water in ${place}`)
     }
     if (situation === "nested-in-structure") {
-      return sentence(`${lead} uses a human structure in ${place} as perch, shelter or hunting ground`)
+      return sentence(`${lead} uses a built structure in ${place} as shelter, hunting ground or a place to feed`)
     }
-    return sentence(`${lead} occupies ${place}, among ${features}`)
+    return sentence(`${lead} ${occupies(number)} ${place}, among ${features}`)
   }
 
   if (category === "character" || category === "group-scene") {
     const lead = characterLead(model)
-    const role = model.being?.kind === "character" ? model.being.role.toLowerCase() : model.subject.role?.toLowerCase()
+    const role = model.being?.kind === "character" ? model.being.role.toLowerCase().replace(/ crew$/, "") : model.subject.role?.toLowerCase()
+    if (category === "group-scene") {
+      const variation = "Their ages and builds vary, but tools and clothing belong to the same trade"
+      if (situation === "crew-at-task" || situation === "mid-labor") {
+        return sentence(`${lead} shares one job in ${place}. ${variation}`)
+      }
+      return sentence(`${lead} works in ${place}. ${variation}`)
+    }
     if (situation === "carrying-through") {
       return sentence(`${lead} carries a real load through ${place}`)
     }
@@ -241,15 +251,10 @@ function sceneParagraph(model: SceneModel): string {
       return sentence(`${lead} has stopped mid-task in ${place}. The unfinished work is still in the hands or on the ground`)
     }
     if (situation === "weather-labor") {
-      return sentence(
-        `${lead} is still working in ${place}, in weather that tells on clothing, skin and ground`
-      )
+      return sentence(`${lead} is still working in ${place}, in weather that tells on clothing, skin and ground`)
     }
     if (situation === "tending-place") {
       return sentence(`${lead} tends ${place} as a job, attention on a specific object or patch of ground`)
-    }
-    if (situation === "crew-at-task") {
-      return sentence(`${lead} shares one job in ${place}. Bodies should answer one another rather than pose as a row of portraits`)
     }
     return sentence(`${lead} is mid-work in ${place}${role ? `, doing the ordinary labor of ${articleFor(role)} ${role}` : ""}`)
   }
@@ -279,10 +284,22 @@ function sceneParagraph(model: SceneModel): string {
   }
 
   const lead = objectLead(model)
+  const detail = model.what.includes(",") ? model.what.slice(model.what.indexOf(",") + 1).trim().replace(/[.!?]$/, "") : ""
+
+  if (category === "architecture") {
+    const located = `${leadNoun(model.what)} stands ${place.startsWith("a ") || place.startsWith("an ") ? `at the edge of ${place}` : `in ${place}`}`
+    const extras = detail ? `, ${detail}` : `, among ${context}`
+    if (situation === "repaired-in-place") {
+      return sentence(`${located}${extras}. Generations of repair are visible in mismatched braces, replaced boards and altered joints`)
+    }
+    if (situation === "still-in-use") {
+      return sentence(`${located}${extras}, kept in service through weekly use`)
+    }
+    return sentence(`${located}${extras}`)
+  }
+
   if (situation === "overtaken-by-plants") {
-    return sentence(
-      `${lead} stands in ${place}, partly claimed by local growth among ${features}`
-    )
+    return sentence(`${lead} stands in ${place}, partly claimed by local growth among ${features}`)
   }
   if (situation === "half-submerged") {
     return sentence(`${lead} stands in ${place}, with a clear waterline on every surface the flood has reached`)
@@ -302,11 +319,8 @@ function sceneParagraph(model: SceneModel): string {
   if (situation === "weather-on-object") {
     return sentence(`${lead} sits in ${place}, with the local weather readable on every surface`)
   }
-  if (situation === "harvest-pause-land") {
-    return sentence(`${lead} stands in ${place} among ${features}, with cut and uncut growth still readable as a crop`)
-  }
   if (situation === "plant-occupies") {
-    return sentence(`${lead} occupy ${place}, meeting ground, water or timber as living structure`)
+    return sentence(`${lead} ${occupies(number)} ${place}, meeting ground, water or timber as living structure`)
   }
   if (situation === "machine-in-use") {
     return sentence(`${lead} stands in ${place}, mid-work or just stopped`)
@@ -322,130 +336,88 @@ function narrativeParagraph(model: SceneModel): string | undefined {
   const name = model.subject.noun
   const features = featurePhrase(model)
   const category = model.subject.category
-  const being = model.being
+  const anatomy = model.anatomy
 
   if (category === "creature" || category === "beast") {
-    const locomotion =
-      being?.kind === "creature"
-        ? locomotionFor(being.bodyPlan, being.ecologicalRole)
-        : "standing, walking, turning and feeding"
     if (situation === "moving-through-cover") {
       return sentence(
-        `Dense growth should overlap the animal's legs and body so it feels physically embedded in the undergrowth. Its anatomy must convincingly support ${locomotion}`
+        anatomy
+          ? overlapContact(anatomy)
+          : "Dense growth overlaps the body so the animal is physically embedded in the undergrowth"
       )
     }
     if (situation === "feeding-in-place") {
-      return sentence(
-        `Show how this animal actually feeds here: ${feedingContact(model)} working among ${features}. The body must support ${locomotion}`
-      )
+      return model.feeding ? sentence(`The available food here is ${model.feeding.food}`) : undefined
     }
     if (situation === "drinking-at-water") {
-      return sentence(
-        `Weight, reflection and the meeting of hide and water are the moment. The stance has to make sense in mud or shallows, and the body must support ${locomotion}`
-      )
+      const hide = anatomy?.hasExoskeleton ? "shell" : anatomy?.hasFins ? "wet skin" : "hide"
+      return sentence(`Weight, reflection and the meeting of ${hide} and water are the moment, in mud or shallows that can actually hold the body`)
     }
     if (situation === "nested-in-structure") {
-      return sentence(
-        `The animal and the construction must share contact points and scale. Keep the structure looking built, and the body able to ${locomotion.split(" and ")[0]}`
-      )
+      return sentence(`The animal and the construction share contact points and scale. The structure looks built; the body uses it`)
     }
-    return sentence(`The creature should feel adapted to this ground. Its anatomy must support ${locomotion}`)
+    if (model.feeding) return sentence(`It ${model.feeding.action} here, using ${model.anatomy?.feedingNoun ?? "the mouth and the ground"}`)
+    return sentence(`The creature is using this ground, not posing on it`)
   }
 
-  if (category === "character" || category === "group-scene") {
+  if (category === "group-scene") {
+    return sentence(
+      "Bodies answer one another around one job: different ages, loads and attention, the same trade and community"
+    )
+  }
+
+  if (category === "character") {
     if (situation === "carrying-through") {
-      return sentence(
-        `The load and the ground together explain the walk. Show weight through the feet, a specific carried object, and clothing worn for work rather than display`
-      )
+      return sentence(`The load and the ground together explain the walk: a specific carried object, and clothing worn for work rather than display`)
     }
     if (situation === "paused-in-work") {
-      return sentence(
-        `Read the pause in the body: weight shifted, the load not yet set down, attention elsewhere. Hands and tools should still belong to the interrupted job`
-      )
+      return sentence(`Weight is shifted, the load not yet set down, attention elsewhere. Hands and tools still belong to the interrupted job`)
     }
     if (situation === "weather-labor") {
-      return sentence(
-        `Weather is a working condition. Wet, cold or dust should tell in cloth, hair and the ground underfoot, not only in the sky`
-      )
+      return sentence(`Wet, cold or dust tells in cloth, hair and the ground underfoot, not only in the sky`)
     }
-    if (situation === "crew-at-task") {
-      return sentence(
-        `Treat the group as a working unit. Variation in age, load and attention matters more than matching faces`
-      )
-    }
-    return sentence(
-      `Show the labor in the body: useful hands, weight through the pelvis and feet, and clothing that has been worn for this job`
-    )
+    return sentence(`Useful hands, weight through the pelvis and feet, and clothing worn for this job`)
   }
 
   if (situation === "overtaken-by-plants") {
-    return sentence(
-      `Let plant masses wrap and break the silhouette of ${name}. The growth is not a wreath around a prop; it shares the same space as the object`
-    )
+    return sentence(`Plant masses wrap and break the silhouette of ${name}, sharing the same space rather than wreathing a prop`)
   }
   if (situation === "half-submerged") {
-    return sentence(
-      `Keep a hard waterline. Wet and dry materials must meet convincingly on ${name} and on ${features}`
-    )
+    return sentence(`A hard waterline cuts ${name} and ${features}. Wet and dry materials meet on the same objects`)
   }
   if (situation === "still-in-use") {
-    return sentence(
-      `A recent offering, repair or work mark should prove that someone was here this week. Keep ${name} looking like a tool in a living place`
-    )
+    return sentence(`A recent offering, repair or work mark proves someone was here this week`)
   }
   if (situation === "left-after-work") {
-    return sentence(
-      `The last user is gone, but the unfinished job is still visible around ${name}`
-    )
+    return sentence(`The last user is gone, but the unfinished job is still visible around ${name}`)
   }
   if (situation === "repaired-in-place") {
-    return sentence(
-      `Show the repair as mismatched timber, extra nails or a later brace. The history should be readable in the joints`
-    )
+    if (category === "architecture") return undefined
+    return sentence(`Mismatched timber, extra nails or a later brace make the repair history readable`)
   }
   if (situation === "path-and-marker") {
-    return sentence(
-      `A worn path and a small object at the near edge establish human traffic and scale`
-    )
+    return sentence(`A worn path and a small object at the near edge establish human traffic and scale`)
   }
   if (situation === "machine-in-use") {
-    return sentence(
-      `Parts, load and site have to explain how the machine works. Wet, dust, heat or tension should show that it functions`
-    )
+    return sentence(`Wet, dust, heat or tension shows that the machine functions. Parts, load and site explain the mechanism`)
   }
   if (situation === "plant-occupies") {
-    return sentence(
-      `Show growth direction, overlap and a clear meeting with ground, water or structure. Plant masses are volumes`
-    )
+    return sentence(`Growth direction and overlap meet ground, water or structure as volume, not wallpaper`)
   }
   if (category === "environment-land") {
     return sentence(
-      `Keep it specific and worked. ${model.setting.interior ? "This is a room with a trade, not an empty stage set" : cap(features) + " should do the describing, not a generic wilderness vista"}`
+      model.setting.interior
+        ? "This is a room with a trade, not an empty stage set"
+        : `${cap(features)} do the describing, not a generic wilderness vista`
     )
   }
   if (category === "spell-moment") {
-    return sentence(
-      `The change is physical: materials, air and temperature. If the moment were removed, the place would still be a specific workplace`
-    )
+    return sentence(`The change is physical: materials, air and temperature. If the moment were removed, the place would still be a specific workplace`)
   }
-  if (model.subject.physicalDescription && !/must be readable|not for display|Build an? /.test(model.subject.physicalDescription)) {
-    return sentence(model.subject.physicalDescription)
+  if (model.establishedLight) {
+    return sentence(model.establishedLight.cue)
   }
   return undefined
-}
-
-function locomotionFor(bodyPlan: string, role: string): string {
-  const feeding = /grazer|browser|forager/i.test(role)
-    ? "grazing"
-    : /predator|hunter/i.test(role)
-      ? "hunting"
-      : "feeding"
-  if (/wader/i.test(bodyPlan)) return `wading, turning and ${feeding}`
-  if (/winged|gliding/i.test(bodyPlan)) return `perching, launching and ${feeding}`
-  if (/serpentine/i.test(bodyPlan)) return `moving, turning and ${feeding}`
-  if (/aquatic|amphibious/i.test(bodyPlan)) return `moving between water and ground, and ${feeding}`
-  if (/burrowing/i.test(bodyPlan)) return `digging, emerging and ${feeding}`
-  return `standing, walking, turning and ${feeding}`
 }
 
 function studyParagraph(model: SceneModel): string {
@@ -475,9 +447,7 @@ function studyParagraph(model: SceneModel): string {
         `Treat the vegetation as three-dimensional masses ${name} must share space with, not as a decorative backdrop. Cluster, overlap and vary scale, and show how plants meet ${features}`
       )
     case "creature-anatomy":
-      return sentence(
-        `Keep the whole body readable: weight through the legs, a believable joint logic, and locomotion that fits this ground. Avoid assembling a costume of parts`
-      )
+      return ""
     case "human-anatomy":
       return sentence(
         `Age and labor should be visible in the body, including hands, neck and the contact with the ground. Clothing must obey the structure underneath`
@@ -526,7 +496,7 @@ function studyParagraph(model: SceneModel): string {
       )
     case "architecture":
       return sentence(
-        `${cap(name)} must look built: load paths, joinery, later repairs and human use should be visible`
+        `${cap(name)} looks built: mismatched braces, replaced boards and later joints sit in a structure that still has a job`
       )
     default:
       return ""
@@ -571,8 +541,9 @@ function compositionText(model: SceneModel): string {
   }
 
   if (vegetation && (camera === "establishing" || camera === "eye-level" || camera === "undergrowth" || camera === "low-angle")) {
+    const emerge = model.anatomy ? emergingContact(model.anatomy) : "the head"
     return sentence(
-      `Place ${name} partially obscured by foreground growth, with the head and shoulders emerging into a clearer area. ${cap(useFeatures)}.`
+      `Place ${name} in the middle distance, partially obscured by foreground growth, with ${emerge} emerging into a clearer area. ${cap(useFeatures)}.`
     )
   }
 
@@ -584,11 +555,11 @@ function compositionText(model: SceneModel): string {
     "worms-eye": model.setting.interior
       ? `Push the camera to the floor. ${cap(name)} recedes vertically; the ceiling becomes a major plane.`
       : `Push the camera to the dirt, water or floor. ${cap(name)} recedes vertically; sky or ceiling becomes a major plane.`,
-    "close-up": `Crop tightly on ${name}. Surface, joint and local light carry the picture; ${foreground ?? "the wider place"} is implied at the edges.`,
+    "close-up": `Crop tightly on ${name}. Surface, joint and local light carry the picture; ${impliedPhrase(foreground ?? "the wider place")} at the edges.`,
     establishing: `Give ${place} real depth. Place ${name} among ${foreground ?? "the near ground"}, overlapping the first plane rather than standing in front of a backdrop. ${cap(useFeatures)}.`,
     "over-shoulder": `Let ${foreground ?? model.subject.elements[0] ?? "a near form"} occupy a large share of the frame and reveal ${name} beyond it. Draw both.`,
     telephoto: `Compress the planes of ${place}. ${cap(name)} and ${supporting[0] ?? foreground ?? "the nearer ground"} should overlap rather than recede into deep space.`,
-    "foreground-frame": `A large, specific ${foreground ?? "foreground object"} occupies the near edge. ${cap(name)} sits beyond it. Both must be drawn.`,
+    "foreground-frame": `${countOf(foreground ?? "foreground object") === "plural" ? cap(foreground ?? "Near forms") : `A large, specific ${foreground ?? "foreground object"}`} ${occupies(countOf(foreground ?? "foreground object"))} the near edge. ${cap(name)} sits beyond it. Both must be drawn.`,
     "three-point": `Commit to a third vanishing point. ${cap(name)} and the major volumes of ${place} recede vertically as well as in plan.`,
     diagonal: `A dominant diagonal through ${name} and ${foreground ?? "the ground"} carries the eye. Counter it with one stable mass.`,
     aperture: `Look through ${foreground ?? "a doorway, wheel, branches or window"} toward ${name}. The frame needs thickness.`,
@@ -613,40 +584,55 @@ function lightingText(model: SceneModel): string {
   const name = model.subject.noun
   const id = model.visualGoal.lighting.id
   const canopy = model.setting.tags.includes("forest") || model.setting.environmentId === "coppice"
+  const cue = model.establishedLight?.cue
 
   const notes: Record<string, string> = {
     dapple: canopy
-      ? `Dappled daylight filtering through the canopy. Use patches of light and shadow to describe ${name}'s larger forms without losing its silhouette.`
-      : `Broken daylight. Use patches of light and shadow to describe larger forms without losing the silhouette of ${name}.`,
-    overcast: `Soft overcast daylight. Keep values close and let form read through temperature and edge rather than hard shadow.`,
-    "golden-hour": `Low golden-hour light. Long ground shadows; keep ${name} readable against the warmer strike.`,
-    dawn: `Cloudy dawn. Hold a little remaining night in the hollows, with only small warmer accents.`,
-    moonlight: `Moonlight with very conservative fill. Let ${name} read as large value shapes, not as a night-time catalogue of detail.`,
-    firelight: `Firelight as the dominant source, with a cooler night or doorway as the second speaker. Watch falloff.`,
-    candlelight: `Candlelight: several weak sources of similar temperature. Faces need not be fully lit.`,
-    backlight: `Strong backlight. Keep a thin rim and a restrained bounce so ${name} does not collapse into a void.`,
-    noon: `Harsh noon. Small hard shadows and bleached ground bounce; find shade under structures or growth.`,
-    storm: `Storm light. A brief brighter opening in the cloud; wet surfaces should do extra work.`,
-    "water-bounce": `Light bouncing off water. Keep caustics structural, and let wet verticals pick up the bounce.`,
-    "fog-lamp": `Lamplight in fog: a short throw, rapid falloff, and silhouettes beyond the lit pocket.`,
-    "forge-glow": `Forge-glow against a much cooler doorway or clerestory. Heat shimmer only if earned.`,
+      ? `Dappled daylight filtering through the canopy. Patches of light and shadow describe ${name}'s larger forms without losing its silhouette.`
+      : `Broken daylight. Patches of light and shadow describe larger forms without losing the silhouette of ${name}.`,
+    overcast: `Soft overcast daylight. Values stay close; form reads through temperature and edge rather than hard shadow.`,
+    "golden-hour": `Low golden-hour light. Long ground shadows; ${name} stays readable against the warmer strike.`,
+    dawn: `Cloudy dawn. A little remaining night in the hollows, with only small warmer accents.`,
+    moonlight: `Moonlight with very conservative fill. ${cap(name)} reads as large value shapes, not as a night-time catalogue of detail.`,
+    firelight: cue
+      ? `${cap(cue)}. Watch falloff against a cooler night or doorway.`
+      : `Firelight as the dominant source, with a cooler night or doorway as the second speaker. Watch falloff.`,
+    candlelight: cue
+      ? `${cap(cue)}. Faces need not be fully lit.`
+      : `Candlelight: several weak sources of similar temperature. Faces need not be fully lit.`,
+    backlight: `Strong backlight. A thin rim and a restrained bounce so ${name} does not collapse into a void.`,
+    noon: `Harsh noon. Small hard shadows and bleached ground bounce; shade under structures or growth.`,
+    storm: `Storm light. A brief brighter opening in the cloud; wet surfaces do extra work.`,
+    "water-bounce": `Light bouncing off water. Caustics stay structural, and wet verticals pick up the bounce.`,
+    "fog-lamp": cue
+      ? `${cap(cue)}. Rapid falloff, and silhouettes beyond the lit pocket.`
+      : `Lamplight in fog: a short throw, rapid falloff, and silhouettes beyond the lit pocket.`,
+    "forge-glow": cue
+      ? `${cap(cue)}, against a much cooler doorway or clerestory.`
+      : `Forge-glow against a much cooler doorway or clerestory. Heat shimmer only if earned.`,
     shaft: `A single aperture of light into surrounding dark. Dust or moisture only where the beam is earned.`,
-    "snow-glare": `Overcast snow glare, with upward bounce stronger than the sky. Keep true darks for cavities.`,
-    "after-rain": `Clearing light after rain. Puddles and wet masses should mirror the sky; keep remaining cloud colder.`,
-    subterranean: `Subterranean lamp or vent-light. Stratified darkness, with a distant second source only if it earns scale.`,
+    "snow-glare": `Overcast snow glare, with upward bounce stronger than the sky. True darks stay in cavities.`,
+    "after-rain": `Clearing light after rain. Puddles and wet masses mirror the sky; remaining cloud stays colder.`,
+    subterranean: cue
+      ? `${cap(cue)}. Stratified darkness, with a distant second source only if it earns scale.`
+      : `Subterranean lamp or vent-light. Stratified darkness, with a distant second source only if it earns scale.`,
     "hearth-interior": `Kitchen or hearth light, with a cooler window as the second speaker. Faces need not be fully lit.`,
     "cold-morning": `Cold morning light: long blue shadows and a delayed warm strike on one plane.`,
-    underwater: `Shallow flooded light. Keep caustics structural, with silty falloff toward a brighter broken surface above.`,
-    "procession-lamps": `Many similar warm lamps in a larger cooler night. Faces mostly lost except near a lamp.`,
+    underwater: `Shallow flooded light. Caustics stay structural, with silty falloff toward a brighter broken surface above.`,
+    "procession-lamps": cue
+      ? `${cap(cue)}. Faces mostly lost except near a lamp.`
+      : `Many similar warm lamps in a larger cooler night. Faces mostly lost except near a lamp.`,
     "workshop-window": `A dusty workshop window as a blown-out rectangle. Tools go quickly to half-light.`,
     twilight: `Winter twilight. Almost no direct sun; a long horizon glow, with interior warmth as a small opposing note.`,
     "smoke-sun": `Smoke-filtered sun. Reduced contrast, brown or orange air as a unifier, and one cleaner plane in the foreground.`,
-    "wet-bounce": `Wet ground as a second light source. Keep dry upper planes darker, and specularity material-specific.`,
+    "wet-bounce": `Wet ground as a second light source. Dry upper planes stay darker, and specularity stays material-specific.`,
+    bioluminescence: cue
+      ? `${cap(cue)}.`
+      : `Bioluminescent fill kept local and biological, with a separate cooler skylight.`,
   }
 
-  return notes[id] ?? sentence(`${model.visualGoal.lighting.name}. Use ${model.visualGoal.lightingAccent} to describe ${name} without breaking the silhouette.`)
+  return notes[id] ?? sentence(`${model.visualGoal.lighting.name}. ${cue ? cap(cue) : `Use ${model.visualGoal.lightingAccent} to describe ${name} without breaking the silhouette.`}`)
 }
-
 function presentMaterials(model: SceneModel): string[] {
   const ids = new Set(model.visualGoal.materials.map((item) => item.id))
   const names: string[] = []
@@ -739,7 +725,8 @@ function renderConstraintText(model: SceneModel): string[] {
   }
 
   if (study === "creature-anatomy") {
-    return ["The creature must convincingly support its own weight. Silhouette remains readable at thumbnail size."]
+    const limb = model.anatomy?.limbNoun ?? "body"
+    return [`The creature must convincingly support its own weight through the ${limb}. Silhouette remains readable at thumbnail size.`]
   }
   if (study === "human-anatomy") {
     return ["Hands must be fully designed and structurally useful, not hidden or mittened."]
@@ -751,7 +738,7 @@ function renderConstraintText(model: SceneModel): string[] {
     }
   }
   if (study === "architecture") {
-    return ["The structure must look built: joints, load, repairs and human use should be visible."]
+    return ["Every major structural member must appear to carry or transfer load plausibly."]
   }
   if (study === "perspective") {
     return ["The ground plane must remain consistent under every object."]
@@ -806,10 +793,8 @@ export function renderArtBrief(model: SceneModel, titleHook?: string): string {
   const paragraphs = [sceneParagraph(model)]
   const narrative = narrativeParagraph(model)
   if (narrative) paragraphs.push(narrative)
-  const study = studyParagraph(model)
-  if (study && study !== narrative) paragraphs.push(study)
   if (titleHook) paragraphs.push(sentence(titleHook))
-  return paragraphs.slice(0, 4).join("\n\n")
+  return paragraphs.slice(0, 3).join("\n\n")
 }
 
 export function renderComposition(model: SceneModel): string {

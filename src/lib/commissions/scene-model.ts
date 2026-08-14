@@ -17,7 +17,6 @@ import {
   accentCompatible,
   allPresent,
   anyOverlap,
-  articleFor,
   cameraWeight,
   fillTemplate,
   joinFeatures,
@@ -28,7 +27,16 @@ import {
   unique,
   withArticle,
 } from "@/lib/commissions/compatibility"
+import {
+  anatomyDirectionFor,
+  feedingBehavior,
+  locomotionPhrase,
+  type AnatomyCapabilities,
+  type FeedingBehavior,
+} from "@/lib/commissions/anatomy"
+import { countOf } from "@/lib/commissions/grammar"
 import type { SeededRng } from "@/lib/commissions/random"
+import { subjectSettingCollision, validateCommission } from "@/lib/commissions/validate"
 import {
   finishLivingTaxonomy,
   pickCharacterIdentity,
@@ -93,6 +101,7 @@ export interface SceneModel {
     wet: boolean
     vegetation: boolean
     interior: boolean
+    localContext: string[]
   }
   narrative: {
     situationId: string
@@ -116,6 +125,10 @@ export interface SceneModel {
   being?: BeingTaxonomy
   realismAnchor?: string
   anatomyDirection?: string
+  anatomy?: AnatomyCapabilities
+  feeding?: FeedingBehavior
+  establishedLight?: { tags: string[]; cue: string }
+  grammaticalNumber: "singular" | "plural"
   titleNouns: string[]
   scaleProblem: boolean
   scaleCue?: string
@@ -194,7 +207,7 @@ function livingEntityFromCreature(subject: Subject, identity: CreatureIdentity):
     subtype: identity.family.label,
     noun: `the ${identity.ecoRole.noun}`,
     what: withArticle(identity.phraseCore),
-    physicalDescription: `Build ${articleFor(identity.body.adjective)} ${identity.body.adjective} ${identity.family.adjective} body that can actually stand, turn and feed. Locomotion must be readable.`,
+    physicalDescription: `A ${identity.family.adjective} body whose ${identity.capabilities.limbNoun} explain ${locomotionPhrase(identity.capabilities)}.`,
     placement: "occupies",
     tags: ["living", "being", "animal", ...identity.preferredEnvTags],
     materials,
@@ -206,7 +219,9 @@ function livingEntityFromCreature(subject: Subject, identity: CreatureIdentity):
       feathers: "the animal's plumage",
       leather: "bare skin, pads or a worn hide",
     },
-    elements: ["the full body", "the feet or contact with the ground", "the head and feeding gear"],
+    elements: identity.capabilities.hasLegs
+      ? ["the full body", `the ${identity.capabilities.limbNoun}`, "the feeding gear"]
+      : ["the full body", `the ${identity.capabilities.limbNoun}`, "the feeding gear"],
     compatibleEnvTags: identity.preferredEnvTags,
     studyAffinity: {
       "creature-anatomy": 4,
@@ -256,6 +271,8 @@ function environmentWeight(
   if (entity.preferEnvIds?.length) {
     if (!entity.preferEnvIds.includes(env.id)) return 0
   }
+  if (entity.forbidEnvIds?.includes(env.id)) return 0
+  if (subjectSettingCollision(entity, env)) return 0
   if (!nonePresent(entity.forbidEnvTags, tags)) return 0
   if (!allPresent(entity.requireAllEnvTags, tags)) return 0
   if (entity.compatibleEnvTags.length > 0 && !anyOverlap(entity.compatibleEnvTags, tags)) return 0
@@ -635,30 +652,63 @@ function pickConstraintsForModel(
   return unique([...chosen, ...extra]).slice(0, difficulty === "master" ? 2 : 1)
 }
 
+function collectSceneTags(entity: SceneEntityDef, place: PlaceContext, extra: string[] = []): string[] {
+  const blob = `${entity.what} ${entity.elements.join(" ")} ${place.features.join(" ")}`.toLowerCase()
+  const tags = unique([...entity.tags, ...place.tags, ...extra, entity.category])
+  if (/\blamp|\blantern/.test(blob) || place.features.some((item) => /lamp|lantern/.test(item))) {
+    tags.push("lamp", "lantern", "carriedLight")
+  }
+  if (/hearth|forge|brazier|fire/.test(blob) || place.tags.includes("fire")) tags.push("fire", "hearth")
+  if (place.interior) tags.push("interior", "workingInterior")
+  if (place.tags.includes("domestic")) tags.push("household")
+  if (place.tags.includes("sacred")) tags.push("shrine", "religiousSpace")
+  if (place.vegetation || place.tags.includes("forest")) tags.push("vegetation", "canopy")
+  if (place.tags.includes("growth") && place.tags.includes("underground")) tags.push("fungus")
+  if (entity.materials.includes("iron") || entity.materials.includes("steel") || entity.materials.includes("bronze")) {
+    tags.push("metal", ...entity.materials.filter((id) => ["iron", "steel", "bronze", "copper"].includes(id)))
+  }
+  return unique(tags)
+}
+
+const LOCAL_CONTEXT: Record<string, string[]> = {
+  granary: ["packed earth", "fencing", "stacked tools", "orchard edge"],
+  "watch post": ["tree line", "a packed path", "fields below"],
+  boathouse: ["muddy bank", "mooring posts", "reeds", "working boats"],
+  mill: ["the mill race", "wet timber", "a loading door"],
+}
+
+function canEstablishLight(
+  light: LightingDef,
+  place: PlaceContext,
+  sceneTags: string[],
+  subject: Subject
+): boolean {
+  const inhabited =
+    ["character", "creature", "beast", "group-scene", "architecture"].includes(subject) ||
+    place.interior
+  if (light.id === "bioluminescence") {
+    return place.interior || place.tags.includes("underground") || place.tags.includes("swamp") || place.tags.includes("strange")
+  }
+  if (light.id === "procession-lamps") {
+    return sceneTags.includes("civic") || sceneTags.includes("sacred") || subject === "group-scene" || subject === "character"
+  }
+  if (light.id === "fog-lamp" || light.id === "firelight" || light.id === "candlelight" || light.id === "forge-glow") {
+    return inhabited
+  }
+  return place.interior
+}
+
 function pickArtDirection(
   rng: SeededRng,
-  subject: Subject,
-  entity: SceneEntityDef,
-  difficulty: Difficulty
+  difficulty: Difficulty,
+  sceneTags: string[]
 ): string | undefined {
   const chance = difficulty === "master" ? 0.42 : difficulty === "journeyman" ? 0.34 : 0.26
   if (!rng.chance(chance)) return undefined
 
-  const relevant = ANTI_SHORTCUTS.filter((item) => {
-    const text = `${item.text} ${item.extra ?? ""}`.toLowerCase()
-    if (/plate armor|spiked pauldron|antlered helmet/.test(text)) {
-      return /soldier|guard|warrior|watch/.test(entity.type)
-    }
-    if (/extra pairs of wings/.test(text)) return /winged|feather/.test(entity.tags.join(" ") + entity.type)
-    if (/crowd clones/.test(text)) return subject === "group-scene"
-    if (/cloak-as-silhouette/.test(text)) return subject === "character" || subject === "group-scene"
-    if (/generic medieval european castle/.test(text)) return subject === "architecture"
-    if (/floating rocks|magical particles|glowing|energy beams|lens flares/.test(text)) return true
-    if (/unblemished metal/.test(text)) return entity.materials.some((id) => ["iron", "steel", "bronze", "copper"].includes(id))
-    return true
-  })
-
-  const shortcut = rng.pick(relevant.length > 0 ? relevant : ANTI_SHORTCUTS)
+  const relevant = ANTI_SHORTCUTS.filter((item) => anyOverlap(item.requireAny, sceneTags))
+  if (relevant.length === 0) return undefined
+  const shortcut = rng.pick(relevant)
   return [shortcut.text, shortcut.extra].filter(Boolean).join(" ")
 }
 
@@ -682,6 +732,10 @@ function validateModel(model: SceneModel): string | null {
   if (model.visualGoal.camera.id === "reflection" && !model.setting.wet) return "reflection without water"
   if (model.visualGoal.camera.id === "undergrowth" && !model.setting.vegetation) return "undergrowth without plants"
   if (model.visualGoal.camera.id === "figure-for-scale" && !model.scaleProblem) return "scale camera without scale problem"
+  const issues = validateCommission(model)
+  if (issues.includes("subject-setting-collision") || issues.includes("unmotivated-lighting")) {
+    return issues[0]
+  }
   return null
 }
 
@@ -785,17 +839,46 @@ export function tryBuildSceneModel(
     })
   )
 
-  const lights = LIGHTING.filter((light) => lightingCompatible(light, place))
+  const sceneTags = collectSceneTags(entity, place, [
+    args.subject,
+    ...(character ? ["character", character.role.id, character.species.id] : []),
+    ...(args.subject === "group-scene" ? ["group-scene"] : []),
+    ...(creature ? [creature.family.id, creature.body.id, "creature", "beast", "eyes"] : []),
+  ])
+  if (creature?.capabilities.hasWings) sceneTags.push("wings", "winged", "avian")
+  if (/soldier|guard|warrior|watch|executioner/.test(character?.role.id ?? entity.type)) {
+    sceneTags.push("warrior", "soldier", "guard", "armored")
+  }
+
+  const lights = LIGHTING.filter((light) => {
+    if (!lightingCompatible(light, place, sceneTags)) return false
+    const met = !light.requiresAny || anyOverlap(light.requiresAny, sceneTags)
+    if (met) return true
+    return Boolean(light.establish) && canEstablishLight(light, place, sceneTags, args.subject)
+  })
   if (lights.length === 0) return null
   const lighting = rng.weightedPick(lights, (light) => {
     let score = 0.8
     for (const tag of light.tags) {
-      if (place.tags.includes(tag)) score += 1.2
+      if (place.tags.includes(tag) || sceneTags.includes(tag)) score += 1.2
     }
     if (primaryStudy === "lighting") score += 0.8
+    const met = !light.requiresAny || anyOverlap(light.requiresAny, sceneTags)
+    if (!met && light.establish) score += 0.35
+    if (met) score += 0.4
     return score
   })
-  const accents = lighting.accents.filter((accent) => accentCompatible(accent, place, living))
+
+  let establishedLight: SceneModel["establishedLight"]
+  const requirementsMet = !lighting.requiresAny || anyOverlap(lighting.requiresAny, sceneTags)
+  if (!requirementsMet && lighting.establish) {
+    establishedLight = { tags: lighting.establish.tags, cue: lighting.establish.cue }
+    sceneTags.push(...lighting.establish.tags)
+    place.features = unique([lighting.establish.feature, ...place.features])
+    entity.elements = unique([lighting.establish.element, ...entity.elements])
+  }
+
+  const accents = lighting.accents.filter((accent) => accentCompatible(accent, place, living, sceneTags))
   const lightingAccent =
     accents.length > 0 ? rng.pick(accents) : "a restrained secondary bounce"
 
@@ -847,6 +930,26 @@ export function tryBuildSceneModel(
     scaleProblem
   )
 
+  const localContext = unique([
+    ...(LOCAL_CONTEXT[entity.type] ?? []),
+    ...place.features,
+  ]).slice(0, 4)
+
+  const feeding = creature
+    ? feedingBehavior({
+        family: creature.family,
+        body: creature.body,
+        role: creature.ecoRole,
+        capabilities: creature.capabilities,
+        placeTags: place.tags,
+      })
+    : undefined
+
+  const anatomyDirection =
+    creature && (primaryStudy === "creature-anatomy" || taxonomy?.anatomyDirection)
+      ? anatomyDirectionFor(creature.capabilities, creature.family.id)
+      : taxonomy?.anatomyDirection
+
   const model: SceneModel = {
     visualPremise: composed.visualPremise,
     what: entity.what,
@@ -860,7 +963,7 @@ export function tryBuildSceneModel(
       physicalDescription: entity.physicalDescription,
       noun: entity.noun,
       elements: unique([...entity.elements, ...(situation.extraElements ?? [])]),
-      tags: entity.tags,
+      tags: unique([...entity.tags, ...sceneTags.filter((tag) => tag === args.subject || tag === character?.role.id)]),
     },
     setting: {
       environmentId: environment.id,
@@ -868,11 +971,12 @@ export function tryBuildSceneModel(
       placeLabel: environmentPhrase(environment),
       location: where,
       environmentalCondition: place.condition,
-      tags: place.tags,
+      tags: unique([...place.tags, ...(establishedLight?.tags ?? [])]),
       features: place.features,
       wet: place.wet,
       vegetation: place.vegetation,
       interior: place.interior,
+      localContext,
     },
     narrative: {
       situationId: situation.id,
@@ -891,11 +995,15 @@ export function tryBuildSceneModel(
     constraints: {
       studyConstraint: constraints[0] ?? STUDY_CONSTRAINTS[primaryStudy][0],
       extraConstraints: constraints.slice(1),
-      artDirectionConstraint: pickArtDirection(rng, args.subject, entity, args.difficulty),
+      artDirectionConstraint: pickArtDirection(rng, args.difficulty, sceneTags),
     },
     being: taxonomy?.being,
     realismAnchor: taxonomy?.realismAnchor,
-    anatomyDirection: taxonomy?.anatomyDirection,
+    anatomyDirection,
+    anatomy: creature?.capabilities,
+    feeding,
+    establishedLight,
+    grammaticalNumber: entity.number ?? countOf(entity.noun),
     titleNouns,
     scaleProblem,
     scaleCue: entity.scaleCue,
@@ -917,7 +1025,7 @@ export function buildSceneModel(
     lockedStudy?: Study
   }
 ): SceneModel {
-  for (let attempt = 0; attempt < 12; attempt += 1) {
+  for (let attempt = 0; attempt < 18; attempt += 1) {
     const model = tryBuildSceneModel(rng, args)
     if (model) return model
   }
@@ -950,6 +1058,7 @@ export function buildSceneModel(
       wet: place.wet,
       vegetation: place.vegetation,
       interior: place.interior,
+      localContext: place.features.slice(0, 4),
     },
     narrative: {
       situationId: "overtaken-by-plants",
@@ -970,6 +1079,7 @@ export function buildSceneModel(
       extraConstraints: [],
     },
     titleNouns: fallbackEntity.titleNouns,
+    grammaticalNumber: "singular",
     scaleProblem: false,
     vegetationCentral: true,
     color: args.color,
