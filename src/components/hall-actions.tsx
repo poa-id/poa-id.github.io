@@ -20,7 +20,7 @@ export function HallActions({ compact = false, className = "" }: HallActionsProp
     <div className={`flex items-stretch gap-2 ${margin} ${className}`}>
       <Link
         href="/work"
-        className={`inline-flex items-center justify-center bg-transparent text-foreground ${height} ${workPadding} ${textSize} ${actionBorder} [font-family:var(--font-disket)]`}
+        className={`inline-flex items-center justify-center whitespace-nowrap shrink-0 bg-transparent text-foreground ${height} ${workPadding} ${textSize} ${actionBorder} [font-family:var(--font-disket)]`}
       >
         View My Work
       </Link>

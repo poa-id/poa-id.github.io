@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
   },
   basePath: '',
   assetPrefix: '',
+  transpilePackages: ['three', '@react-three/fiber', '@react-three/drei', '@react-three/rapier'],
   eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.

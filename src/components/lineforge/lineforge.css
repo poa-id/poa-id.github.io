@@ -1,0 +1,131 @@
+.lineforge-root {
+  --background: hsl(0 0% 7%);
+  --foreground: hsl(0 0% 90%);
+  --card: hsl(0 0% 11%);
+  --card-foreground: hsl(0 0% 90%);
+  --popover: hsl(0 0% 14%);
+  --popover-foreground: hsl(0 0% 90%);
+  --primary: hsl(40 46% 61%);
+  --primary-foreground: hsl(0 0% 7%);
+  --secondary: hsl(0 0% 14%);
+  --secondary-foreground: hsl(0 0% 60%);
+  --muted: hsl(0 0% 11%);
+  --muted-foreground: hsl(0 0% 66%);
+  --accent: hsl(40 46% 61%);
+  --accent-foreground: hsl(0 0% 7%);
+  --destructive: hsl(40 48% 44%);
+  --destructive-foreground: hsl(0 0% 90%);
+  --border: hsl(0 0% 18%);
+  --input: hsl(0 0% 18%);
+  --ring: hsl(40 46% 61%);
+  --radius: 0.125rem;
+  --surface: hsl(0 0% 11%);
+  --surface-hover: hsl(0 0% 15%);
+  --surface-elevated: hsl(0 0% 15%);
+  --success: hsl(0 0% 60%);
+  --success-foreground: hsl(0 0% 7%);
+  --warning: hsl(40 48% 44%);
+  --warning-foreground: hsl(0 0% 90%);
+  --disabled: hsl(0 0% 33%);
+
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-lf-mono), ui-monospace, "Cascadia Code", monospace;
+  isolation: isolate;
+}
+
+.lineforge-root .font-mono {
+  font-family: var(--font-lf-mono), ui-monospace, monospace;
+}
+
+.lineforge-root .font-sans {
+  font-family: var(--font-lf-sans), system-ui, sans-serif;
+}
+
+.lineforge-root .text-gradient {
+  color: var(--primary);
+}
+
+.lineforge-root .card-surface {
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+
+.lineforge-root .timer-display {
+  font-family: var(--font-lf-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+
+.lineforge-root .bg-surface {
+  background-color: var(--surface);
+}
+
+.lineforge-root .bg-surface-hover {
+  background-color: var(--surface-hover);
+}
+
+.lineforge-root .bg-surface-elevated {
+  background-color: var(--surface-elevated);
+}
+
+.lineforge-root .hover\:bg-surface-hover:hover {
+  background-color: var(--surface-hover);
+}
+
+.lineforge-root input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2px;
+  background: var(--border);
+  outline: none;
+  border-radius: 0;
+}
+
+.lineforge-root input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background: var(--primary);
+  border-radius: 1px;
+  cursor: pointer;
+  border: none;
+}
+
+.lineforge-root input[type="range"]::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  background: var(--primary);
+  border-radius: 1px;
+  cursor: pointer;
+  border: none;
+}
+
+.lineforge-root input[type="range"]::-moz-range-track {
+  height: 2px;
+  background: var(--border);
+}
+
+.lineforge-root button:focus-visible,
+.lineforge-root a:focus-visible,
+.lineforge-root input:focus-visible,
+.lineforge-root select:focus-visible {
+  outline: 1px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@keyframes lf-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.lineforge-root .animate-fade-in {
+  animation: lf-fade-in 0.15s ease-out forwards;
+}

@@ -7,9 +7,19 @@ import { RelicToast } from "@/components/relic-toast"
 import { HouseMapNav } from "@/components/house-map-nav"
 import { MobileCubeGuard } from "@/components/mobile-cube-guard"
 import { useIsMobile } from "@/hooks/use-is-mobile"
+import { usePathname } from "next/navigation"
+
+function isLineforgePath(pathname: string) {
+  return pathname.startsWith("/forge/lineforge")
+}
 
 function GamificationChrome() {
+  const pathname = usePathname()
   const isMobile = useIsMobile()
+
+  if (isLineforgePath(pathname)) {
+    return null
+  }
 
   if (isMobile) {
     return <MobileCubeGuard />

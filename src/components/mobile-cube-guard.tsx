@@ -11,7 +11,7 @@ export function MobileCubeGuard() {
   const isMobile = useIsMobile()
 
   useEffect(() => {
-    if (isMobile && isCubeRoute(pathname)) {
+    if (isMobile && isCubeRoute(pathname) && !pathname.startsWith("/forge")) {
       router.replace("/")
     }
   }, [isMobile, pathname, router])
