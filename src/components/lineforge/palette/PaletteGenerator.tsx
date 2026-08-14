@@ -23,10 +23,12 @@ export function PaletteGenerator({ onClose }: { onClose: () => void }) {
   const [copied, setCopied] = useState<string | null>(null)
 
   const regenerate = (nextMode = mode, nextGray = grayCount) => {
-    const count = nextMode === "grayscale" ? nextGray : 5
-    const base = swatches.find((item) => !item.locked)?.color ?? randHSL()
-    const generated = generatePalette(nextMode, count, base)
-    setSwatches((existing) => mergeLocked(generated, existing))
+    setSwatches((existing) => {
+      const count = nextMode === "grayscale" ? nextGray : 5
+      const base = existing.find((item) => item.locked)?.color ?? randHSL()
+      const generated = generatePalette(nextMode, count, base)
+      return mergeLocked(generated, existing)
+    })
   }
 
   const copyHex = async (hex: string) => {

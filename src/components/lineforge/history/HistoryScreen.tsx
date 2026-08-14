@@ -2,17 +2,11 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { Plus } from "lucide-react"
-import { getLogs, getNotes, getStreak, saveNotes, todayIso } from "@/lib/lineforge/storage"
+import { addDaysIso, getLogs, getNotes, getStreak, saveNotes, todayIso } from "@/lib/lineforge/storage"
 import type { DayLog, ProgressNote } from "@/lib/lineforge/types/lineforge"
 import { cn } from "@/lib/utils"
 
 type SubTab = "history" | "notes" | "review"
-
-function addDays(dateStr: string, days: number): string {
-  const d = new Date(`${dateStr}T00:00:00.000Z`)
-  d.setUTCDate(d.getUTCDate() + days)
-  return d.toISOString().slice(0, 10)
-}
 
 export function HistoryScreen() {
   const [logs, setLogs] = useState<DayLog[]>([])
@@ -22,7 +16,7 @@ export function HistoryScreen() {
   const [showForm, setShowForm] = useState(false)
   const [text, setText] = useState("")
   const [tagInput, setTagInput] = useState("")
-  const [today, setToday] = useState("")
+  const [today, setToday] = useState<string | null>(null)
 
   useEffect(() => {
     setLogs([...getLogs()].sort((a, b) => b.date.localeCompare(a.date)))
@@ -39,7 +33,7 @@ export function HistoryScreen() {
 
   const logByDate = useMemo(() => new Map(logs.map((log) => [log.date, log])), [logs])
 
-  const monthKey = today.slice(0, 7)
+  const monthKey = today?.slice(0, 7) ?? ""
   const monthLogs = logs.filter((log) => log.date.startsWith(monthKey))
   const monthMinutes = monthLogs.reduce((sum, log) => {
     const minutes =
@@ -55,7 +49,7 @@ export function HistoryScreen() {
       .map((item) => item.trim())
       .filter(Boolean)
     const next = [
-      { id: Date.now().toString(), date: today, text: trimmed, tags },
+      { id: Date.now().toString(), date: today ?? todayIso(), text: trimmed, tags },
       ...notes,
     ]
     setNotes(next)
@@ -100,17 +94,18 @@ export function HistoryScreen() {
       {tab === "history" && (
         <div className="space-y-4">
           <div className="grid grid-cols-7 gap-px">
-            {Array.from({ length: 14 }, (_, i) => {
-              const date = addDays(today, -(13 - i))
-              const filled = logByDate.has(date)
-              return (
-                <div
-                  key={date}
-                  title={date}
-                  className={cn("aspect-square border border-border", filled ? "bg-primary/40" : "bg-card")}
-                />
-              )
-            })}
+            {today &&
+              Array.from({ length: 14 }, (_, i) => {
+                const date = addDaysIso(today, -(13 - i))
+                const filled = logByDate.has(date)
+                return (
+                  <div
+                    key={date}
+                    title={date}
+                    className={cn("aspect-square border border-border", filled ? "bg-primary/40" : "bg-card")}
+                  />
+                )
+              })}
           </div>
           <div className="space-y-px">
             {logs.map((log) => (

@@ -91,7 +91,8 @@ export function DiceTray({ onOpenLibraryEntry }: { onOpenLibraryEntry: (name: st
     setResults([])
     setDiceCount(3)
     setStage(1)
-    window.setTimeout(() => sceneRef.current?.throwAll(), 100)
+    sceneRef.current?.reset(3)
+    window.setTimeout(() => sceneRef.current?.throwAll(), 160)
   }
 
   const handleAddDie = () => {
@@ -116,7 +117,7 @@ export function DiceTray({ onOpenLibraryEntry }: { onOpenLibraryEntry: (name: st
   }
 
   const handleReset = () => {
-    sceneRef.current?.reset()
+    sceneRef.current?.reset(3)
     setStage(0)
     setResults([])
     setLabels(["?", "?", "?"])

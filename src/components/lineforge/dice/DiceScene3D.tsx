@@ -16,7 +16,7 @@ import * as THREE from "three"
 export interface DiceSceneHandle {
   throwAll: () => void
   throwOne: (index: number) => void
-  reset: () => void
+  reset: (count?: number) => void
 }
 
 const DIE_COLORS = ["#555555", "#666666", "#4a4a5a", "#5a5050", "#4a555a"]
@@ -256,8 +256,17 @@ export const DiceScene3D = forwardRef<
 >(function DiceScene3D({ diceCount, labels, onSettle }, ref) {
   const [resetKey, setResetKey] = useState(0)
   const [thrownDice, setThrownDice] = useState<boolean[]>(() => Array.from({ length: diceCount }, () => false))
-  const positions = useRef<[number, number, number][]>([])
+  const [origins, setOrigins] = useState<[number, number, number][]>(() =>
+    Array.from({ length: diceCount }, (_, i) => spawnPosition(i, diceCount))
+  )
   const throwTimers = useRef<number[]>([])
+  const diceCountRef = useRef(diceCount)
+  diceCountRef.current = diceCount
+
+  const clearThrowTimers = () => {
+    throwTimers.current.forEach((id) => window.clearTimeout(id))
+    throwTimers.current = []
+  }
 
   useEffect(() => {
     setThrownDice((prev) => {
@@ -265,20 +274,24 @@ export const DiceScene3D = forwardRef<
       if (prev.length < diceCount) return [...prev, ...Array.from({ length: diceCount - prev.length }, () => false)]
       return prev.slice(0, diceCount)
     })
-    while (positions.current.length < diceCount) {
-      const i = positions.current.length
-      positions.current.push(spawnPosition(i, diceCount))
-    }
+    setOrigins((prev) => {
+      if (prev.length >= diceCount) return prev.slice(0, diceCount)
+      const next = [...prev]
+      while (next.length < diceCount) {
+        next.push(spawnPosition(next.length, diceCount))
+      }
+      return next
+    })
   }, [diceCount])
 
   useImperativeHandle(ref, () => ({
     throwAll() {
-      throwTimers.current.forEach((id) => window.clearTimeout(id))
-      throwTimers.current = []
-      for (let i = 0; i < diceCount; i++) {
+      clearThrowTimers()
+      const count = diceCountRef.current
+      for (let i = 0; i < count; i++) {
         const id = window.setTimeout(() => {
           setThrownDice((prev) => {
-            const next = [...prev]
+            const next = prev.length === count ? [...prev] : Array.from({ length: count }, (_, n) => !!prev[n])
             next[i] = true
             return next
           })
@@ -293,11 +306,12 @@ export const DiceScene3D = forwardRef<
         return next
       })
     },
-    reset() {
-      throwTimers.current.forEach((id) => window.clearTimeout(id))
-      throwTimers.current = []
-      setThrownDice([])
-      positions.current = []
+    reset(count?: number) {
+      clearThrowTimers()
+      const nextCount = count ?? diceCountRef.current
+      diceCountRef.current = nextCount
+      setOrigins(Array.from({ length: nextCount }, (_, i) => spawnPosition(i, nextCount)))
+      setThrownDice(Array.from({ length: nextCount }, () => false))
       setResetKey((key) => key + 1)
     },
   }))
@@ -322,7 +336,7 @@ export const DiceScene3D = forwardRef<
               index={i}
               thrown={!!thrownDice[i]}
               label={labels[i] ?? "?"}
-              position={positions.current[i] ?? [0, 5, 0]}
+              position={origins[i] ?? spawnPosition(i, diceCount)}
               onSettle={onSettle}
             />
           ))}
