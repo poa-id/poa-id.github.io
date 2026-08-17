@@ -91,7 +91,7 @@
   --rol-shelf-width: 0px;
   --rol-shelf-opacity: 0.1;
   /* Visible wood only; the file has black side padding cropped via object-fit. */
-  --rol-shelf-ratio: 608 / 1024;
+  --rol-shelf-ratio: calc(608 / 1024);
   display: flex;
   flex-direction: column;
 }
