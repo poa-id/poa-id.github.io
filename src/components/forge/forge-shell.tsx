@@ -3,10 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ThemeToggle } from "@/components/theme-toggle"
-import {
-  GardenEntryFromForgeEdge,
-  GardenReturnFromForgeInline,
-} from "@/components/cube-edge-tabs"
+import { GardenEntryFromForgeEdge } from "@/components/cube-edge-tabs"
 import { useCubeFaceThemeForSlug } from "@/hooks/use-cube-face-theme"
 import { getForgeProject } from "@/lib/forge-content"
 
@@ -28,13 +25,19 @@ export function ForgeShell({ children }: { children: React.ReactNode }) {
 
       <div className="lg:hidden px-6 pt-4 flex items-center justify-between shrink-0 gap-4">
         <div className="flex flex-wrap items-center gap-4 min-w-0">
-          <GardenReturnFromForgeInline />
-          {project && (
+          {project ? (
             <Link
               href="/forge"
-              className="text-sm uppercase tracking-wide [font-family:var(--font-disket)] opacity-80 hover:opacity-100"
+              className="inline-flex items-center min-h-11 text-sm uppercase tracking-wide [font-family:var(--font-disket)] opacity-80 hover:opacity-100"
             >
               ← Forge
+            </Link>
+          ) : (
+            <Link
+              href="/work"
+              className="inline-flex items-center min-h-11 text-sm uppercase tracking-wide [font-family:var(--font-disket)] opacity-80 hover:opacity-100"
+            >
+              ← Work
             </Link>
           )}
         </div>

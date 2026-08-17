@@ -21,11 +21,11 @@ const buttonVariants = cva(
         increment: "border border-rol-border/60 bg-rol-card hover:bg-rol-muted/50 text-rol-foreground rounded",
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 px-3",
-        lg: "h-11 px-8",
-        icon: "h-10 w-10",
-        pill: "h-9 px-5",
+        default: "h-11 px-4 py-2",
+        sm: "h-10 px-3",
+        lg: "h-12 px-8",
+        icon: "h-11 w-11",
+        pill: "h-11 px-5",
       },
     },
     defaultVariants: {

@@ -73,7 +73,7 @@ export function TodayScreen({
           eyebrow={formatLongDate(today)}
           title="Daily Observance"
           action={
-            <Button variant="ghost" size="icon" className="h-8 w-8 -mt-1" onClick={onOpenSettings} aria-label="Settings">
+            <Button variant="ghost" size="icon" onClick={onOpenSettings} aria-label="Settings">
               <Settings />
             </Button>
           }

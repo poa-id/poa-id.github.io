@@ -471,12 +471,12 @@ export function RuleOfLifeApp({ serifVar, sansVar }: { serifVar: string; sansVar
       <div className="rol-app">
         <Link
           href="/forge"
-          className="absolute top-3 left-3 z-40 text-[10px] uppercase tracking-widest text-rol-muted-foreground/70 hover:text-rol-foreground font-serif"
+          className="relative z-40 shrink-0 inline-flex items-center min-h-11 px-5 text-[11px] uppercase tracking-widest text-rol-muted-foreground/70 hover:text-rol-foreground font-serif touch-manipulation"
         >
           ← Forge
         </Link>
 
-        <div className="relative z-10 flex-1 min-h-0 overflow-y-auto pt-8">{body}</div>
+        <div className="relative z-10 flex-1 min-h-0 overflow-y-auto">{body}</div>
 
         {editorOverlay}
       </div>

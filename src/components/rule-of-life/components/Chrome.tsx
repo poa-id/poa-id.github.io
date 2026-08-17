@@ -87,7 +87,7 @@ export function BackLink({
     <button
       type="button"
       onClick={onClick}
-      className="mb-6 inline-flex items-center gap-1.5 text-xs uppercase tracking-widest text-rol-muted-foreground hover:text-rol-foreground transition-colors duration-200"
+      className="mb-6 inline-flex items-center gap-1.5 min-h-11 text-xs uppercase tracking-widest text-rol-muted-foreground hover:text-rol-foreground transition-colors duration-200 touch-manipulation"
     >
       <span aria-hidden="true">←</span>
       {label}

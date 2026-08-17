@@ -87,6 +87,9 @@
   font-family: var(--font-rol-sans), Inter, system-ui, sans-serif;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   isolation: isolate;
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior: none;
   --rol-desk-height: calc(3.5rem + max(1rem, env(safe-area-inset-bottom, 0px)));
   --rol-shelf-width: 0px;
   --rol-shelf-opacity: 0.1;
@@ -104,6 +107,7 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 .rol-side-shelves {

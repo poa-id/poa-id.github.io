@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { ProfessionalSectionShell } from "@/components/professional-section-shell"
 import { sectionTabClass } from "@/lib/professional-layout"
 import { useTheme } from "next-themes"
@@ -312,6 +313,29 @@ export default function Work() {
           <div className="space-y-12">
             <div className="space-y-6">
               <h2 className="text-4xl mb-8 uppercase tracking-wide [font-family:var(--font-disket-bold)]">Personal</h2>
+
+              <div className="space-y-8 border border-border dark:border-gray-800 p-8 bg-card">
+                <div className="space-y-4">
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground [font-family:var(--font-disket)]">
+                    Live tools
+                  </p>
+                  <h3 className="text-2xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">The Forge</h3>
+                  <p className="text-base text-muted-foreground">
+                    A workshop of things I keep for myself. Pillars is a personal Rule of Life; Lineforge is daily art practice.
+                  </p>
+                  <div className="mt-4">
+                    <Link
+                      href="/forge"
+                      className="inline-flex items-center min-h-11 text-muted-foreground hover:text-foreground transition-colors [font-family:var(--font-disket)]"
+                    >
+                      Enter the Forge
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </Link>
+                  </div>
+                </div>
+              </div>
               
               {/* Arcana Beard Oil */}
               <div className="space-y-8 border border-border dark:border-gray-800 p-8 bg-card">

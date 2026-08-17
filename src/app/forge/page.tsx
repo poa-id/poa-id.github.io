@@ -41,7 +41,7 @@ export default function ForgePage() {
         </div>
       </section>
 
-      <div className="flex justify-center pt-4">
+      <div className="hidden lg:flex justify-center pt-4">
         <DeepDescentLink />
       </div>
     </div>

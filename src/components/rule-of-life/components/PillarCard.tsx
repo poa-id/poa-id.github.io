@@ -70,7 +70,7 @@ export function PillarCard({
                 <Button
                   key={step.value}
                   variant="increment"
-                  className="h-8 px-2.5 text-xs w-auto"
+                  className="h-11 px-3 text-sm w-auto"
                   onClick={() => onIncrement(step.value)}
                 >
                   {step.label}

@@ -33,7 +33,7 @@ export function Navigation({
   return (
     <nav aria-label="Rule of Life">
       <DeskBar>
-        <div className="rol-desk-tabs relative flex items-center justify-around px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+        <div className="rol-desk-tabs relative flex items-center justify-around gap-1 px-2 sm:px-4 py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
           {TABS.map((tab) => {
             const active = tab.id === screen
             return (
@@ -42,7 +42,7 @@ export function Navigation({
                 type="button"
                 onClick={() => onChange(tab.id)}
                 className={cn(
-                  "flex-1 py-2 text-[15px] tracking-wide font-serif transition-colors duration-200 relative",
+                  "flex-1 min-h-11 py-2 text-[13px] sm:text-[15px] tracking-wide font-serif transition-colors duration-200 relative touch-manipulation",
                   active
                     ? "text-rol-primary"
                     : "text-rol-muted-foreground hover:text-rol-foreground"
