@@ -28,6 +28,8 @@ export interface RoomContent {
   gameTeaser?: {
     title: string
     description: string
+    href?: string
+    actionLabel?: string
   }
   topics?: string[]
 }
@@ -124,11 +126,13 @@ export const ROOMS: Record<RoomId, RoomContent> = {
     question: "What am I dreaming about?",
     marginalia: "The Dream realm",
     body:
-      "The Deep is where fascination, myth, imagination, and personal projects take root before they become anything else. This is the faerie realm.",
+      "The Deep is where fascination, myth, imagination, and personal projects take root before they become anything else. This is the faerie realm. Down here, a dwarf still works a dead mountain.",
     gameTeaser: {
       title: "The Hearth & The Deep",
       description:
-        "A game about one dwarf, a dead mountain, and color slowly returning. Strike ore, tend the hearth, rekindle. Side project.",
+        "A game about one dwarf, a dead mountain, and color slowly returning. Strike ore, tend the hearth, rekindle.",
+      href: "https://www.poa.ar/dwarf-game/",
+      actionLabel: "Play ↗",
     },
   },
 }

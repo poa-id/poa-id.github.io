@@ -15,7 +15,7 @@ export function ForgeShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const project = getForgeProject(pathname)
 
-  if (pathname.startsWith("/forge/lineforge")) {
+  if (pathname.startsWith("/forge/lineforge") || pathname.startsWith("/forge/rule-of-life")) {
     return <>{children}</>
   }
 

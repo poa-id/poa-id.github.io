@@ -1,3 +1,5 @@
+import { getMadeObjectsForRealm } from "@/lib/made-objects"
+
 export type GardenSection =
   | "gardening"
   | "training"
@@ -19,7 +21,7 @@ export const GARDEN_SECTION_INTROS: Record<GardenSection, string> = {
   training:
     "Muay Thai and kickboxing a couple times a week, plus kettlebells and mobility. Less about performance, more about staying durable. I have a daughter and we're planning on more.",
   trades:
-    "Welding a wood cart soon. Scouting a shipping container for a workshop/gym. Knifemaking is coming back now that there's a house with a yard. Smithing got dropped in the apartment years.",
+    "A firewood cart is the first welding project I designed and finished on my own. Scouting a shipping container for a workshop/gym. Knifemaking is coming back now that there's a house with a yard. Smithing got dropped in the apartment years.",
   skills:
     "Concept art practice right now: drawing my friends' D&D characters. Tattoo apprenticeship ongoing. Things that compound slowly if you show up.",
   stewardship:
@@ -32,4 +34,8 @@ export const GARDEN_SECTION_TOPICS: Record<GardenSection, string> = {
   trades: "Welding, knifemaking",
   skills: "Concept art, tattoo",
   stewardship: "Slow living, land & tools",
+}
+
+export function getGardenTradeProjects() {
+  return getMadeObjectsForRealm("garden").filter((object) => object.garden)
 }

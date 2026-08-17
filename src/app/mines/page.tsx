@@ -30,20 +30,43 @@ export default function MinesPage() {
         <div className="max-w-md space-y-8 w-full">
           <RoomHeader roomId="deep" textMuted={theme.textMuted} align="center" />
 
-          {game && (
-            <div className="text-center space-y-4">
-              <h2 className="text-xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">
-                {game.title}
-              </h2>
-              <p className="text-sm leading-relaxed [font-family:var(--font-disket)] opacity-80">
-                {game.description}
-              </p>
-            </div>
-          )}
-
-          <p className="text-xs opacity-40 [font-family:var(--font-disket)] text-center">
-            No playable build yet. Check back eventually.
-          </p>
+          {game &&
+            (game.href ? (
+              <a
+                href={game.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex flex-col gap-6 border p-5 sm:p-6 text-center transition-colors hover:border-current focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                style={{
+                  borderColor: theme.border,
+                  outlineColor: theme.text,
+                }}
+              >
+                <div className="space-y-3">
+                  <h2 className="text-xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">
+                    {game.title}
+                  </h2>
+                  <p className="text-sm leading-relaxed [font-family:var(--font-disket)] opacity-80">
+                    {game.description}
+                  </p>
+                </div>
+                <p
+                  className="text-[10px] uppercase tracking-[0.22em] [font-family:var(--font-disket)] transition-opacity group-hover:opacity-100 opacity-70"
+                  style={{ color: theme.text }}
+                >
+                  {game.actionLabel ?? "Play ↗"}
+                </p>
+              </a>
+            ) : (
+              <div className="text-center space-y-4">
+                <h2 className="text-xl uppercase tracking-wide [font-family:var(--font-disket-bold)]">
+                  {game.title}
+                </h2>
+                <p className="text-sm leading-relaxed [font-family:var(--font-disket)] opacity-80">
+                  {game.description}
+                </p>
+              </div>
+            ))}
         </div>
       </main>
     </div>

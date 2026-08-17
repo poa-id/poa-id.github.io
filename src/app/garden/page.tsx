@@ -7,8 +7,10 @@ import { CUBE_FACE_STUBS } from "@/lib/cube-face-content"
 import {
   GARDEN_SECTION_INTROS,
   GARDEN_SECTIONS,
+  getGardenTradeProjects,
   type GardenSection,
 } from "@/lib/garden-content"
+import { GardenTradeEntry } from "@/components/garden/garden-trade-entry"
 
 function GardenSectionContent({ section }: { section: GardenSection }) {
   const theme = useCubeFaceThemeForSlug("garden")
@@ -32,6 +34,12 @@ function GardenSectionContent({ section }: { section: GardenSection }) {
       <p className="text-sm leading-relaxed [font-family:var(--font-disket)] opacity-85">
         {GARDEN_SECTION_INTROS[section]}
       </p>
+
+      {section === "trades"
+        ? getGardenTradeProjects().map((object) => (
+            <GardenTradeEntry key={object.slug} object={object} theme={theme} />
+          ))
+        : null}
     </section>
   )
 }

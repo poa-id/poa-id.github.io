@@ -1,0 +1,357 @@
+:root {
+  --rol-background: 40 16% 96%;
+  --rol-foreground: 30 10% 18%;
+  --rol-card: 40 14% 98%;
+  --rol-card-foreground: 30 10% 18%;
+  --rol-popover: 40 14% 98%;
+  --rol-popover-foreground: 30 10% 18%;
+  --rol-primary: 32 42% 38%;
+  --rol-primary-foreground: 40 16% 97%;
+  --rol-secondary: 40 10% 92%;
+  --rol-secondary-foreground: 30 10% 18%;
+  --rol-muted: 40 10% 93%;
+  --rol-muted-foreground: 30 6% 40%;
+  --rol-accent: 32 42% 38%;
+  --rol-accent-foreground: 40 16% 97%;
+  --rol-destructive: 0 32% 42%;
+  --rol-destructive-foreground: 40 16% 97%;
+  --rol-border: 40 10% 84%;
+  --rol-input: 40 10% 84%;
+  --rol-ring: 32 42% 38%;
+  --rol-observed: 32 40% 36%;
+  --rol-tally-filled: 30 10% 22%;
+  --rol-tally-empty: 40 8% 78%;
+}
+
+.rol-root {
+  --rol-background: 40 16% 96%;
+  --rol-foreground: 30 10% 18%;
+  --rol-card: 40 14% 98%;
+  --rol-card-foreground: 30 10% 18%;
+  --rol-popover: 40 14% 98%;
+  --rol-popover-foreground: 30 10% 18%;
+  --rol-primary: 32 42% 38%;
+  --rol-primary-foreground: 40 16% 97%;
+  --rol-secondary: 40 10% 92%;
+  --rol-secondary-foreground: 30 10% 18%;
+  --rol-muted: 40 10% 93%;
+  --rol-muted-foreground: 30 6% 40%;
+  --rol-accent: 32 42% 38%;
+  --rol-accent-foreground: 40 16% 97%;
+  --rol-destructive: 0 32% 42%;
+  --rol-destructive-foreground: 40 16% 97%;
+  --rol-border: 40 10% 84%;
+  --rol-input: 40 10% 84%;
+  --rol-ring: 32 42% 38%;
+  --rol-observed: 32 40% 36%;
+  --rol-tally-filled: 30 10% 22%;
+  --rol-tally-empty: 40 8% 78%;
+  --rol-nav: 38 26% 88%;
+  --rol-shadow-soft: none;
+  --rol-shadow-card: none;
+  --radius: 0.25rem;
+
+  --background: hsl(var(--rol-background));
+  --foreground: hsl(var(--rol-foreground));
+  --card: hsl(var(--rol-card));
+  --card-foreground: hsl(var(--rol-card-foreground));
+  --popover: hsl(var(--rol-popover));
+  --popover-foreground: hsl(var(--rol-popover-foreground));
+  --primary: hsl(var(--rol-primary));
+  --primary-foreground: hsl(var(--rol-primary-foreground));
+  --secondary: hsl(var(--rol-secondary));
+  --secondary-foreground: hsl(var(--rol-secondary-foreground));
+  --muted: hsl(var(--rol-muted));
+  --muted-foreground: hsl(var(--rol-muted-foreground));
+  --accent: hsl(var(--rol-accent));
+  --accent-foreground: hsl(var(--rol-accent-foreground));
+  --destructive: hsl(var(--rol-destructive));
+  --destructive-foreground: hsl(var(--rol-destructive-foreground));
+  --border: hsl(var(--rol-border));
+  --input: hsl(var(--rol-input));
+  --ring: hsl(var(--rol-ring));
+
+  background-color: hsl(var(--rol-background));
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      hsl(var(--rol-foreground) / 0.008) 2px,
+      hsl(var(--rol-foreground) / 0.008) 3px
+    ),
+    radial-gradient(ellipse at 15% 25%, hsl(var(--rol-primary) / 0.018) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 75%, hsl(var(--rol-primary) / 0.012) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, hsl(var(--rol-muted) / 0.2) 0%, transparent 70%);
+  color: hsl(var(--rol-foreground));
+  font-family: var(--font-rol-sans), Inter, system-ui, sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  isolation: isolate;
+  --rol-desk-height: calc(3.5rem + max(1rem, env(safe-area-inset-bottom, 0px)));
+  --rol-shelf-width: 0px;
+  --rol-shelf-opacity: 0.1;
+  /* Visible wood only; the file has black side padding cropped via object-fit. */
+  --rol-shelf-ratio: 608 / 1024;
+  display: flex;
+  flex-direction: column;
+}
+
+.rol-app {
+  position: relative;
+  z-index: 10;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.rol-side-shelves {
+  display: none;
+}
+
+@media (min-width: 48rem) {
+  .rol-root {
+    --rol-shelf-width: min(
+      calc((100dvh - var(--rol-desk-height)) * var(--rol-shelf-ratio)),
+      max(0px, calc((100vw - 24rem) / 2))
+    );
+    display: grid;
+    grid-template-columns: var(--rol-shelf-width) minmax(0, 1fr) var(--rol-shelf-width);
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .rol-app {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .rol-root > nav,
+  .rol-root > .rol-desk {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .rol-side-shelves {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    grid-row: 1;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .rol-side-shelves--left {
+    grid-column: 1;
+  }
+
+  .rol-side-shelves--right {
+    grid-column: 3;
+  }
+
+  .rol-side-shelves img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center bottom;
+    display: block;
+    opacity: var(--rol-shelf-opacity);
+  }
+
+  .rol-side-shelves--right img {
+    transform: scaleX(-1);
+  }
+
+  .rol-desk-tabs {
+    margin-left: var(--rol-shelf-width);
+    margin-right: var(--rol-shelf-width);
+  }
+}
+
+.rol-page {
+  position: relative;
+  z-index: 1;
+}
+
+.rol-desk {
+  background-color: hsl(var(--rol-nav));
+  border-top: 1px solid hsl(var(--rol-border));
+}
+
+.rol-root.rol-night {
+  --rol-background: 0 0% 7%;
+  --rol-foreground: 0 0% 90%;
+  --rol-card: 0 0% 11%;
+  --rol-card-foreground: 0 0% 90%;
+  --rol-popover: 0 0% 14%;
+  --rol-popover-foreground: 0 0% 90%;
+  --rol-primary: 40 46% 61%;
+  --rol-primary-foreground: 0 0% 7%;
+  --rol-secondary: 0 0% 14%;
+  --rol-secondary-foreground: 0 0% 90%;
+  --rol-muted: 0 0% 11%;
+  --rol-muted-foreground: 0 0% 66%;
+  --rol-accent: 40 46% 61%;
+  --rol-accent-foreground: 0 0% 7%;
+  --rol-destructive: 0 32% 48%;
+  --rol-destructive-foreground: 0 0% 90%;
+  --rol-border: 0 0% 18%;
+  --rol-input: 0 0% 18%;
+  --rol-ring: 40 46% 61%;
+  --rol-observed: 32 50% 52%;
+  --rol-tally-filled: 0 0% 78%;
+  --rol-tally-empty: 0 0% 28%;
+  --rol-nav: 0 0% 9%;
+  --rol-shadow-soft: none;
+  --rol-shadow-card: none;
+}
+
+.rol-root[data-text-size="small"] {
+  zoom: 0.92;
+}
+
+.rol-root[data-text-size="large"] {
+  zoom: 1.12;
+}
+
+.rol-root h1,
+.rol-root h2,
+.rol-root h3,
+.rol-root h4,
+.rol-root h5,
+.rol-root h6 {
+  font-family: var(--font-rol-serif), "Cormorant Garamond", "Crimson Pro", Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.rol-root .font-serif {
+  font-family: var(--font-rol-serif), "Cormorant Garamond", "Crimson Pro", Georgia, serif;
+}
+
+.rol-root nav button {
+  font-family: var(--font-rol-serif), "Cormorant Garamond", "Crimson Pro", Georgia, serif;
+}
+
+.rol-desk-grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("/forge/rule-of-life/desk-grain.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.rol-root .font-sans {
+  font-family: var(--font-rol-sans), Inter, system-ui, sans-serif;
+}
+
+.rol-root .divider-flourish {
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    hsl(var(--rol-border)),
+    transparent
+  );
+}
+
+.rol-root .vellum-texture {
+  background-color: hsl(var(--rol-background));
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      hsl(var(--rol-foreground) / 0.008) 2px,
+      hsl(var(--rol-foreground) / 0.008) 3px
+    ),
+    radial-gradient(ellipse at 15% 25%, hsl(var(--rol-primary) / 0.018) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 75%, hsl(var(--rol-primary) / 0.012) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, hsl(var(--rol-muted) / 0.2) 0%, transparent 70%);
+}
+
+.rol-root .section-header {
+  font-size: 10px;
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: hsl(var(--rol-muted-foreground) / 0.7);
+}
+
+.rol-root .tally-strike {
+  width: 0.125rem;
+  height: 0.875rem;
+  border-radius: 0.125rem;
+  background-color: hsl(var(--rol-tally-filled));
+}
+
+.rol-root .tally-strike-compact {
+  width: 0.125rem;
+  height: 0.625rem;
+  border-radius: 0.125rem;
+  background-color: hsl(var(--rol-tally-filled));
+}
+
+.rol-root .tally-dot {
+  width: 0.25rem;
+  height: 0.25rem;
+  border-radius: 9999px;
+  background-color: hsl(var(--rol-tally-empty));
+}
+
+.rol-root .shadow-card {
+  box-shadow: var(--rol-shadow-card);
+}
+
+.rol-root .shadow-soft {
+  box-shadow: var(--rol-shadow-soft);
+}
+
+.rol-root .text-observed {
+  color: hsl(var(--rol-observed));
+}
+
+.rol-root .bg-observed {
+  background-color: hsl(var(--rol-observed));
+}
+
+@keyframes rol-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rol-root .animate-fade-in {
+  animation: rol-fade-in 0.3s ease-out both;
+}
+
+.rol-root.rol-reduce-motion .animate-fade-in,
+.rol-root.rol-reduce-motion .active\:scale-\[0\.99\]:active {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rol-root .animate-fade-in {
+    animation: none;
+  }
+}
+
+.rol-root.rol-reduce-motion *,
+.rol-root.rol-reduce-motion *::before,
+.rol-root.rol-reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}

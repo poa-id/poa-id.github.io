@@ -9,15 +9,15 @@ import { MobileCubeGuard } from "@/components/mobile-cube-guard"
 import { useIsMobile } from "@/hooks/use-is-mobile"
 import { usePathname } from "next/navigation"
 
-function isLineforgePath(pathname: string) {
-  return pathname.startsWith("/forge/lineforge")
+function isImmersiveForgeTool(pathname: string) {
+  return pathname.startsWith("/forge/lineforge") || pathname.startsWith("/forge/rule-of-life")
 }
 
 function GamificationChrome() {
   const pathname = usePathname()
   const isMobile = useIsMobile()
 
-  if (isLineforgePath(pathname)) {
+  if (isImmersiveForgeTool(pathname)) {
     return null
   }
 

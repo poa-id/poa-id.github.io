@@ -49,6 +49,29 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --color-rol-background: hsl(var(--rol-background));
+  --color-rol-foreground: hsl(var(--rol-foreground));
+  --color-rol-card: hsl(var(--rol-card));
+  --color-rol-card-foreground: hsl(var(--rol-card-foreground));
+  --color-rol-popover: hsl(var(--rol-popover));
+  --color-rol-popover-foreground: hsl(var(--rol-popover-foreground));
+  --color-rol-primary: hsl(var(--rol-primary));
+  --color-rol-primary-foreground: hsl(var(--rol-primary-foreground));
+  --color-rol-secondary: hsl(var(--rol-secondary));
+  --color-rol-secondary-foreground: hsl(var(--rol-secondary-foreground));
+  --color-rol-muted: hsl(var(--rol-muted));
+  --color-rol-muted-foreground: hsl(var(--rol-muted-foreground));
+  --color-rol-accent: hsl(var(--rol-accent));
+  --color-rol-accent-foreground: hsl(var(--rol-accent-foreground));
+  --color-rol-destructive: hsl(var(--rol-destructive));
+  --color-rol-destructive-foreground: hsl(var(--rol-destructive-foreground));
+  --color-rol-border: hsl(var(--rol-border));
+  --color-rol-input: hsl(var(--rol-input));
+  --color-rol-ring: hsl(var(--rol-ring));
+  --color-rol-observed: hsl(var(--rol-observed));
+  --color-rol-tally-filled: hsl(var(--rol-tally-filled));
+  --color-rol-tally-empty: hsl(var(--rol-tally-empty));
 }
 
 @tailwind base;
