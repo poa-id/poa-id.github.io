@@ -17,6 +17,7 @@ export interface MadeObject {
   images: MadeObjectImage[]
   garden?: {
     meta: string
+    sortDate: string
     body: string[]
     lessons?: string[]
     next?: string
@@ -50,6 +51,7 @@ export const MADE_OBJECTS: MadeObject[] = [
     ],
     garden: {
       meta: "First solo welding project",
+      sortDate: "2026-08-01",
       body: [
         "My first complete welding project built on my own: a wheeled steel firewood cart with a quebracho base, made for actual use around the house.",
         "It works. It also made the gaps in my technique immediately visible — the frame pulled slightly out of square, the welds are inconsistent, and cleanup in tight inside corners is still something I need to learn.",
@@ -92,6 +94,7 @@ export const MADE_OBJECTS: MadeObject[] = [
     ],
     garden: {
       meta: "September · Workshop infrastructure",
+      sortDate: "2026-09-01",
       body: [
         "Built the foundation for my workshop.",
         "A 1.97 m steel workbench built around the work I want to do here: knifemaking, metalworking, sharpening and general fabrication.",

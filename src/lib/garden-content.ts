@@ -45,6 +45,7 @@ export interface GardenJournalEntry {
   section: GardenSection
   title: string
   date: string
+  sortDate: string
   meta: string
   body: GardenJournalParagraph[]
   images?: GardenJournalImage[]
@@ -56,6 +57,7 @@ export const GARDEN_JOURNAL_ENTRIES: GardenJournalEntry[] = [
     section: "gardening",
     title: "Learning to Shape Trees",
     date: "Spring 2026",
+    sortDate: "2026-10-01",
     meta: "Pruning / Tree training",
     body: [
       { text: "Learning that growing a tree and shaping one are different skills." },
@@ -103,6 +105,7 @@ export const GARDEN_JOURNAL_ENTRIES: GardenJournalEntry[] = [
     section: "gardening",
     title: "Spring Vegetable Garden",
     date: "Spring 2026",
+    sortDate: "2026-10-01",
     meta: "Vegetable garden / Hydroponics",
     body: [
       {
@@ -132,9 +135,13 @@ export const GARDEN_SECTION_TOPICS: Record<GardenSection, string> = {
 }
 
 export function getGardenTradeProjects() {
-  return getMadeObjectsForRealm("garden").filter((object) => object.garden)
+  return getMadeObjectsForRealm("garden")
+    .filter((object) => object.garden)
+    .sort((a, b) => b.garden!.sortDate.localeCompare(a.garden!.sortDate))
 }
 
 export function getGardenJournalEntries(section: GardenSection) {
-  return GARDEN_JOURNAL_ENTRIES.filter((entry) => entry.section === section)
+  return GARDEN_JOURNAL_ENTRIES.filter((entry) => entry.section === section).sort(
+    (a, b) => b.sortDate.localeCompare(a.sortDate),
+  )
 }
