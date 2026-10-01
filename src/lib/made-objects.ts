@@ -69,6 +69,38 @@ export const MADE_OBJECTS: MadeObject[] = [
         "A wheeled steel cart with a quebracho base, built to store and move firewood around the house.",
     },
   },
+  {
+    slug: "workshop-bench",
+    title: "Workshop Bench",
+    year: 2026,
+    trades: ["Metalworking", "Workshop"],
+    materials: ["Steel", "Quebracho", "Wood"],
+    realms: ["garden"],
+    images: [
+      {
+        src: "/garden/trades/workshop-bench/in-use.jpeg",
+        alt: "The steel workshop bench in use with a belt grinder, gas forge, vise, and hand tools.",
+        width: 900,
+        height: 1600,
+      },
+      {
+        src: "/garden/trades/workshop-bench/finished.jpeg",
+        alt: "The completed steel workshop bench with a timber top, reclaimed quebracho lower shelf, vise, and gas forge.",
+        width: 900,
+        height: 1600,
+      },
+    ],
+    garden: {
+      meta: "September · Workshop infrastructure",
+      body: [
+        "Built the foundation for my workshop.",
+        "A 1.97 m steel workbench built around the work I want to do here: knifemaking, metalworking, sharpening and general fabrication.",
+        "I welded the frame from square steel tubing, added a lower shelf from reclaimed quebracho, mounted a vise, and built it heavy enough to take real workshop use. The forge and belt grinder now have a proper place to work from.",
+        "This was my second substantial welding project after the firewood cart. The welds are getting better, but building a large square frame exposed a different set of problems: controlling heat, bridging imperfect joints, keeping everything square and figuring out assembly order before welding myself into a corner.",
+        "More than a finished object, this bench is infrastructure. Most of what I want to learn next will be built on it.",
+      ],
+    },
+  },
 ]
 
 export function getMadeObjectsForRealm(realm: MadeObjectRealm): MadeObject[] {

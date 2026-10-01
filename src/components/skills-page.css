@@ -1,5 +1,41 @@
 /* Full-page Skillbook shell — OSRS website aesthetic */
 
+.skillbook-achievement {
+  border: 1px solid rgba(109, 84, 47, 0.82);
+  background: rgba(20, 13, 7, 0.55);
+  padding: 0.8rem 0.9rem;
+  box-shadow: inset 0 0 0 1px rgba(224, 176, 84, 0.08);
+}
+
+.skillbook-achievement-year {
+  color: #9b815c;
+  font-family: var(--font-runescape-small), monospace;
+  font-size: 0.8rem;
+}
+
+.skillbook-achievement-title {
+  color: #e0b054;
+  font-family: var(--font-runescape-bold), monospace;
+  font-size: 1.05rem;
+  margin-top: 0.1rem;
+}
+
+.skillbook-achievement-description {
+  color: #c7bca9;
+  font-family: var(--font-runescape), monospace;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin-top: 0.3rem;
+}
+
+.skillbook-achievement-flavor {
+  color: #9b815c;
+  font-family: var(--font-runescape), monospace;
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-top: 0.4rem;
+}
+
 .skillbook-shell {
   --skillbook-yellow: #ffff00;
   --skillbook-orange: #ff981f;

@@ -16,6 +16,13 @@ export type SkillJournalMilestone = {
   level?: number;
 };
 
+export type SkillAchievement = {
+  title: string;
+  description: string;
+  flavor: string;
+  year: number | string;
+};
+
 export type LifeSkill = {
   id: string;
   name: string;
@@ -27,6 +34,8 @@ export type LifeSkill = {
   description?: string;
   /** Chronological progress journal — append-only story of the skill */
   milestones?: SkillJournalMilestone[];
+  /** Meaningful firsts and thresholds, distinct from visitor achievements. */
+  achievements?: SkillAchievement[];
   countsTowardTotal?: boolean;
   href?: string;
   /** Label for the skill journal CTA link (requires href) */
@@ -164,14 +173,30 @@ export const skills: LifeSkill[] = [
   {
     id: "metalworking",
     name: "Metalworking",
-    level: 10,
+    level: 12,
     category: "Craft",
     icon: "/skills/icons-32/metalworking.png",
     milestones: [
       { year: 2018, title: "Built my first forge." },
       { year: 2018, title: "First blacksmithing projects." },
       { year: 2026, title: "New smithy workshop with better tools." },
+      {
+        year: 2026,
+        title: "Built a permanent steel workshop bench.",
+        detail:
+          "A larger fabrication project requiring structural layout, squaring, thin-wall welding, fit-up, and assembly planning.",
+        level: 12,
+      },
       { year: "Currently", title: "Learning to weld better." },
+    ],
+    achievements: [
+      {
+        title: "WORKSHOP FOUNDATION",
+        description:
+          "Built a steel workbench for metalworking, knifemaking and fabrication.",
+        flavor: "A place to make the next thing.",
+        year: 2026,
+      },
     ],
   },
 
@@ -179,7 +204,7 @@ export const skills: LifeSkill[] = [
   {
     id: "gardening",
     name: "Gardening",
-    level: 38,
+    level: 39,
     category: "Discipline",
     icon: "/skills/icons-32/gardening.png",
     milestones: [
@@ -192,7 +217,23 @@ export const skills: LifeSkill[] = [
         title: "Built raised bed vegetable garden and installed automatic irrigation system.",
       },
       { year: 2026, title: "Planted flower garden." },
+      {
+        year: 2026,
+        title: "Began learning structural pruning and tree training.",
+        detail:
+          "Acquired an Acer palmatum 'Sango-kaku' as a long-term cultivation project.",
+        level: 39,
+      },
       { year: 2026, title: "Greenhouse in the making." },
+    ],
+    achievements: [
+      {
+        title: "CORAL BARK",
+        description:
+          "Acquired and began training an Acer palmatum 'Sango-kaku'.",
+        flavor: "Some work is measured in seasons.",
+        year: 2026,
+      },
     ],
   },
   {
@@ -258,12 +299,17 @@ export const skills: LifeSkill[] = [
   {
     id: "woodworking",
     name: "Woodworking",
-    level: 18,
+    level: 19,
     category: "Craft",
     icon: "/skills/icons-32/woodworking.png",
     milestones: [
       { year: 2026, title: "Built first furniture projects." },
       { year: 2026, title: "Completed a timber framing course." },
+      {
+        year: 2026,
+        title: "Built a reclaimed quebracho shelf for the workshop bench.",
+        level: 19,
+      },
       { year: "Currently", title: "Establishing a home workshop." },
     ],
   },
@@ -332,7 +378,7 @@ export const skills: LifeSkill[] = [
   {
     id: "homesteading",
     name: "Homesteading",
-    level: 35,
+    level: 36,
     category: "Vocation",
     icon: "/skills/icons-32/homesteading.png",
     description:
@@ -344,6 +390,11 @@ export const skills: LifeSkill[] = [
       {
         year: "",
         title: "Continuously improving the property for future generations.",
+      },
+      {
+        year: 2026,
+        title: "Established permanent productive infrastructure in the home workshop.",
+        level: 36,
       },
     ],
   },

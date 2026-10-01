@@ -118,6 +118,31 @@ function SkillDetail({
         ) : null}
       </div>
 
+      {skill.achievements && skill.achievements.length > 0 ? (
+        <div className="space-y-2">
+          <h3 className="skillbook-subtitle" style={{ fontSize: "1.2rem" }}>
+            Achievements
+          </h3>
+          <div className="space-y-3 pt-1">
+            {skill.achievements.map((achievement) => (
+              <article
+                key={`${achievement.year}-${achievement.title}`}
+                className="skillbook-achievement"
+              >
+                <p className="skillbook-achievement-year">{achievement.year}</p>
+                <h4 className="skillbook-achievement-title">{achievement.title}</h4>
+                <p className="skillbook-achievement-description">
+                  {achievement.description}
+                </p>
+                <p className="skillbook-achievement-flavor">
+                  {achievement.flavor}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
       <div className="space-y-2">
         <h3 className="skillbook-subtitle" style={{ fontSize: "1.2rem" }}>
           Journal
