@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { GardenShell } from "@/components/garden-shell"
 import { useCubeFaceThemeForSlug } from "@/hooks/use-cube-face-theme"
 import { CUBE_FACE_STUBS } from "@/lib/cube-face-content"
@@ -36,6 +37,28 @@ function GardenSectionContent({ section }: { section: GardenSection }) {
       <p className="text-sm leading-relaxed [font-family:var(--font-disket)] opacity-85">
         {GARDEN_SECTION_INTROS[section]}
       </p>
+
+      {section === "skills" ? (
+        <Link
+          href="/skills"
+          className="group block border p-5 transition-colors [font-family:var(--font-disket)]"
+          style={{ borderColor: theme.border }}
+        >
+          <span className="block text-xs uppercase tracking-widest opacity-65">
+            Character record
+          </span>
+          <span className="mt-2 flex items-center justify-between gap-4 text-lg [font-family:var(--font-disket-bold)]">
+            Open the Skillbook
+            <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
+              →
+            </span>
+          </span>
+          <span className="mt-2 block text-sm leading-relaxed opacity-75">
+            A living record of disciplines, levels, achievements, and the work
+            still in progress.
+          </span>
+        </Link>
+      ) : null}
 
       {section === "trades"
         ? getGardenTradeProjects().map((object) => (

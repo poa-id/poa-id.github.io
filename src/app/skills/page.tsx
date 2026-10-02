@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Nav } from "@/components/nav";
 import { SkillsPageContent } from "@/components/skills-page-content";
 
 export const metadata: Metadata = {
@@ -10,7 +9,6 @@ export const metadata: Metadata = {
 export default function SkillsPage() {
   return (
     <main className="fixed inset-0 overflow-hidden bg-black">
-      <Nav />
       <SkillsPageContent />
     </main>
   );

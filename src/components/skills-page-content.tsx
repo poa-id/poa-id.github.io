@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import localFont from "next/font/local";
+import Link from "next/link";
 import { SkillsPanel } from "@/components/SkillsPanel";
 import {
   getSkillTooltipLabel,
@@ -9,7 +10,6 @@ import {
   skills,
   type LifeSkill,
 } from "@/data/skills";
-import { PROFESSIONAL_PAGE_FRAME } from "@/lib/professional-layout";
 import "./skills-page.css";
 
 const runescape = localFont({
@@ -70,6 +70,22 @@ const runescapeSmall = localFont({
 });
 
 type MobileView = "text" | "panel";
+
+function SkillbookNav() {
+  return (
+    <header className="skillbook-chrome">
+      <nav className="skillbook-nav" aria-label="Skillbook navigation">
+        <Link href="/garden" className="skillbook-nav-link">
+          ← Garden
+        </Link>
+        <span className="skillbook-nav-title">The Skillbook</span>
+        <Link href="/" className="skillbook-nav-link skillbook-nav-link--right">
+          Hall →
+        </Link>
+      </nav>
+    </header>
+  );
+}
 
 function SkillDetail({
   skill,
@@ -269,40 +285,44 @@ export function SkillsPageContent() {
 
   return (
     <div
-      className={`${PROFESSIONAL_PAGE_FRAME} overflow-hidden skillbook-shell ${runescape.variable} ${runescapeBold.variable} ${runescapeSmall.variable} ${runescape.className}`}
+      className={`h-full w-full overflow-hidden skillbook-shell ${runescape.variable} ${runescapeBold.variable} ${runescapeSmall.variable} ${runescape.className}`}
     >
-      <section
-        className={`skillbook-copy-col w-full lg:flex-1 min-w-0 min-h-0 overflow-y-auto overscroll-contain lg:h-full lg:block ${
-          mobileView === "text" ? "h-full" : "hidden"
-        }`}
-      >
-        <div className="w-[90%] lg:w-[min(42rem,86%)] mx-auto py-8 lg:py-12 pb-28 lg:pb-12">
-          {selectedSkill ? (
-            <SkillDetail
-              skill={selectedSkill}
-              onClear={() => setSelectedSkillId(null)}
-            />
-          ) : (
-            <WelcomeCopy
-              levelsOpen={levelsOpen}
-              onToggleLevels={() => setLevelsOpen((open) => !open)}
-            />
-          )}
-        </div>
-      </section>
+      <SkillbookNav />
 
-      <section
-        className={`skillbook-panel-slot w-full min-h-0 h-full items-stretch justify-center overflow-hidden py-3 pb-24 lg:pb-4 lg:py-4 lg:pr-4 lg:w-auto lg:shrink-0 lg:flex ${
-          mobileView === "panel" ? "flex" : "hidden"
-        }`}
-      >
-        <SkillsPanel
-          fit
-          scale={3}
-          selectedSkillId={selectedSkillId}
-          onSelectSkill={handleSelectSkill}
-        />
-      </section>
+      <div className="skillbook-main">
+        <section
+          className={`skillbook-copy-col w-full lg:flex-1 min-w-0 min-h-0 overflow-y-auto overscroll-contain lg:h-full lg:block ${
+            mobileView === "text" ? "h-full" : "hidden"
+          }`}
+        >
+          <div className="w-[90%] lg:w-[min(42rem,86%)] mx-auto py-8 lg:py-12 pb-28 lg:pb-12">
+            {selectedSkill ? (
+              <SkillDetail
+                skill={selectedSkill}
+                onClear={() => setSelectedSkillId(null)}
+              />
+            ) : (
+              <WelcomeCopy
+                levelsOpen={levelsOpen}
+                onToggleLevels={() => setLevelsOpen((open) => !open)}
+              />
+            )}
+          </div>
+        </section>
+
+        <section
+          className={`skillbook-panel-slot w-full min-h-0 h-full items-stretch justify-center overflow-hidden py-3 pb-24 lg:pb-4 lg:py-4 lg:pr-4 lg:w-auto lg:shrink-0 lg:flex ${
+            mobileView === "panel" ? "flex" : "hidden"
+          }`}
+        >
+          <SkillsPanel
+            fit
+            scale={3}
+            selectedSkillId={selectedSkillId}
+            onSelectSkill={handleSelectSkill}
+          />
+        </section>
+      </div>
 
       <div className="lg:hidden fixed bottom-0 inset-x-0 z-30 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <button

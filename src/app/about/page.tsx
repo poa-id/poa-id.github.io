@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { ProfessionalSectionShell } from "@/components/professional-section-shell"
 import { sectionTabClass } from "@/lib/professional-layout"
 import { useTheme } from "next-themes"
@@ -92,6 +93,15 @@ export default function About() {
             <h2 className="text-4xl mb-8 uppercase tracking-wide [font-family:var(--font-disket-bold)]">Other Interests</h2>
             <p className="text-base text-muted-foreground">I'm building a cove for myself in a frantic world. I ride motorcycles, train Muay Thai, weld and build things with my hands, cook, and tend a garden planted for color in every season: Japanese maples, ginkgo, chrysanthemums, zinnias, apricots, plums, almonds. I'm also a tattoo artist (still training), an illustrator, and lately exploring concept design. Most of it comes back to the same instinct: making things, slowly, on purpose.</p>
             <p className="text-base text-muted-foreground">I'm a father and husband first. My daughter is the actual center of all this.</p>
+            <p className="text-sm text-muted-foreground">
+              The longer record of those disciplines lives in the{" "}
+              <Link
+                href="/skills"
+                className="text-foreground underline underline-offset-4 transition-opacity hover:opacity-65 [font-family:var(--font-disket-bold)]"
+              >
+                Skillbook →
+              </Link>
+            </p>
           </div>
         )
     }
@@ -125,4 +135,4 @@ export default function About() {
       {renderContent()}
     </ProfessionalSectionShell>
   )
-} 
+}

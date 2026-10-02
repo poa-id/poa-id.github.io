@@ -11,7 +11,7 @@ export const GARDEN_SECTIONS: { id: GardenSection; label: string }[] = [
   { id: "gardening", label: "Gardening" },
   { id: "training", label: "Training" },
   { id: "trades", label: "Trades" },
-  { id: "skills", label: "Skills" },
+  { id: "skills", label: "Skillbook" },
   { id: "stewardship", label: "Stewardship" },
 ]
 
